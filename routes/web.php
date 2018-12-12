@@ -17,5 +17,5 @@ Route::resource('order','orderController',[
 		'except' => ['show','edit','update','destroy','create']
 ]);
 
-Route::POST('/rewardOnline','rewardController@rewardOnline');
-Route::POST('/rewardPos','rewardController@rewardPos');
+Route::POST('/rewardOnline','rewardController@rewardOnline')->name('online_reward');
+Route::POST('/rewardPos','rewardController@rewardPos')->name('pos_reward');

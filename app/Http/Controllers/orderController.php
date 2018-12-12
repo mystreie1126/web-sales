@@ -45,6 +45,7 @@ class orderController extends Controller
                ->with('credits',$credits)
                ->with('reference',$request->order_reference)
                ->with('product_name',$request->product_name)
-               ->with('id_order',$request->id_order);
+               ->with('id_order',$request->id_order)
+               ->with('id_customer',$request->id_customer);
     }
 }
