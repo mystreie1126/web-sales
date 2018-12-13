@@ -5,7 +5,7 @@
 	@foreach($data as $d)
 		<form action="{{route('postOrder')}}" method="POST">
 			<p class="flow-text"><span class="cyan-text">Reference:</span>{{$d->reference}}</p>
-			<p class="flow-text"><span class="red">Date:</span>{{$d->date_add}}</p>
+			<p class="flow-text"><span class="cyan-text">Date:</span>{{$d->date_add}}</p>
 			<p class="flow-text"><span class="cyan-text">Product:</span>{{$d->product_name}}</p>
 			<p class="flow-text"><span class="cyan-text">Shop:</span>{{$d->product_reference}}</p>
 			<input type="hidden" value="{{$d->product_name}}" name="product_name">

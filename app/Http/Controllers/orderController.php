@@ -16,7 +16,7 @@ class orderController extends Controller
         $this->middleware('auth');
     }
 
-    public function showOrder()
+    public function showOrder(Request $request)
     {
         if(Auth::user()->user_type == 3){
             $data = DB::table('ps_orders as a')
