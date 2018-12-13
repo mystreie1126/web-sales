@@ -22,7 +22,7 @@ class rewardController extends Controller
     	DB::table('ps_orders')->where('id_order',$request->id_order)
     	->update(['current_state'=>2]);
 
-    	return redirect()->route('homepage');
+    	return redirect('/');
 
     }
 
