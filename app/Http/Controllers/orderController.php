@@ -6,19 +6,42 @@ use Illuminate\Http\Request;
 use DB;
 use App\Order;
 use App\Customer_ie;
+use Illuminate\Support\Facades\Auth;
 
 class orderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $data = DB::table('ps_orders as a')
+        if(Auth::user()->user_type == 3){
+            $data = DB::table('ps_orders as a')
                 ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id')
                 ->join('ps_order_detail as b','a.id_order','=','b.id_order')
                 ->where('a.current_state',10)->where('date_add','>',date('Y-m-d'))
                 ->get();
 
-        return view('index',compact('data'));
+        
+            return view('index',compact('data'));
 
+        }else if(Auth::user()->user_type == 2){
+             $data = DB::table('ps_orders as a')
+                ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id')
+                ->join('ps_order_detail as b','a.id_order','=','b.id_order')
+                ->join('ps_feature_product as c','c.id_product','=','b.product_id')
+                ->where('c.id_feature',Auth::user()->feature_id)
+                ->where('c.id_feature_value',Auth::user()->feature_value)
+                ->where('a.current_state',10)->where('date_add','>',date('Y-m-d'))
+                ->get();
+
+        
+            return view('index',compact('data'));
+        }
+        
 
     }
 

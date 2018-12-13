@@ -9,7 +9,11 @@ use App\pos_customer;
 use App\pos_reward;
 
 class rewardController extends Controller
+
 {
+
+
+
     public function rewardOnline(Request $request){
 
     	DB::table('ps_rewards')->where('id_order',$request->id_order)
@@ -40,6 +44,7 @@ class rewardController extends Controller
         // ]);
        
         //update firstname,lastname and email
+
 
         DB::table('ps_orders')->where('id_order',$request->id_order)->update(['current_state'=>2]);
 
@@ -73,5 +78,7 @@ class rewardController extends Controller
 
         $new_reward->save();
 
+        return redirect()->route('order.index');
+        return 2;
     }
 }

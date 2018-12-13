@@ -11,7 +11,7 @@
 |
 */
 
-
+Auth::routes();
 
 Route::resource('order','orderController',[
 		'except' => ['show','edit','update','destroy','create']
@@ -19,3 +19,7 @@ Route::resource('order','orderController',[
 
 Route::POST('/rewardOnline','rewardController@rewardOnline')->name('online_reward');
 Route::POST('/rewardPos','rewardController@rewardPos')->name('pos_reward');
+
+
+
+//Route::get('/order', 'HomeController@index')->name('home');

@@ -26,8 +26,8 @@
 
     </head>
     <body>
+
         <div class="container">
-            <h4 class="cyan-text">Incoming Pre-Own Orders</h2>
             @yield('content')
         </div>
 

@@ -1,5 +1,5 @@
 @extends('template')
-
+@include('navtop')
 @section('content')
 
 	@foreach($data as $d)
