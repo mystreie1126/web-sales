@@ -24,11 +24,15 @@
 		<div class="button-rewards">
 
 			
-			@if(Auth::User()->user_type == 2)
-				<input type="submit" value="Generate rewards on Rockpos" class="btn waves-effect red" formaction="{{route('pos_reward')}}" onclick="return confirm('Are you sure to use rewards on rockpos?')">
-			@else
+			@if(Auth::User()->user_type == 2 && Auth::User()->rockpos == 0)
 				<input type="submit" value="Generate rewards on Website" class="btn waves-effect waves-light" formaction="{{route('online_reward')}}" onclick="return confirm('Are you sure you want to generate rewards on Funtech.ie?')" >
+			@else
+				<input type="submit" value="Generate rewards on Rockpos" class="btn waves-effect red" formaction="{{route('pos_reward')}}" onclick="return confirm('Are you sure to use rewards on rockpos?')">
+				
 			@endif
+			
+			
+			@if(Auth::User()->user_type == 2) 
 		</div>
 
 		{{csrf_field()}}

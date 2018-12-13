@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('feature_value')->nullable();
             $table->integer('feature_id')->nullable();
             $table->integer('user_type')->nullable();
+            $table->integer('rockpos')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
