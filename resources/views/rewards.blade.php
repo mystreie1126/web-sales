@@ -32,7 +32,7 @@
 			@endif
 			
 			
-			@if(Auth::User()->user_type == 2) 
+		
 		</div>
 
 		{{csrf_field()}}

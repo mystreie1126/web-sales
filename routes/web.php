@@ -13,9 +13,13 @@
 
 Auth::routes();
 
-Route::resource('order','orderController',[
-		'except' => ['show','edit','update','destroy','create']
-]);
+// Route::resource('order','orderController',[
+// 		'except' => ['show','edit','update','destroy','create']
+// ]);
+
+
+Route::get('/','orderController@showOrder')->name('homepage');
+Route::post('/order','orderController@store')->name('postOrder');
 
 Route::POST('/rewardOnline','rewardController@rewardOnline')->name('online_reward');
 Route::POST('/rewardPos','rewardController@rewardPos')->name('pos_reward');
