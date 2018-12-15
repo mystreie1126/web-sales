@@ -1,5 +1,6 @@
 @extends('template')
 @include('navtop')
+@include('layouts.searchnav')
 @section('content')
 
 	@foreach($data as $d)

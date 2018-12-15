@@ -23,7 +23,7 @@ Route::post('/order','orderController@store')->name('postOrder');
 
 Route::POST('/rewardOnline','rewardController@rewardOnline')->name('online_reward');
 Route::POST('/rewardPos','rewardController@rewardPos')->name('pos_reward');
-
+Route::post('/ref','searchRef@search')->name('search');
 
 
 //Route::get('/order', 'HomeController@index')->name('home');

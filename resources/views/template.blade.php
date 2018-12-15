@@ -22,6 +22,16 @@
                         justify-content: space-between;
                     }
                 }
+
+            .search-container{
+                display:block;
+                width:30%;
+                margin:0 auto;
+            }
+
+            .search-form input{
+                display: inline;
+            }
         </style>
 
     </head>
