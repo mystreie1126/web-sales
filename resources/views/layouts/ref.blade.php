@@ -27,7 +27,9 @@
 					@endif
 			
 			   </p>
-
+				<p class="flow-text"><span class="Red-text">Pick up Message:</span>
+					<p>{{$order->message}}</p>
+				</p>
 			</li>
 		</ul>
 	
