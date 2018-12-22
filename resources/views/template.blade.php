@@ -10,28 +10,52 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" rel="stylesheet">
         <style>
-            .button-rewards{
-                display:flex;
-                justify-content: space-between;
-                height:25vh;
+            .collapsible-header i{
+                font-size: 3rem;
+                margin-right: 30px;
             }
-
-             @media only screen and (max-width: 600px){
-                    .button-rewards{
-                        flex-direction: column;
-                        justify-content: space-between;
-                    }
-                }
-
+            
             .search-container{
                 display:block;
                 width:30%;
                 margin:0 auto;
             }
 
-            .search-form input{
-                display: inline;
+            
+            .form-container{
+                display:block;
+                margin:auto;
+                width:50%;
+                transform: translateY(30%);
             }
+            
+            .order_and_name{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+
+            .order-intro{
+                display: flex;
+                align-items: flex-start;
+            }
+            .order-detail-container{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+
+            .confirm-order{
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+            
+          /*  .reward-status-text{
+                padding: 30px;
+            }*/
         </style>
 
     </head>
@@ -49,6 +73,8 @@
 
     $(document).ready(function() {
       $("select").material_select();
+        $(".button-collapse").sideNav();
+
     });
     $('.datepicker').pickadate({
         selectMonths:true,

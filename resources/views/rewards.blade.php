@@ -3,47 +3,61 @@
 @include('navtop')
 @section('content')
 
-<form method="post">
-	@foreach($customer_details as $detail)
-		<ul class="collection">
-			<li class="collection-item">
-				<p class="flow-text"><span class="cyan-text">Customer firstname: </span>{{$detail->firstname}}</p>
-				<p class="flow-text"><span class="cyan-text">Customer lastname: </span>{{$detail->lastname}}</p>
-				<p class="flow-text"><span class="cyan-text">Customer Email: </span>{{$detail->email}}</p>
-				<p class="flow-text"><span class="cyan-text">Order Reference: </span>{{$reference}}</p>
-				<p class="flow-text"><span class="cyan-text">Product: </span>{{$product_name}}</p>
-				<p class="flow-text"><span class="cyan-text">Has Rewards: </span>{{$credits}} euro</p>
-				<input type="hidden" value="{{$id_order}}" name="id_order">
-				<input type="hidden" value="{{$id_customer}}" name="id_customer">
-				<input type="hidden" value="{{$credits}}" name="credits">
-				<input type="hidden" value="{{$detail->firstname}}" name="firstname">
-				<input type="hidden" value="{{$detail->lastname}}" name="lastname">
-				<input type="hidden" value="{{$detail->email}}" name="email">
-			</li>
-		</ul>
-		<div class="button-rewards">
-
-			
-			@if(Auth::User()->user_type == 2 && Auth::User()->rockpos == 0)
-				<input type="submit" value="Generate rewards on Website" class="btn waves-effect waves-light" formaction="{{route('online_reward')}}" onclick="return confirm('Are you sure you want to generate rewards on Funtech.ie?')" >
-			@elseif(Auth::User()->user_type == 2 && Auth::User()->rockpos == 1)
-				<input type="submit" value="Generate rewards on Rockpos" class="btn waves-effect red" formaction="{{route('pos_reward')}}" onclick="return confirm('Are you sure to use rewards on rockpos?')">
-			@else
-			
-				<input type="submit" value="Generate rewards on Rockpos" class="btn waves-effect red" formaction="{{route('pos_reward')}}" onclick="return confirm('Are you sure to use rewards on rockpos?')">
-				
-				<input type="submit" value="Generate rewards on Website" class="btn waves-effect waves-light" formaction="{{route('online_reward')}}" onclick="return confirm('Are you sure you want to generate rewards on Funtech.ie?')" >
-
-			@endif
-			
-			
-		
-		</div>
-
-		{{csrf_field()}}
-	@endforeach
 
 
+@if($voucher_orders[0]->current_state == 2 && $voucher_orders[0]->payment == 'Free order')
+
+<form action="{{route('pickup')}}" method="POST">
+	<p class="flow-text">{{$firstname}} {{$lastname}}</p>
+	<ul class="collection">
+		<li class="collection-header flow-text">Reward items:</li>
+			@foreach($voucher_orders as $v)
+				<li class="collection-item">
+					<p>
+						Product Name:<span class="indigo-text">{{$v->product_name}}</span>
+						Reference: <span class="indigo-text">{{$v->product_reference}}</span>
+						<input type="show" name="ref[]" value="{{$v->product_reference}}">
+						Quantity: <span class="indigo-text">{{$v->product_quantity}}</span>
+						<input type="show" name="qty[]" value="{{$v->product_quantity}}">			
+					</p>
+				</li>
+			@endforeach
+	</ul>
+	<button class="btn indigo">Pick up in Store</button>
+	{{csrf_field()}}
 </form>
+@elseif(count($vouchers) == 0)
+
+
+<p>{{$firstname}} {{$lastname}} hasn't place any order with reward voucher</p>
+
+
+@endif
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @endsection
