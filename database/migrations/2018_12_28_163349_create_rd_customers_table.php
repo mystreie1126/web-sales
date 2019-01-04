@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhoneorderpaidTable extends Migration
+class CreateRdCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePhoneorderpaidTable extends Migration
      */
     public function up()
     {
-        Schema::create('phone_order_paid', function (Blueprint $table) {
+        Schema::create('vr_sharedcustomers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('paid_amount');
-            $table->integer('order_id');
-            $table->integer('product_id');
-            $table->string('shop_name');
+            $table->integer('ie_customerid');
+            $table->integer('pos_customerid');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePhoneorderpaidTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phone_order_paid');
+        Schema::dropIfExists('rd_customers');
     }
 }

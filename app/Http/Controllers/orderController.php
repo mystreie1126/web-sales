@@ -6,58 +6,49 @@ use Illuminate\Http\Request;
 use DB;
 use App\Order;
 use App\Customer_ie;
+use App\voucher_ie;
+use App\rd_pickup_order;
 use Illuminate\Support\Facades\Auth;
 
-class orderController extends Controller
+class OrderController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function showOrder(Request $request)
-    {
-        if(Auth::user()->user_type == 3){
-            $data = DB::table('ps_orders as a')
-                ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id')
-                ->join('ps_order_detail as b','a.id_order','=','b.id_order')
-                ->where('a.current_state',10)->where('date_add','>',date('Y-m-d'))
-                ->get();
+
+    //show the coming order
+    public function newOrder(){
+
+    	if(Auth::user()->user_type == 2){
+    		$data = DB::table('ps_orders as a')
+            ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id','ps_rewards.id_reward_state','ps_rewards.credits',
+                'cus.firstname','cus.lastname',
+                'cus.email','a.current_state',
+                'e.active','a.total_paid_tax_incl')
+            ->join('ps_customer as cus','a.id_customer','cus.id_customer')
+            ->join('ps_order_detail as b','a.id_order','=','b.id_order')
+            ->join('ps_feature_product as c','c.id_product','=','b.product_id')
+            ->join('ps_rewards','a.id_order','=','ps_rewards.id_order')
+            ->join('ps_product_shop as e','b.product_id','=','e.id_product')
+            ->where('e.id_shop',1)
+            ->where('c.id_feature',Auth::user()->feature_id)
+            ->where('c.id_feature_value',Auth::user()->feature_value)
+            ->where('a.current_state',10)
+            ->where('a.date_add','>',date('Y-m-d'))
+            ->where('ps_rewards.plugin','loyalty')
+            ->orderBy('a.date_add','desc')
+            ->get();
+
+            $staff = DB::table('users')->select('name','shop_id')->where('shop_id',Auth::User()->shop_id)->get();
+
+            return response()->json([ 'order' => $data,'staff'=>$staff]);
+    	}
+    	
+         
 
         
-            return view('index',compact('data'));
-
-
-        }else if(Auth::user()->user_type == 2){
-             $data = DB::table('ps_orders as a')
-                ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id','ps_rewards.id_reward_state','ps_rewards.credits',
-                    'cus.firstname','cus.lastname',
-                    'cus.email','a.current_state',
-                    'e.active','a.total_paid_tax_incl')
-                ->join('ps_customer as cus','a.id_customer','cus.id_customer')
-                ->join('ps_order_detail as b','a.id_order','=','b.id_order')
-                ->join('ps_feature_product as c','c.id_product','=','b.product_id')
-                ->join('ps_rewards','a.id_order','=','ps_rewards.id_order')
-                ->join('ps_product_shop as e','b.product_id','=','e.id_product')
-                ->where('e.id_shop',1)
-                ->where('c.id_feature',Auth::user()->feature_id)
-                ->where('c.id_feature_value',Auth::user()->feature_value)
-                ->where('a.current_state',10)
-                ->orderBy('a.date_add','desc')
-                ->get();
-
-            //return $data;
-            return view('index',compact('data'));
-        }
-        
-
-    }
-
-
-    public function orderConfirm(Request $request)
-
-    {
 
     }
 
@@ -66,31 +57,12 @@ class orderController extends Controller
 
 
 
-    public function store(Request $request)
-    {
-        $this->validate($request,[
-            'id_order' => "required|integer",
-            'id_customer'=>"required|integer",
-            'product_id'=>"required|integer",
-            'order_reference'=>"required",
-            'product_name'=>"required"
-        ]);
-
-        //pull off the phone from website
-        
-        DB::table('ps_product_shop')->where('id_product',$request->product_id)->where('id_shop',1)
-            ->update(['active'=>0]);
-
-        $credits = DB::table('ps_rewards')->where('ps_rewards.id_order',$request->id_order)->sum('credits');
-        $customer_details = DB::table('ps_customer')->select('firstname','lastname','email')
-                            ->where('id_customer',$request->id_customer)->get();
 
 
-        return view('rewards',compact('customer_details'))
-               ->with('credits',$credits)
-               ->with('reference',$request->order_reference)
-               ->with('product_name',$request->product_name)
-               ->with('id_order',$request->id_order)
-               ->with('id_customer',$request->id_customer);
-    }
+
+
+
+
+
+
 }

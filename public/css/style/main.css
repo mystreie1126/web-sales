@@ -1,0 +1,28 @@
+ .main-header {
+            background: teal;
+            background-size: cover;
+            background-position: center;
+            min-height: 100px;
+            color: #000;
+          }
+  
+          .main-header .showcase {
+            padding-top: 20px;
+            width:70%;
+            border:1px solid red;
+          }
+          
+          .active-link {
+            color: yellow;
+            font-weight: bold;
+          }
+          
+          .coming-orders{
+            width:70%;
+            border:1px solid red;
+          }
+
+          .bold{
+            font-weight: bolder;
+          }
+  

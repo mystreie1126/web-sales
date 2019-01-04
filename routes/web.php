@@ -18,9 +18,9 @@ Auth::routes();
 // ]);
 
 
-Route::get('/','orderController@showOrder')->name('homepage');
-Route::post('/order','orderController@store')->name('postOrder');
-Route::post('/voucher','voucherController@get_voucher')->name('get_voucher');
+// Route::get('/','orderController@showOrder')->name('homepage');
+// Route::post('/order','orderController@store')->name('postOrder');
+// Route::post('/voucher','voucherController@get_voucher')->name('get_voucher');
 
 // Route::POST('/rewardOnline','rewardController@rewardOnline')->name('online_reward');
 // Route::POST('/rewardPos','rewardController@rewardPos')->name('pos_reward');
@@ -29,19 +29,15 @@ Route::post('/voucher','voucherController@get_voucher')->name('get_voucher');
 // Route::POST('/pickup','voucherController@pickup')->name('pickup');
 
 //Route::get('/order', 'HomeController@index')->name('home');
-Route::get('/test',function(){
-	$str = 'iphone7 IMEI:12313123';
 
-	echo (strpos($str, 'IMEI') === true);
-	// $result = strpos($str,'imei');
 
-	// echo $result;
+
+Route::get('/',function(){
+	return view('index');
 });
 
-
-
-
-
+Route::get('/neworder','OrderController@newOrder');
+Route::post('/createvoucher','voucherController@createPosVoucher');
 
 
 
