@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
          <link rel="stylesheet" href="{{URL::asset('css/style/main.css')}}">
-    
+
         <style>
            .main-header {
             background: #fff;
@@ -20,18 +20,18 @@
             min-height: 100px;
             color: #000;
           }
-  
+
           .main-header .showcase {
             padding-top: 20px;
             width:70%;
             border:1px solid red;
           }
-          
+
           .active-link {
             color: yellow;
             font-weight: bold;
           }
-          
+
           .coming-orders{
             width:70%;
             border:1px solid red;
@@ -41,7 +41,20 @@
             font-weight: bolder;
           }
 
+          #check-order{
+            height:60vh;
+          }
 
+          #new-order td{
+            width:25%;
+            border:1px solid red;
+            text-align: center;
+          }
+
+
+          #voucher{
+            height:60vh;
+          }
         </style>
 
     </head>
@@ -51,7 +64,7 @@
             @yield('content')
         </div>
 
-    
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js
 "></script>

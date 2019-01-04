@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Confirm_payment;
 use App\Models\Shared_customer;
-// use App\Cart_voucher;
+use App\Models\Online_voucher;
 use App\Models\POS_customer;
 // use App\pos_reward;
 // use App\pos_cart_voucher;
@@ -63,10 +63,33 @@ public function createPosVoucher(Request $request)
 					}
 
 
-					
-					$d = POS_customer::find(2799)->id_customer;
+					$voucher = Online_voucher::find(3011);
+					$voucher_template = $voucher->replicate();
 
-					return response()->json(['data' => $d]);
+					if($voucher_template->save()){
+							$voucher_new = $voucher_template::findOrFail($voucher_template->id_cart_rule);
+							$voucher_new->id_customer = $request->id_customer;
+							$voucher_new->code = $request->shop_id.'-'.$request->reference;
+							$voucher_new->reduction_amount = $request->credits;
+							$voucher_new->date_add = $request->current_date;
+							$voucher_new->date_upd = $request->current_date;
+							$voucher_new->quantity = 1;
+
+							if($voucher_new->save()){
+									DB::table('ps_cart_rule_lang')->insert([
+											'id_cart_rule' => $voucher_new->id_cart_rule,
+											'id_lang'      => 1,
+											'name'         => '10% Online Credit Back'
+									]);
+
+									return response()->json(['data' => 2]);
+							}
+
+
+					}
+
+
+
 
 
     }
