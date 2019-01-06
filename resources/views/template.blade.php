@@ -41,20 +41,54 @@
             font-weight: bolder;
           }
 
-          #check-order{
-            height:60vh;
+      
+          #order-info th{
+            width:20%;
           }
-
           #new-order td{
-            width:25%;
-            border:1px solid red;
-            text-align: center;
+            width:20%;
           }
 
 
-          #voucher{
-            height:60vh;
+        #order .tabs .indicator {
+            background-color: black;
           }
+
+        #order .tabs .tab a{
+          color:black;
+          font-weight: bolder;
+        }
+
+        .voucher-management{
+          height: 50vh;
+        }
+
+        .pull-voucher{
+          /* display: flex;
+          justify-content: space-around;
+          align-items: center;
+          flex-wrap: wrap; */
+        }
+
+        .voucher-result{
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          align-items:center;
+        }
+
+        @media only screen and (max-width: 900px){
+            .voucher-result{
+              display: flex;
+              flex-direction: column;
+            }
+        }
+
+
+        .order-basic-info{
+          display: flex;
+          justify-content: space-around;
+        }
         </style>
 
     </head>

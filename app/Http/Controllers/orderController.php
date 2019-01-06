@@ -45,10 +45,10 @@ class OrderController extends Controller
 
             return response()->json([ 'order' => $data,'staff'=>$staff]);
     	}
-    	
-         
 
-        
+
+
+
 
     }
 

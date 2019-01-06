@@ -2,20 +2,20 @@
 @extends('template')
 @section('content')
 <div class="container">
-        
-            
-                
+
+
+
 
                 <div class="form-container">
                     <h4 class="cyan-text center-align">FunTech</h4>
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
-                        
+
                     <div class="input-field">
-                        
-                   
+
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            
+
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
                             <label for="email">E-Mail Address</label>
                             @if ($errors->has('email'))
@@ -27,13 +27,13 @@
 
                     </div>
 
-                    
+
                     <div class="input-field">
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                           
 
-                           
+
+
                                 <input id="password" type="password" class="form-control" name="password" required>
                                  <label for="password">Password</label>
                                 @if ($errors->has('password'))
@@ -41,12 +41,12 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
-                            
+
                         </div>
-                        
+
                     </div>
-                       
-                       
+
+
 
                      {{--    <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -71,7 +71,7 @@
                         </div>
                     </form>
                 </div>
-          
-    
+
+
 </div>
 @endsection
