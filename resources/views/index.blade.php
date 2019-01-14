@@ -165,7 +165,39 @@
 		 </div>
 
 		 <div id="test4" class="col s12">
-		 
+		 	<div class="row valign-wrapper center">
+				 <div class="col s8 input-field">
+					 <input id="input-online_email" type="text" class="validate">
+           			 <label for="input-online_email">Customer's Email</label>
+				 </div>
+				 <div class="col s4">
+				 	<button class="btn purple white-text" id="search-online_price-by-email">Search</button>
+				 </div>
+			 </div>
+
+
+			 <div class="yolo">
+			 	
+				 	<ul class="collection online-customer-transfer  with-header hide">
+						<li class="collection-items">
+							<p class="online-customer_email"></p>
+							<p class="online-customer_fullname"></p>
+							
+							<p class="has_online_price cyan-text"></p>
+							
+								<button class="btn transfer_customer_to_pos hide">Online Price</button>
+							
+							
+							<br>
+							<input type="hidden" value="0" class="online-customer_id-hide">
+							<input type="hidden" value="0" class="online-customer_firstname-hide">
+							<input type="hidden" value="0" class="online-customer_lastname-hide">
+							<input type="hidden" value="0" class="online-customer_email-hide">
+						</li>
+			
+				    </ul>
+				
+			 </div>
 		 </div>
 
 	 </div>

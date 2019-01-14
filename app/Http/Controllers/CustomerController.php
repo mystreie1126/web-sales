@@ -42,4 +42,105 @@ class CustomerController extends Controller
     	}
     	
     }
+
+    // public function transfer_customer_check(Request $request){
+    // 	if(Auth::check()){
+    // 		$the_customer = new Online_customer;
+    // 		$the_customer->refresh();
+
+    // 		$online_customer = $the_customer->where('email','like','%'.$request->email.'%')->first();
+
+
+
+    // 		if($request->email == '' || $online_customer == null){
+    // 			return response()->json(['valid_customer' => 0]);
+    // 		}else if($online_customer){
+
+    // 			$customer_in_share = Shared_customer::where('ie_customerid',$online_customer->id_customer);
+
+    // 			if(!$customer_in_share){
+    // 				$the_pos_customer = POS_customer::find(2799);
+	   //          	$customer_template = $the_pos_customer->replicate();
+    // 				if($customer_template->save()){
+		  //               $pos_customer = POS_customer::findOrFail($customer_template->id_customer);
+
+		  //               $pos_customer->firstname = $online_customer->firstname;
+		  //               $pos_customer->lastname = $online_customer->lastname;
+		  //               $pos_customer->email = $online_customer->email;
+
+		  //               if($pos_customer->save()){
+		  //                   $share_customer = new Shared_customer;
+		  //                   $share_customer->ie_customerid = $online_customer->id_customer;
+		  //                   $share_customer->pos_customerid = $pos_customer->id_customer;
+		  //                   $share_customer->created_at = $request->current_time;
+		  //                   $share_customer->save();
+
+		  //                   return response()->json($share_customer);
+		  //               }
+		  //            }
+    // 			}else{
+    // 				return response()->json(['share_customer'=>1]);
+    // 			}
+    			
+
+	             
+    // 		}
+    // 	}
+    // }
+
+    public function transfer_customer_check(Request $request){
+    	if(Auth::check()){
+    		$the_customer = new Online_customer;
+    		$the_customer->refresh();
+
+    		
+
+    		$online_customer = $the_customer->where('email','like','%'.$request->email.'%')->first();
+
+    		if($request->email == '' || $online_customer == null){
+     			return response()->json(['valid_customer' => 0]);
+     		}else if($online_customer){
+     			$customer_in_pos = Shared_customer::where('ie_customerid',$online_customer->id_customer)->count();
+     			return response()->json(['customer'=>$online_customer,
+     				                     'valid_customer' => 1,
+     				                     'share_customer' => $customer_in_pos
+     				                    ]);
+     		}
+     		
+    	}
+
+    }
+
+
+
+    public function get_member(Request $request){
+    	if(Auth::check()){
+    		$the_pos_customer = POS_customer::find(2799);
+	        $customer_template = $the_pos_customer->replicate();
+
+	        if($customer_template->save()){
+	        	 $pos_customer = POS_customer::findOrFail($customer_template->id_customer);
+
+	        	 $pos_customer->firstname = $request->firstname;
+		         $pos_customer->lastname = $request->lastname;
+		         $pos_customer->email = $request->email;
+		         if($pos_customer->save()){
+		         	 $share_customer = new Shared_customer;
+	                 $share_customer->ie_customerid = $request->online_customer_id;
+	                 $share_customer->pos_customerid = $pos_customer->id_customer;
+	                 $share_customer->created_at = $request->date;
+	                 $share_customer->save();
+
+	                 return response()->json($pos_customer);
+		         }
+	        }
+
+
+    	}
+    }
+
+
+
+
+
 }

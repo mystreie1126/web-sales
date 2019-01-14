@@ -351,10 +351,90 @@ $('.toast').hide();
 
 
 
-					
+
 				}
 			}
 		});
+	}
+
+	//7. transfer customer online ajax call 
+
+	var transfer_customer_check = function(email){
+		let ajax_obj = {
+			url:window.location.href+'transfer_customer_check',
+			type:'post',
+			dataType:'json',
+			data:{
+				email:email,
+			}
+		}
+
+		$.ajaxSetup({
+	       headers: {
+	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	     }
+	    });
+
+	    $.ajax(ajax_obj).done(function(response){
+	    	console.log(response);
+	    	if(response.valid_customer == 0 ){
+				let alert_msg = $("<p class='flow-text red-text'>Customer Not Found!</p>").fadeOut(4000);
+				$('.yolo').append(alert_msg);
+			}else if(response.valid_customer == 1){
+				$('.online-customer_email').text(response.customer.email);
+				$('.online-customer_fullname').text(response.customer.firstname + ' ' + response.customer.lastname);
+			
+
+				$('.online-customer_id-hide').val(response.customer.id_customer);
+				$('.online-customer_firstname-hide').val(response.customer.firstname);
+				$('.online-customer_lastname-hide').val(response.customer.lastname);
+				$('.online-customer_email-hide').val(response.customer.email);
+
+				
+				$('.online-customer-transfer').removeClass('hide');
+
+				if(response.share_customer == 0){
+					$('.has_online_price').text("No Online Price avilable");
+					$('.transfer_customer_to_pos').removeClass('hide');
+				}else if(response.share_customer == 1){
+					$('.has_online_price').text("Has Online Price");
+				}
+			}
+	    });
+
+
+	}
+
+	//8. transfer customer to pos for online price 
+
+	var get_member = function(id,firstname,lastname,email){
+		let ajax_obj = {
+			url:window.location.href+'get_member',
+			type:'post',
+			dataType:'json',
+			data:{
+		        online_customer_id:id,
+				firstname:firstname,
+				lastname:lastname,
+				email:$('.online-customer_email').text(),
+				date:new Date().toISOString().slice(0, 19).replace('T', ' ')
+			}	
+		}
+
+		$.ajaxSetup({
+	       headers: {
+	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	     }
+	    });
+
+		 $.ajax(ajax_obj).done(function(response){
+		 	console.log(response);
+		 	$('.has_online_price').text("Has Online Price");
+		 	$('.transfer_customer_to_pos').addClass('hide');
+		 });
+
+
+
 	}
 
 
@@ -526,13 +606,28 @@ $('.toast').hide();
 
 
 
+	$('#search-online_price-by-email').click((e)=>{
+		e.preventDefault();
+		let email = $('#input-online_email').val();
+		transfer_customer_check(email);
+	});
 
 
 
 
 
+	$('.transfer_customer_to_pos').click((e)=>{
+		e.preventDefault();
+		$(this).attr('disabled','disabled');
+		let id = $('.online-customer_id-hide').val();
+		let firstname = $('.online-customer_firstname-hide').val();
+		let  lastname = $('.online-customer_lastname-hide').val();
+		let  email = $('online-customer_email-hide').val();
+
+		 get_member(id,firstname,lastname,email);
 
 
+	});
 
 
 

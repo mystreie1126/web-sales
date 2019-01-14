@@ -51,7 +51,8 @@ Route::post('/forgot_use_reward','voucherController@forgot_use_reward');
 Route::post('/search_order_by_ref','orderController@search_order_by_ref');
 Route::post('/collect_in_store','orderController@collect_in_store');
 Route::post('/search_reward_by_email','CustomerController@search_reward_by_email');
-
+Route::post('/transfer_customer_check','CustomerController@transfer_customer_check');
+Route::post('/get_member','CustomerController@get_member');
 
 
 
