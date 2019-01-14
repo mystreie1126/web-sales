@@ -48,3 +48,11 @@ Route::post('/voucher_results','voucherController@voucher_results');
 Route::post('/checkreward','voucherController@check_reward');
 Route::post('/not_use_reward','voucherController@not_use_reward');
 Route::post('/forgot_use_reward','voucherController@forgot_use_reward');
+Route::post('/search_order_by_ref','orderController@search_order_by_ref');
+Route::post('/collect_in_store','orderController@collect_in_store');
+Route::post('/search_reward_by_email','CustomerController@search_reward_by_email');
+
+
+
+
+

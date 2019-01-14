@@ -33,12 +33,13 @@ class voucherController extends Controller
 
 	        $paid_order->paid_amount     = $request->total_paid;
 	        $paid_order->order_id        = $request->order_id;
-	        $paid_order->product_id      = $request->product_id;
+	        $paid_order->product_id      = 0;
 	        $paid_order->shop_name       = $request->shopname;
 	        $paid_order->rockpos_shop_id = $request->shop_id;
 	        $paid_order->device_order    = $request->device;
 	        $paid_order->created_at      = $request->current_time;
-
+	        $paid_order->card	 		 = $request->pay_by_card;
+	        $paid_order->cash   		 = $request->pay_by_cash;
 	        $paid_order->save();
 
 					//check if customer exisit in rockpos
@@ -77,10 +78,10 @@ class voucherController extends Controller
 								$pos_reward->save();
 
 								DB::table('ps_rewards')->where('id_reward',$request->id_reward)->update(['id_reward_state'=>4]);
-								DB::table('ps_orders')->where('id_order',$request->order_id)->update(['current_state'=>2]);
-								DB::table('ps_product_shop')->where('id_shop',1)
-								                            ->where('id_product',$request->product_id)
-								                            ->update(['active'=>0]);
+								// DB::table('ps_orders')->where('id_order',$request->order_id)->update(['current_state'=>2]);
+								// DB::table('ps_product_shop')->where('id_shop',1)
+								//                             ->where('id_product',$request->product_id)
+								//                             ->update(['active'=>0]);
 								return response()->json(['pos_credits'=>$pos_reward->credits,
 									 'online_orderid'=>$request->order_id,
 								   'online_customerid'=>$request->id_customer,

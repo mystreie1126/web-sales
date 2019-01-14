@@ -3,13 +3,43 @@
 
 
 @section('content')
+{{-- 	
+<a href='#modal1' class="btn collect-order_pay">Pay and Collect</a> --}} 
+
+	{{--   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> --}}
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Please Select a Payment method</h4>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat green white-text payment-proceed pay_by_cash">Cash</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text payment-proceed pay_by_card">Card</a>
+    </div>
+  </div>
+
+
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Please Select a Payment method</h4>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat green white-text payment-proceed collect_pay_by_cash">Cash</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text payment-proceed collect_pay_by_card">Card</a>
+    </div>
+  </div>
+
+
 
 	<div class="row" id="order">
 		 <div class="col s12">
 			 <ul class="tabs">
-				 <li class="tab col s4"><a class="active" href="#test1">Orders</a></li>
-				 <li class="tab col s4"><a href="#test2" id="get-pickup-order">Reward</a></li>
-				 <li class="tab col s4"><a href="#test3" id="get-order-history">Collect in Store</a></li>
+				 <li class="tab col s3"><a class="active" href="#test1">Orders</a></li>
+				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Reward</a></li>
+				 <li class="tab col s3"><a href="#test3" id="get-order-history">Collect in Store</a></li>
+				 <li class="tab col s3"><a href="#test4" id="memmmer">Member</a></li>
 			 </ul>
 		 </div>
 		 <div id="test1" class="col s12">
@@ -30,22 +60,114 @@
 
 		 <div id="test2" class="col s12">
 			 <div class="row valign-wrapper center">
-				 <div class="col s6 input-field">
+				 <div class="col s8 input-field">
 					 <input id="email-for-voucher" type="text" class="validate">
-           <label for="email-for-voucher">Customer's Email</label>
+           			 <label for="email-for-voucher">Customer's Email</label>
 				 </div>
-				 <div class="col s6">
-				 	<button class="btn" id="search-voucher-by-email">Search Voucher</button>
+				 <div class="col s4">
+				 	<button class="btn  orange" id="search-reward-by-email">Search Voucher</button>
 				 </div>
 
 			 </div>
 
-			 <div class="voucher-results">
+			 <div class="reward-results hide">
+				<ul class="collection with-header collect-order">
+					<li class="collection-header cyan-text rm-fullname">
+						customer name
+					</li>
 
+					<li class="collection-item">
+						<p class="customer-email cyan-text rm_customer_email">email</p>
+						<p><span class="rm-customer_rewards cyan-text">remain</span> &euro; rewards Available</p>
+						<button class="btn cyan hide rm_reward_active">Active</button>
+						<button class="btn orange lighten-2 hide">Finish Transaction</button>
+						<input type="hidden" class='rm_customer_id' value='0'>
+						<input type="hidden" class='rm_id_reward' value='0'>
+						<input type="hidden" class='rm_firstname' value='0'>
+						<input type="hidden" class='rm_lastname' value='0'>
+						<input type="hidden" class='rm_email' value='0'>
+						<input type="hidden" class='rm_rewards' value='0'>
+					</li>
+				</ul>
 			 </div>
 			</div>
 
-		 <div id="test3" class="col s12">Test 3</div>
+
+
+
+		 <div id="test3" class="col s12">
+		 	<div class="row valign-wrapper center">
+				 <div class="col s8 input-field">
+					 <input id="input-id-ref" type="text" class="validate">
+           			 <label for="input-id-ref">Order Reference</label>
+				 </div>
+				 <div class="col s4">
+				 	<button class="btn  light-blue darken-2" id="search-order-by-reference">Search</button>
+				 </div>
+			 </div>
+			
+			 <div class="lol">
+			 	
+			 	<ul class="collection with-header collect-order hide">
+			        <li class="collection-header collect-order_basic_info indigo-text">
+
+			        		<i class='material-icons'>payment</i>
+
+			        		<span class="collect-order_ref"></span>
+
+			        		<span class="collect-order_date hide-on-med-and-down"></span>
+			        	
+							<span><span class="collect-order_amount"></span> &euro;</span>
+
+							<span class="collect-order_state"></span>
+							
+							<span class="collect-payment_status"></span>
+							{{-- <span class="red">Not Paid</span> --}}
+
+			        </li>
+			        <li class="collection-item collect-order_customer_info">
+			        	<div>
+			        		<span class="collect-order_customer_name">customer name</span><br>
+			        		<span class="collect-order_email">email</span>
+			        	</div>
+			        	
+			        	<button href='#modal2' class='modal-trigger btn collect-order_pay hide'>Pay and Collect</button>
+			    	</li>
+			        <li class="collection-item collect-order_items">
+			        {{-- 	<div class="collect-order_items_detail">
+			        		<span>iphone 6 chargeasasaasasaasa</span>
+			        		<span>2323232</span>
+			        		<span>Qty:1</span>
+			        	</div>
+						 --}}
+					
+			        	
+			        </li>
+
+			       {{--  hidden value need to be post  --}}
+			       	<div>
+			       		<input type="hidden" class="hide-id_order" value="0">
+			       		<input type="hidden" class="hide-id_customer" value="0">
+						@if(Auth::check())
+							<input type="hidden" class="hide-shop_name" value="{{Auth::User()->name}}">
+							<input type="hidden" class="hide-shop_id" value="{{Auth::User()->shop_id}}">
+					 	@endif
+					 	<input type="hidden" class="hide-device_order" value="0">
+					 	<input type="hidden" class="hide-pay_by_card" value="0">
+					 	<input type="hidden" class="hide-pay_by_cash" value="0">
+			       	</div>
+			     </ul>
+
+			    
+			 </div>
+			
+
+		 </div>
+
+		 <div id="test4" class="col s12">
+		 
+		 </div>
+
 	 </div>
 
 
@@ -56,28 +178,6 @@
 
 
 
-{{--
-<div id="check-order">
-	<p class="bold">Have incoming orders? please press the button below to check.</p>
-	<button id="check_order" class="white-text orange waves-effect waves-light btn-small">Check New Orders</button>
-
-		<table class="bordered highlight" id="order-info">
-		    <thead>
-		        <tr>
-							<th >Reference</th>
-
-			        <th >Email</th>
-			        <th >Order Action</th>
-							<th >Online Voucher</th>
-							<th >Voucher Action</th>
-		        </tr>
-		    </thead>
-
-		    <tbody id="new-order">
-
-		    </tbody>
-		</table>
-</div> --}}
 
 
 

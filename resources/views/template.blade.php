@@ -27,7 +27,9 @@
             border:1px solid grey;
           }
 
-
+     /*   #order{
+          height:100vh;
+        }*/
         #order .tabs .indicator {
             background-color: black;
           }
@@ -43,14 +45,33 @@
         border-radius:4px;
       }
 
-        .order-basic-info{
+        .order-basic-info,.order-results-header{
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+        .collect-order_items{
+          display: flex;
+          /*flex-wrap: wrap;*/
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+        .collect-order_items_detail{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .collect-order_basic_info{
           display: flex;
           justify-content: space-around;
         }
 
-        /* #order .carousel{
-          overflow: unset;
-        } */
+        .collect-order_customer_info{
+          display: flex;
+          justify-content: space-between;
+        }
+
         </style>
 
     </head>

@@ -9,6 +9,7 @@ use App\Customer_ie;
 use App\voucher_ie;
 use App\rd_pickup_order;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Confirm_payment;
 
 class OrderController extends Controller
 {
@@ -21,7 +22,12 @@ class OrderController extends Controller
     //show the coming order
     public function newOrder(){
 
-    	if(Auth::user()->user_type == 2){
+    	if(Auth::check()){
+
+            
+
+
+
     		$data = DB::table('ps_orders as a')
             ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id','ps_rewards.id_reward_state','ps_rewards.credits',
                 'cus.firstname','cus.lastname',
@@ -47,20 +53,78 @@ class OrderController extends Controller
     	}
 
 
+    }
 
 
 
+    public function search_order_by_ref(Request $request){
+
+        if(Auth::check()){
+
+            $the_order = new Order;
+            $the_order->refresh();
+
+            $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();
+
+            if($request->ref == '' || $order==null){
+                return response()->json(['has_order'=>0]);
+            }else{
+                $the_customer = new Customer_ie;
+                $the_customer->refresh();
+
+                $customer = $the_customer->where('id_customer',$order->id_customer)->first();
+                //$order_items = Order::find(9027)->order_detail;
+                 return response()->json([
+                     'order'=>$order,
+                     'items'=>$order->order_detail,
+                     'customer'=>$customer,
+                      'has_order'=>1
+                    ]);
+            }
+        } 
     }
 
 
 
 
 
+    public function collect_in_store(Request $request){
+
+        if(Auth::check()){
+            $pick_up = new rd_pickup_order;
+            $pick_up->ie_customer_id = $request->online_customer_id;
+            $pick_up->ie_order_id = $request->online_order_id;
+            $pick_up->pos_shop_id = $request->shop_id;
+            $pick_up->created_at = $request->date;
+
+            if($pick_up->save()){
+                $collect = new Confirm_payment;
+                $collect->paid_amount = $request->paid_amount;
+                $collect->order_id = $request->online_order_id;
+                $collect->product_id = 0;
+                $collect->shop_name = $request->shop_name;
+                $collect->rockpos_shop_id = $request->shop_id;
+                $collect->device_order = $request->device_order;
+                $collect->cash = $request->cash;
+                $collect->card = $request->card;
+                if($collect->save()){
+                    DB::table('ps_orders')->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
+                    return response()->json(['collected'=>1]);
+                }
+
+
+                
+
+            }
 
 
 
+        }
 
 
+
+        
+    }
 
 
 
