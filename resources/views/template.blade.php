@@ -84,19 +84,12 @@
 "></script>
    {{--  <script type="text/javascript" src="{{URL::asset('js/jquery.js')}}"></script> --}}
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function() {
-      $("select").material_select();
-        $(".button-collapse").sideNav();
+    window.onbeforeunload = function() {
+        return "Dude, are you sure you want to leave? Think of the kittens!";
+    }
 
-    });
-    $('.datepicker').pickadate({
-        selectMonths:true,
-        selectYear:15,
-        closeOnSelect:true
-    });
-
-    </script> --}}
+    </script>
     </body>
 </html>

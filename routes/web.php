@@ -56,7 +56,7 @@ Route::post('/get_member','CustomerController@get_member');
 Route::post('/pull_reward','voucherController@pull_reward');
 
 Route::post('/check_remain_reward_use','voucherController@check_remain_reward_use');
-
+Route::post('/get_total_today','CustomerController@get_total_today');
 
 
 

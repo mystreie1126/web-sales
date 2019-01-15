@@ -1,4 +1,7 @@
 
+
+
+
 const  default_postVar = function()
 
 {
@@ -48,7 +51,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 let styles = {
-	height:"60vh",
+	height:"50vh",
 	overflow:'auto'
 }
 
@@ -89,14 +92,14 @@ $('.toast').hide();
 	           reference:default_postVar().reference,
 	            order_id:default_postVar().order_id,
 	           id_reward:default_postVar().id_reward,
-	          // product_id:default_postVar().product_id,
+	          product_id:default_postVar().product_id,
 	              device:default_postVar().device,
 	          total_paid:default_postVar().total_paid,
 	            shopname:default_postVar().shopname,
 	             shop_id:default_postVar().shop_id,
 	        current_time:new Date().toISOString().slice(0, 19).replace('T', ' '),
-	         pay_by_card:$('.card').val(),
-	         pay_by_cash:$('.cash').val()
+	         pay_by_card:0,
+	         pay_by_cash:0
 			}
 
 		}
@@ -240,8 +243,11 @@ $('.toast').hide();
 	    			$('.collect-order_pay').removeClass('hide');
 	    			//$('.collect-order_customer_info').append("<button href='#modal2' class='modal-trigger btn collect-order_pay'>Pay and Collect</button>");
 	    			
-	    		}else if(response.order.current_state == 5 || response.order.current_state == 2){
+	    		}else if(response.order.current_state == 5){
 	    			$('.collect-payment_status').html('<span class="green-text">Paid and Collected</span>')
+	    		}else if(response.order.current_state == 2){
+	    			$('.collect-payment_status').html('<span class="green-text">Paid</span>');
+	    			$('.collect-order_no_pay').removeClass('hide');
 	    		}
 
 	    		$('.collect-order').removeClass('hide');
@@ -290,7 +296,7 @@ $('.toast').hide();
 	      		$('.collect-order_items_detail').remove();
 	      		$('.collect-order').addClass('hide');
 	      		$("<p class='flow-text green-text'> Collected and Paid!</p>").appendTo('.lol').fadeOut(4000);
-
+	      		$('.collect-order_no_pay').addClass('hide');
 	      	}
 	      });
 	}
@@ -493,6 +499,7 @@ $('.toast').hide();
               $('.reward-results').addClass('hide');
               $('.rm_check_reward').removeAttr('disabled');
               $('#search-reward-by-email').removeAttr('disabled');
+              $('.rm_reward_active').removeAttr('disabled')
             }else if(response.reward_used ==0){
             	
                 $('.toast').show();
@@ -503,6 +510,31 @@ $('.toast').hide();
 
 	//
 
+	var get_total_today = function(){
+		let ajax_obj = {
+			url:window.location.href+'get_total_today',
+			type:'post',
+			dataType:'json',
+			data:{
+				shop_id:$('.get_total_shop').val()
+			}
+		}
+
+
+		$.ajaxSetup({
+	       headers: {
+	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	     }
+	    });
+
+	    $.ajax(ajax_obj).done(function(response){
+	    	console.log(response);
+
+	    	$('.total_cash_card').html(response.total);
+	    	$('.total_cash').html(response.cash);
+	    	$('.total_card').html(response.card);
+	    });
+	}
 
 
 /* =========================================end of all ajax calls =================================*/
@@ -593,23 +625,24 @@ $('.toast').hide();
 		//$('#payment-accept').attr('disabled','disabled');
 		$('#get-new-order').attr('disabled','disabled');
 		$('#payment-accept').attr('disabled','disabled');
+		confirm_payment_call();
 	});	
 
 
 
-	$('.pay_by_card').click((e)=>{
-		e.preventDefault();
-		$('.card').val(1);
+	// $('.pay_by_card').click((e)=>{
+	// 	e.preventDefault();
+	// 	$('.card').val(1);
 		
-		confirm_payment_call();	
-	});
+	// 	confirm_payment_call();	
+	// });
 
-	$('.pay_by_cash').click((e)=>{
-		e.preventDefault();
-		$('.cash').val(1)
-		$('#payment-accept').attr('disabled','disabled');
-		confirm_payment_call();	
-	});
+	// $('.pay_by_cash').click((e)=>{
+	// 	e.preventDefault();
+	// 	$('.cash').val(1)
+	// 	$('#payment-accept').attr('disabled','disabled');
+	// 	confirm_payment_call();	
+	// });
 
 	
 
@@ -657,8 +690,15 @@ $('.toast').hide();
 	});
 
 
-
 	
+	$('.collect-order_no_pay').click(function(e){
+		e.preventDefault();
+		pay_flag = 1;
+		let cash = 0, card = 0; 
+		$('.collect-order_amount').text('0');
+		collect_payment(cash,card);
+
+	});
 
 	$('#search-order-by-reference').click((e)=>{
 		e.preventDefault();	
@@ -677,6 +717,7 @@ $('.toast').hide();
 		let cash = $('.hide-pay_by_cash').val()
 		collect_payment(card,cash);
 		$('.collect-order_pay').addClass('hide');
+
 	});
 
 	$('.collect_pay_by_card').click((e)=>{
@@ -737,5 +778,13 @@ $('.toast').hide();
 		check_remain_reward_use();
 	});
 
+	$('#get_total_today').click((e)=>{
+		get_total_today();
+	});
 
 });
+
+
+
+
+

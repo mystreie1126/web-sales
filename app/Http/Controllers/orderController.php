@@ -43,7 +43,6 @@ class OrderController extends Controller
             ->where('c.id_feature_value',Auth::user()->feature_value)
             ->where('a.current_state',10)
             ->where('a.date_add','>',date('Y-m-d'))
-            ->where('ps_rewards.plugin','loyalty')
             ->orderBy('a.date_add','desc')
             ->get();
 
@@ -107,6 +106,7 @@ class OrderController extends Controller
                 $collect->device_order = $request->device_order;
                 $collect->cash = $request->cash;
                 $collect->card = $request->card;
+                $collect->created_at = $request->date;
                 if($collect->save()){
 
                     $order = new Order;

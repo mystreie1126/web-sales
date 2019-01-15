@@ -131,6 +131,7 @@
 							<div>
 				        		<span class="collect-order_customer_name">customer name</span><br>
 				        		<span class="collect-order_email">email</span>
+				        		<hr>
 				        	</div>	              
 							<div class="collect-order_items">
 								<div class="collect-order_items_detail">
@@ -140,6 +141,7 @@
 			            </div>
 			            <div class="card-action">
 			              <button href='#modal2' class='modal-trigger btn collect-order_pay hide'>Pay and Collect</button>
+			              <button href='#modal2' class='btn collect-order_no_pay hide'>Collect Only</button>
 			            </div>
 
 			            <div>
@@ -202,26 +204,28 @@
 	</div>
 
 	<div>
-		<button class="btn green center">Get Sales Today</button>
-	
-
+		<button class="btn green right" id="get_total_today">Online Order Sales</button>
+		
+		
 	<table class="striped total-sale">
         <thead>
           <tr>
-              <th>Card</th>
-              <th>Cash</th>
-              <th>Total</th>
+              <th class="center">Card</th>
+              <th class="center">Cash</th>
+              <th class="center">Total</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+            <td class="center"><span class="total_card"></span> &euro;</td>
+            <td class="center"><span class="total_cash"></span> &euro;</td>
+            <td class="center"><span class="total_cash_card"></span> &euro;</td>
           </tr>
 		</tbody>
 	</table>
-
+	@if(Auth::check())
+		<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
+	@endif
 	</div>
 @endsection

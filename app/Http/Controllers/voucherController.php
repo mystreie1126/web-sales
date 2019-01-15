@@ -78,15 +78,17 @@ class voucherController extends Controller
 								$pos_reward->save();
 
 								DB::table('ps_rewards')->where('id_reward',$request->id_reward)->update(['id_reward_state'=>4]);
-								DB::table('ps_orders')->where('id_order',$request->order_id)->update(['current_state'=>2]);
+								DB::table('ps_orders')->where('id_order',$request->order_id)->update(['current_state'=>5]);
 								DB::table('ps_product_shop')->where('id_shop',1)
 								                            ->where('id_product',$request->product_id)
 								                            ->update(['active'=>0]);
+
 								return response()->json(['pos_credits'=>$pos_reward->credits,
 									 'online_orderid'=>$request->order_id,
 								   'online_customerid'=>$request->id_customer,
 									 'online_rewardid'=>$request->id_reward,
-									 'pos_rewardid'=>$pos_reward->id_reward
+									 'pos_rewardid'=>$pos_reward->id_reward,
+									 'id'=>$request->product_id
 									]);
 							}
 
