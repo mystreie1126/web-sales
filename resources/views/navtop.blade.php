@@ -13,9 +13,6 @@
             {{-- <li>
               <a class="active-link" href="index.html">Home</a>
             </li> --}}
-            <li>
-              <a href="solutions.html">Order History</a>
-            </li>
            {{--  <li>
               <a href="signup.html">Sign Up</a>
             </li> --}}
