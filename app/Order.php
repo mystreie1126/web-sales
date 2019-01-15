@@ -9,7 +9,7 @@ class Order extends Model
     protected $table = 'ps_orders';
     protected $primaryKey = 'id_order';
 
-
+    public $timestamps = false;
     public function order_detail(){
     	return $this->hasMany('App\Order_detail','id_order');
     }

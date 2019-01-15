@@ -72,21 +72,28 @@
 
 			 <div class="reward-results hide">
 				<ul class="collection with-header collect-order">
-					<li class="collection-header cyan-text rm-fullname">
+					<li class="collection-header cyan-text rm-fullname flow-text">
 						customer name
 					</li>
 
 					<li class="collection-item">
-						<p class="customer-email cyan-text rm_customer_email">email</p>
-						<p><span class="rm-customer_rewards cyan-text">remain</span> &euro; rewards Available</p>
-						<button class="btn cyan hide rm_reward_active">Active</button>
-						<button class="btn orange lighten-2 hide">Finish Transaction</button>
+						<p class="customer-email flow-text cyan-text rm_customer_email">email</p>
+						<p class="flow-text"><span class="rm-customer_rewards cyan-text">remain</span> &euro; total rewards Available</p>
+						<button class="btn cyan hide rm_reward_active hide">Active</button>
+						<button class="btn orange rm_check_reward hide">Finish Transaction</button>
+
 						<input type="hidden" class='rm_customer_id' value='0'>
-						<input type="hidden" class='rm_id_reward' value='0'>
 						<input type="hidden" class='rm_firstname' value='0'>
 						<input type="hidden" class='rm_lastname' value='0'>
 						<input type="hidden" class='rm_email' value='0'>
-						<input type="hidden" class='rm_rewards' value='0'>
+						<input type="hidden" class='rm_total_reward' value='0'>
+
+						<input type="hidden" class='response_stored_id_reward' value='0'>
+						<input type="hidden" class='response_pos_id_reward' value='0'>
+						<input type="hidden" class='response_pos_id_customer' value='0'>
+						<input type="hidden" class='response_pos_reward_credits' value='0'>
+						<input type="hidden" class='response_customer_id' value='0'>
+
 					</li>
 				</ul>
 			 </div>
@@ -180,10 +187,10 @@
 			 	
 				 	<ul class="collection online-customer-transfer  with-header hide">
 						<li class="collection-items">
-							<p class="online-customer_email"></p>
-							<p class="online-customer_fullname"></p>
+							<p class="online-customer_email flow-text"></p>
+							<p class="online-customer_fullname flow-text"></p>
 							
-							<p class="has_online_price cyan-text"></p>
+							<p class="has_online_price flow-text"></p>
 							
 								<button class="btn transfer_customer_to_pos hide">Online Price</button>
 							
@@ -192,7 +199,8 @@
 							<input type="hidden" value="0" class="online-customer_id-hide">
 							<input type="hidden" value="0" class="online-customer_firstname-hide">
 							<input type="hidden" value="0" class="online-customer_lastname-hide">
-							<input type="hidden" value="0" class="online-customer_email-hide">
+							<input type="hidden" value="0" class="online-customer_email-hide">			
+							
 						</li>
 			
 				    </ul>

@@ -24,7 +24,7 @@ class OrderController extends Controller
 
     	if(Auth::check()){
 
-            
+
 
 
 
@@ -108,8 +108,13 @@ class OrderController extends Controller
                 $collect->cash = $request->cash;
                 $collect->card = $request->card;
                 if($collect->save()){
-                    DB::table('ps_orders')->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
-                    return response()->json(['collected'=>1]);
+
+                    $order = new Order;
+                    $order->refresh();
+
+                    $order->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
+                  
+                    return response()->json(['collected'=>1,'order'=>$order]);
                 }
 
 

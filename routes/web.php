@@ -53,6 +53,9 @@ Route::post('/collect_in_store','orderController@collect_in_store');
 Route::post('/search_reward_by_email','CustomerController@search_reward_by_email');
 Route::post('/transfer_customer_check','CustomerController@transfer_customer_check');
 Route::post('/get_member','CustomerController@get_member');
+Route::post('/pull_reward','voucherController@pull_reward');
+
+Route::post('/check_remain_reward_use','voucherController@check_remain_reward_use');
 
 
 
