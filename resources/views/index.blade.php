@@ -39,7 +39,7 @@
 				 <li class="tab col s3"><a class="active" href="#test1">Orders</a></li>
 				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Reward</a></li>
 				 <li class="tab col s3"><a href="#test3" id="get-order-history">Collect in Store</a></li>
-				 <li class="tab col s3"><a href="#test4" id="memmmer">Member</a></li>
+				 <li class="tab col s3"><a href="#test4" id="memmmer">Register Members</a></li>
 			 </ul>
 		 </div>
 		 <div id="test1" class="col s12">
@@ -114,59 +114,48 @@
 			 </div>
 			
 			 <div class="lol">
-			 	
-			 	<ul class="collection with-header collect-order hide">
-			        <li class="collection-header collect-order_basic_info indigo-text">
+			 	<div class="row collect-order hide">
+			        <div class="col s12">
+			          <div class="card">
+			            <div class="card-content">
+			              <div class="card-title collect-order_basic_info">
 
-			        		<i class='material-icons'>payment</i>
+			              	<span class="collect-order_ref indigo-text"></span>
+			              	<span class="collect-order_date hide-on-med-and-down"></span>
+			              	<span class="cyan-text"><span class="collect-order_amount"></span> &euro;</span>
+			              	<span class="collect-order_state"></span>
+			              	<span class="collect-payment_status"></span>
 
-			        		<span class="collect-order_ref"></span>
+			              </div>
+			              <div class="collect-order_customer_info">
+							<div>
+				        		<span class="collect-order_customer_name">customer name</span><br>
+				        		<span class="collect-order_email">email</span>
+				        	</div>	              
+							<div class="collect-order_items">
+								<div class="collect-order_items_detail">
+								</div>
+							</div>
+			              </div>
+			            </div>
+			            <div class="card-action">
+			              <button href='#modal2' class='modal-trigger btn collect-order_pay hide'>Pay and Collect</button>
+			            </div>
 
-			        		<span class="collect-order_date hide-on-med-and-down"></span>
-			        	
-							<span><span class="collect-order_amount"></span> &euro;</span>
-
-							<span class="collect-order_state"></span>
-							
-							<span class="collect-payment_status"></span>
-							{{-- <span class="red">Not Paid</span> --}}
-
-			        </li>
-			        <li class="collection-item collect-order_customer_info">
-			        	<div>
-			        		<span class="collect-order_customer_name">customer name</span><br>
-			        		<span class="collect-order_email">email</span>
-			        	</div>
-			        	
-			        	<button href='#modal2' class='modal-trigger btn collect-order_pay hide'>Pay and Collect</button>
-			    	</li>
-			        <li class="collection-item collect-order_items">
-			        {{-- 	<div class="collect-order_items_detail">
-			        		<span>iphone 6 chargeasasaasasaasa</span>
-			        		<span>2323232</span>
-			        		<span>Qty:1</span>
-			        	</div>
-						 --}}
-					
-			        	
-			        </li>
-
-			       {{--  hidden value need to be post  --}}
-			       	<div>
-			       		<input type="hidden" class="hide-id_order" value="0">
-			       		<input type="hidden" class="hide-id_customer" value="0">
-						@if(Auth::check())
-							<input type="hidden" class="hide-shop_name" value="{{Auth::User()->name}}">
-							<input type="hidden" class="hide-shop_id" value="{{Auth::User()->shop_id}}">
-					 	@endif
-					 	<input type="hidden" class="hide-device_order" value="0">
-					 	<input type="hidden" class="hide-pay_by_card" value="0">
-					 	<input type="hidden" class="hide-pay_by_cash" value="0">
-			       	</div>
-			     </ul>
-
-			    
-			 </div>
+			            <div>
+			            	<input type="hidden" class="hide-id_order" value="0">
+				       		<input type="hidden" class="hide-id_customer" value="0">
+							@if(Auth::check())
+								<input type="hidden" class="hide-shop_name" value="{{Auth::User()->name}}">
+								<input type="hidden" class="hide-shop_id" value="{{Auth::User()->shop_id}}">
+						 	@endif
+						 	<input type="hidden" class="hide-device_order" value="0">
+						 	<input type="hidden" class="hide-pay_by_card" value="0">
+						 	<input type="hidden" class="hide-pay_by_cash" value="0">
+			            </div>
+			          </div>
+			        </div>
+			    </div>
 			
 
 		 </div>
@@ -210,15 +199,29 @@
 
 	 </div>
 
+	</div>
 
+	<div>
+		<button class="btn green center">Get Sales Today</button>
+	
 
+	<table class="striped total-sale">
+        <thead>
+          <tr>
+              <th>Card</th>
+              <th>Cash</th>
+              <th>Total</th>
+          </tr>
+        </thead>
 
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+		</tbody>
+	</table>
 
-
-
-
-
-
-
-
+	</div>
 @endsection

@@ -50,28 +50,25 @@
           justify-content: space-around;
           align-items: center;
         }
-        .collect-order_items{
-          display: flex;
-          /*flex-wrap: wrap;*/
-          justify-content: space-between;
-          flex-wrap: wrap;
-        }
-        .collect-order_items_detail{
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
+    /*   
+      .collect-order_items_detail{
+        display: flex;
 
-        .collect-order_basic_info{
+      }*/
+      .collect-order_items_detail span{
+        padding-right: 10px
+      }
+      
+        
+
+        .card .card-content .card-title {
           display: flex;
           justify-content: space-around;
         }
-
-        .collect-order_customer_info{
-          display: flex;
-          justify-content: space-between;
+    
+        .total-sale{
+          height:20vh;
         }
-
         </style>
 
     </head>

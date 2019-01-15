@@ -47,7 +47,12 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 
+let styles = {
+	height:"60vh",
+	overflow:'auto'
+}
 
+$('.tabs-content').css(styles);
 function toast_init(){
 	$('.toast').hide();
 	$('.warning-proceed').removeAttr('disabled');
@@ -222,8 +227,8 @@ $('.toast').hide();
 
 	    			"<div class='collect-order_items_detail'>"+
 		    			"<span>"+e.product_name+"</span>"+
-		    			"<span>"+e.product_reference+"</span>"+
-		    			"<span>Quantity: <span class='indigo-text'>"+e.product_quantity+"</span></span>"+
+		    			"<span class='orange-text'>"+e.product_reference+"</span>"+
+		    			"<span>&#215; <span class='indigo-text'>"+e.product_quantity+"</span></span>"+
 		    		"</div>"
 
 	    		});
@@ -541,7 +546,7 @@ $('.toast').hide();
 	    								+"<span>"+e.credits+"&euro; <span class='voucher-status'>reward amount</span></span>"
 	    							+"</div>"
 
-	  							+"<button class='col s3 btn green modal-trigger' id='payment-accept' href='#modal1'>Payment Accept</button>"
+	  							+"<button class='col s3 btn green' id='payment-accept'>Payment Accept</button>"
 	                +"<button class='col s3 btn hide orange white-text' id='check-remain-voucher'>Transition Completed</button>"
 
 	                +"<input type='hidden' value="+e.id_reward+" class='order-reward_id'>"
@@ -587,15 +592,15 @@ $('.toast').hide();
 	$('#order-info').on('click','#payment-accept',function(e){
 		//$('#payment-accept').attr('disabled','disabled');
 		$('#get-new-order').attr('disabled','disabled');
-		
-	});	//end of confirm the payment
+		$('#payment-accept').attr('disabled','disabled');
+	});	
 
-	
+
 
 	$('.pay_by_card').click((e)=>{
 		e.preventDefault();
 		$('.card').val(1);
-		$('#payment-accept').attr('disabled','disabled');
+		
 		confirm_payment_call();	
 	});
 
