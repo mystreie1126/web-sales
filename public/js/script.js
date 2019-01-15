@@ -585,22 +585,24 @@ $('.toast').hide();
 
 
 	$('#order-info').on('click','#payment-accept',function(e){
-		$('#payment-accept').attr('disabled','disabled');
+		//$('#payment-accept').attr('disabled','disabled');
 		$('#get-new-order').attr('disabled','disabled');
 		
 	});	//end of confirm the payment
 
-
+	
 
 	$('.pay_by_card').click((e)=>{
 		e.preventDefault();
 		$('.card').val(1);
+		$('#payment-accept').attr('disabled','disabled');
 		confirm_payment_call();	
 	});
 
 	$('.pay_by_cash').click((e)=>{
 		e.preventDefault();
 		$('.cash').val(1)
+		$('#payment-accept').attr('disabled','disabled');
 		confirm_payment_call();	
 	});
 
