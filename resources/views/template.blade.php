@@ -84,12 +84,6 @@
 "></script>
    {{--  <script type="text/javascript" src="{{URL::asset('js/jquery.js')}}"></script> --}}
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
-    <script type="text/javascript">
 
-    window.onbeforeunload = function() {
-        return "Dude, are you sure you want to leave? Think of the kittens!";
-    }
-
-    </script>
     </body>
 </html>

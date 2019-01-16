@@ -1,7 +1,5 @@
 
 
-
-
 const  default_postVar = function()
 
 {
@@ -27,6 +25,8 @@ const  default_postVar = function()
 
 var flag = 0;
 $(document).ready(function(){
+
+
 	//css initialize 
 
 	$("select").material_select();
@@ -780,6 +780,7 @@ $('.toast').hide();
 
 	$('#get_total_today').click((e)=>{
 		get_total_today();
+		
 	});
 
 });
