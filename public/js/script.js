@@ -55,73 +55,13 @@ let styles = {
 	overflow:'auto'
 }
 
-$('.tabs-content').css(styles);
-function toast_init(){
-	$('.toast').hide();
-	$('.warning-proceed').removeAttr('disabled');
-	$('.warning-reverse').removeAttr('disabled');
-}
-
-//toast message
-
-const toastContent = $("<p>Do you wanna proceed without using the reward?</p>")
-                  .add($('<button id="click-toast" class="btn-flat red-text toast-action warning-proceed">Proceed</button>'))
-                  .add($('<button id="click-toast" class="btn-flat toast-action warning-reverse">NO!</button>'));
-                  Materialize.toast(toastContent);
-
-$('.toast').hide();
 
 
 
 /* =========================================all ajax calls =================================*/
 
 //1 . confriam payment ajax call
-	var confirm_payment_call  = function(){
-		let ajax_obj = {
-			url:window.location.href+'createvoucher',
-	        type:'post',
-	        dataType:'json',
-			data:{
 
-	        	   email:default_postVar().email,
-	           firstname:default_postVar().firstname,
-	        	lastname:default_postVar().lastname,
-	             credits:default_postVar().credits,
-	         id_customer:default_postVar().id_customer,
-	        // product_name:default_postVar().product_name,
-	           reference:default_postVar().reference,
-	            order_id:default_postVar().order_id,
-	           id_reward:default_postVar().id_reward,
-	          product_id:default_postVar().product_id,
-	              device:default_postVar().device,
-	          total_paid:default_postVar().total_paid,
-	            shopname:default_postVar().shopname,
-	             shop_id:default_postVar().shop_id,
-	        current_time:new Date().toISOString().slice(0, 19).replace('T', ' '),
-	         pay_by_card:0,
-	         pay_by_cash:0
-			}
-
-		}
-		$.ajaxSetup({
-	       headers: {
-	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	     }
-	    });
-
-		$.ajax(ajax_obj).done(function(data){
-			console.log(data);
-
-			console.log('payment confirmed');
-			$('#payment-accept').remove();
-			$('#check-remain-voucher').removeClass('hide');
-
-
-			$('.pos_credits').val(data.pos_credits);
-			$('.pos_reward_id').val(data.pos_rewardid);
-		});	
-
-	}//end of confirm ajax call
 
 
 	//2  .start check reward ajax call
@@ -161,7 +101,7 @@ $('.toast').hide();
 	}//end of ajax call
 
 
-
+	
 	//3 .start proceed without using reward call
 
 	var not_use_reward = function(online_rewardid,pos_rewardid){
@@ -183,10 +123,9 @@ $('.toast').hide();
 	    });
 
 	    $.ajax(ajax_obj).done(function(data){
-	    	console.log(data);
-	    	$('#each-order-details').remove();
-            $('#get-new-order').removeAttr('disabled');
-            console.log(data.msg); 
+	    	
+
+	    
 	    });
 
 
@@ -539,13 +478,29 @@ $('.toast').hide();
 
 /* =========================================end of all ajax calls =================================*/
 
+var btn_flag = 0;
 
+function check_new_order_reset(){
+	$('#get-new-order').removeAttr('disabled');
+	$('#get-new-order').text('Check New Order');
+}
 
+function check_new_order_processing(){
+	$('#get-new-order').attr('disabled','disabled');
+	$('#get-new-order').text('Processing...');
+}
+
+function check_new_order_loading(){
+	$('#get-new-order').attr('disabled','disabled');
+	$('#get-new-order').text('Loading...');
+}
 
 
 	//1.toast_inital post var 
 	$('#get-new-order').click(function(e){
 
+		//check new order
+		check_new_order_loading();
 		 e.preventDefault();
 	     let url = window.location.href+'neworder';
 
@@ -561,10 +516,24 @@ $('.toast').hide();
 	        dateType:'json',
 	        asycn:false,
 	        success:function(data){
+	        	//console.log(data);
+
+	        	// data.order.forEach(function(e){
+	        	// 	console.log(e.reward);
+	        	// });
+	        	if(data['order'].length == 0){
+	        		check_new_order_reset();
+	        		let msg = $("<p class='flow-text'>No reward order coming yet!</p>").fadeOut(3000);
+	        		$('.new-order').html(msg);
+	        	}
+
+	        
+
 	        	let htmlresult = '';
 	         	data['order'].forEach(function(e){
+	         		console.log(e);
 	            htmlresult += 
-	              "<li id='each-order-details'>"+
+	              "<li class='each-order-details'>"+
 	                "<div class='collapsible-header order-basic-info'>"
 	                  +"<i class='material-icons indigo-text'>payment</i>"
 	                  +"<span class='order-ref indigo-text'>"+e.reference+"</span>"
@@ -572,22 +541,31 @@ $('.toast').hide();
 	                  +"<span class='total-amount indigo-text'>"+parseInt(e.total_paid_tax_incl)+" &euro;</span>"
 	                +"</div>"
 	                +"<div class='collapsible-body row'>"
-	                  +"<div class='col s9'>"
+	                  +"<div class='col s7'>"
 	    								+"<span>"+e.product_name+"</span></br>"
 	    								+"<span class='indigo-text'>"+e.email+"</span></br>"
 	    								+"<span>"+e.credits+"&euro; <span class='voucher-status'>reward amount</span></span>"
 	    							+"</div>"
+	    			+"<div class='order-dialog col s5'>"
+	  							+"<button class=' btn green' id='payment-accept'>Payment Accept</button>"
+	               				+"<button class='btn hide orange white-text' id='check-remain-voucher'>Transition Completed</button>"
 
-	  							+"<button class='col s3 btn green' id='payment-accept'>Payment Accept</button>"
-	                +"<button class='col s3 btn hide orange white-text' id='check-remain-voucher'>Transition Completed</button>"
-
+		           
+	                +"</div>"
+	                +"<div id='check_btn_lol' class='hide'>"
+       					+"<h6 class='red-text' style='font-weight:bold;'>Are you sure proceed without using Reward?</h6>"
+			            	
+	            		+"<button id='proceed' class='btn teal accent-3'>Proceed</button>"
+	            		+"<button id='no-proceed' class='btn  blue-grey'>No</button>"
+							            	
+	               	+"</div>"
 	                +"<input type='hidden' value="+e.id_reward+" class='order-reward_id'>"
 	                +"<input type='hidden' value="+e.email+" class='order-email'>"
 	                +"<input type='hidden' value="+e.firstname+" class='order-firstname'>"
 	                +"<input type='hidden' value="+e.lastname+" class='order-lastname'>"
 	                +"<input type='hidden' value="+e.credits+" class='order-credits'>"
 	                +"<input type='hidden' value="+e.id_customer+" class='order-customer_id'>"
-	                +"<input type='hidden' value="+e.product_name+" class='order-product_name'>"
+	                 +"<input type='hidden' value="+e.product_name+" class='order-product_name'>"
 	                +"<input type='hidden' value="+e.reference+" class='order-reference'>"
 	                +"<input type='hidden' value="+e.id_order+" class='order-order_id'>"
 	                +"<input type='hidden' value="+e.product_id+" class='order-product_id'>"
@@ -611,6 +589,146 @@ $('.toast').hide();
 	          });
 
 	         $('#order-info').html(htmlresult);
+	         let child_length = $('#order-info').children().length;
+				if(child_length > 0){
+					check_new_order_processing();
+				}
+
+	         $('.each-order-details').each(function(index,e){
+	         	
+	         	$(e).find('#payment-accept').click(function(){
+	         		$('#payment-accept').attr('disabled','disabled');
+	         		check_new_order_processing();
+		          	$.ajaxSetup({
+				       headers: {
+				       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				     	}
+	   				 });
+	
+
+	         		$.ajax({
+	         			url:window.location.href+'createvoucher',
+				        type:'post',
+				        dataType:'json',
+				        data:{
+				        	email : $(e).find('.order-email').val(),
+		         		 	firstname : $(e).find('.order-firstname').val(),
+		         		 	lastname : $(e).find('.order-lastname').val(),
+		         		 	id_customer : $(e).find('.order-customer_id').val(),
+		         		 	reference : $(e).find('.order-reference').val(),
+		         		 	order_id : $(e).find('.order-order_id').val(),
+		         		 	id_reward : $(e).find('.order-reward_id').val(),
+		         		 	product_id : $(e).find('.order-product_id').val(),
+		         		 	device : 1,
+		         		 	total_paid : $(e).find('.order-total_paid').val(),
+		         		 	shopname : $(e).find('.shopname').val(),
+		         		 	shop_id : $(e).find('.shop_id').val(),
+		         		 	current_time:new Date().toISOString().slice(0, 19).replace('T', ' '),
+					        pay_by_card:0,
+					        pay_by_cash:0
+				        },
+				        success:function(re){
+				        	console.log('payment confirmed');
+				        	$(e).find('#payment-accept').remove();
+
+				        	$(e).find('#check-remain-voucher').removeClass('hide');
+				        	$(e).find('.pos_credits').val(re.pos_credits);
+							$(e).find('.pos_reward_id').val(re.pos_rewardid);
+
+							$(e).on('click','#check-remain-voucher',function(){
+
+								$(e).find('#check-remain-voucher').attr('disabled','disabled');
+								console.log($(e).find('#check-remain-voucher').text());
+								$(e).find('#check_btn_lol').removeClass('hide');
+
+								$.ajax({
+									url:window.location.href+'checkreward',
+									type:'post',
+							        dataType:'json',
+							        data:{
+						        	       pos_credits:$(e).find('.pos_credits').val(),
+					                      pos_rewardid:$(e).find('.pos_reward_id').val(),
+					                    online_orderid:$(e).find('.order-order_id').val(),
+					                 online_customerid:$(e).find('.order-customer_id').val(),
+					                   online_rewardid:$(e).find('.order-reward_id').val()
+							        },
+							        success:function(data){
+							        	//$(e).find('#check-remain-voucher').remove();
+								    	if(data.reward_used == 1){
+							              $(e).remove();
+							              check_new_order_reset();
+							            }else if(data.reward_used ==0){
+							            	console.log(2);
+
+							            	
+
+							            	$(e).find('#proceed').click((function(){
+							            		$(this).attr('disabled','disabled');
+
+
+							            		$.ajax({
+							            			url:window.location.href+'not_use_reward',
+							            			type:'post',
+							            			dataType:'json',
+							            			data:{
+							            				 online_rewardid:data.online_rewardid,
+                     									 pos_rewardid:data.pos_rewardid
+							            			},
+							            			success:function(res){
+							            				console.log(res);
+							            
+							            				$(e).remove();
+
+							            				if($('#order-info').children().length == 0){
+							            					check_new_order_reset();
+							            				}
+							            			}
+							            		});
+							            		
+
+							            		
+							            	}));
+
+
+							            	$(e).find('#no-proceed').click((function(e){
+							            		$(this).parent().prev().children().removeAttr('disabled');
+							            		$(this).parent().addClass('hide');
+							            	}));
+							              	
+
+
+							            }
+							        }
+								});
+
+
+							});//end of function
+							
+							// a.on('click','a',function(){
+
+							// })
+
+
+				        }
+
+	         		});
+	         			
+
+
+	      
+
+
+			
+
+
+	         	});//end of each li tag
+
+
+
+
+
+	         	
+	         });
 	        },
 	        error:function(){
 	        	console.log('payment error');
@@ -619,75 +737,16 @@ $('.toast').hide();
 
 	      });//end of ajax call
 	});//end of click this 
-
-
-	$('#order-info').on('click','#payment-accept',function(e){
-		//$('#payment-accept').attr('disabled','disabled');
-		$('#get-new-order').attr('disabled','disabled');
-		$('#payment-accept').attr('disabled','disabled');
-		confirm_payment_call();
-	});	
-
-
-
-	// $('.pay_by_card').click((e)=>{
-	// 	e.preventDefault();
-	// 	$('.card').val(1);
-		
-	// 	confirm_payment_call();	
-	// });
-
-	// $('.pay_by_cash').click((e)=>{
-	// 	e.preventDefault();
-	// 	$('.cash').val(1)
-	// 	$('#payment-accept').attr('disabled','disabled');
-	// 	confirm_payment_call();	
-	// });
-
 	
 
-	$('#order-info').on('click','#check-remain-voucher',function(e){
-		$('#check-remain-voucher').attr('disabled','disabled');
-		check_reward();
-	});
+	// $('#order-info').on('click','#check-remain-voucher',function(e){
+	// 	$('#check-remain-voucher').attr('disabled','disabled');
+	// 	check_reward();
+	// });
 
 
 
-	$('.warning-proceed').click(function(e){
-		$(this).attr('disabled','disabled');
-		if(flag == 1){
-			console.log(flag);
-			let online_rewardid = $('.response_stored_id_reward').val(),
-				   pos_rewardid = $('.response_pos_id_reward').val();
-			not_use_reward(online_rewardid,pos_rewardid);
-			toast_init();
 
-			$('.reward-results').addClass('hide');
-			$('#search-reward-by-email').removeAttr('disabled');
-			$('.rm_reward_active').removeAttr('disabled');
-			$('.rm_check_reward').removeAttr('disabled');
-
-			$('.rm_reward_active').addClass('hide');
-			$('.rm_check_reward').addClass('hide');
-
-		}else{
-			$('#check-remain-voucher').attr('disabled','disabled');
-			let online_rewardid = default_postVar().id_reward,
-                   pos_rewardid = $('.pos_reward_id').val();
-			not_use_reward(online_rewardid,pos_rewardid);
-			toast_init();
-
-		}
-		
-	});
-
-	$('.warning-reverse').click(function(e){
-		$(this).attr('disabled','disabled');
-		$('#check-remain-voucher').removeAttr('disabled');
-		$('.rm_check_reward').removeAttr('disabled');
-		console.log(22);
-		toast_init();
-	});
 
 
 	

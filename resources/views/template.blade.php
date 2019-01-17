@@ -69,6 +69,14 @@
         .total-sale{
           height:20vh;
         }
+
+        .order-dialog div button{
+          margin-right: 10px;
+        }
+
+        #check_btn_lol button{
+         margin-right: 20px;
+        }
         </style>
 
     </head>

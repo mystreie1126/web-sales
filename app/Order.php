@@ -17,4 +17,8 @@ class Order extends Model
     public function reward(){
     	return $this->hasOne('App\Models\Online_reward','id_order');
     }
+
+    public function customer(){
+    	return $this->belongsTo('App\Models\Online_customer','id_customer');
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Order;
-use App\Customer_ie;
+use App\Models\Online_customer;
 use App\voucher_ie;
 use App\rd_pickup_order;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +24,6 @@ class OrderController extends Controller
 
     	if(Auth::check()){
 
-
-
-
-
     		$data = DB::table('ps_orders as a')
             ->select('a.id_order','a.reference','a.id_customer','a.date_add','b.product_name','b.product_reference','b.total_price_tax_incl','b.product_id','ps_rewards.id_reward_state','ps_rewards.credits',
                 'cus.firstname','cus.lastname',
@@ -42,7 +38,7 @@ class OrderController extends Controller
             ->where('c.id_feature',Auth::user()->feature_id)
             ->where('c.id_feature_value',Auth::user()->feature_value)
             ->where('a.current_state',10)
-            // ->where('a.date_add','>',date('Y-m-d'))
+            ->where('a.date_add','>',date('Y-m-d'))
             ->orderBy('a.date_add','desc')
             ->get();
 
