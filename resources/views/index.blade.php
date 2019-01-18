@@ -32,7 +32,7 @@
   </div>
 
 	
-
+@if(Auth::check())
 	<div class="row" id="order">
 		 <div class="col s12">
 			 <ul class="tabs">
@@ -202,7 +202,7 @@
 	 </div>
 
 	</div>
-
+@endif
 	<div>
 		<button class="btn green right" id="get_total_today">Online Order Sales</button>
 		
@@ -227,5 +227,6 @@
 	@if(Auth::check())
 		<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
 	@endif
+	
 	</div>
 @endsection

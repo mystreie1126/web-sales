@@ -4,7 +4,9 @@
       <div class="container">
         <div class="nav-wrapper">
           @if(Auth::check())
-          <a href="#" class="brand-logo">{{Auth::User()->name}}</a>
+            <a href="#" class="brand-logo">{{Auth::User()->name}}</a>
+          @else
+            <a href="#" class="brand-logo red-text">You are not Logged in!</a>
           @endif
           <a href="#" data-activates="mobile-nav" class="button-collapse">
             <i class="fa fa-bars"></i>
