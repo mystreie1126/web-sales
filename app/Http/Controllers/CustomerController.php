@@ -22,26 +22,48 @@ class CustomerController extends Controller
     	if(Auth::check()){
     		$the_customer = new Online_customer;
     		$the_customer->refresh();
+            
+            $reward_amount = [];
+            $voucher_amount = [];
+            $cus = $the_customer->with(['reward','voucher'])->where('email','like','%'.$request->email.'%')->first();
 
-    		$customer = $the_customer->where('email','like','%'.$request->email.'%')->first();
+            $reward = $cus->reward; 
+            $voucher = $cus->voucher;
 
-    		if($request->email == '' || $customer == null){
-    			return response()->json(['a'=>$request->email,'valid_customer' => 0]);
-    			
-    		}else if($customer){
-    			$reward = $customer->reward->where('id_reward_state',2)->where('plugin','loyalty');
-    			$reward_total = $reward->sum('credits');
-    			
-    			if($reward->count() > 0){
-    				return response()->json(['reward'=>$reward,'customer'=>$customer,'reward_total'=>$reward_total,'valid_customer'=>1]);
-    			}else if($reward->count() == 0){
-    				return response()->json(['customer'=>$customer,'valid_customer'=>1,'reward_total'=> 0]);
-    			}
-    			
-    		}
-    	}
+            if($reward->count() > 0){
+                foreach($reward as $r){
+                    if($r->id_reward_state == 2 && $r->credits > 0){
+                        array_push($reward_amount,$r->credits);
+                    }
+                }
+            }
+
+            if($voucher->count() > 0){
+                 foreach($voucher as $v){
+                    if($v->quantity == 1 && $v->reduction_amount > 0){
+                        array_push($voucher_amount,$v->credits);
+                    }
+                }
+            }
+
+
+
+            if($cus){
+                return response()->json([
+
+                        'customer'=>$cus,
+                        'reward_total'=>$reward_amount,
+                        'voucher_total'=>$voucher_amount,
+                        
+                    ]);
+            }
+
+            
+    	
     	
     }
+
+}
 
    
 

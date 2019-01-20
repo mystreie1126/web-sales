@@ -13,6 +13,10 @@ class Online_customer extends Model
     	return $this->hasMany('App\Models\Online_reward','id_customer');
     }
 
+    public function voucher(){
+        return $this->hasMany('App\Models\Online_voucher','id_customer');
+    }
+
     public function order(){
     	return $this->hasMany('App\Order','id_customer');
     }

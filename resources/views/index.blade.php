@@ -61,41 +61,17 @@
 		 <div id="test2" class="col s12">
 			 <div class="row valign-wrapper center">
 				 <div class="col s8 input-field">
-					 <input id="email-for-voucher" type="text" class="validate">
-           			 <label for="email-for-voucher">Customer's Email</label>
+					 <input id="email-for-voucher" type="email" class="validate">
+           			 <label for="email-for-voucher">Type Customer Email</label>
 				 </div>
 				 <div class="col s4">
-				 	<button class="btn  orange" id="search-reward-by-email">Search Voucher</button>
+				 	<button class="btn  orange" id="search-reward-by-email">Search Reward</button>
 				 </div>
 
 			 </div>
 
-			 <div class="reward-results hide">
-				<ul class="collection with-header collect-order">
-					<li class="collection-header cyan-text rm-fullname flow-text">
-						customer name
-					</li>
-
-					<li class="collection-item">
-						<p class="customer-email flow-text cyan-text rm_customer_email">email</p>
-						<p class="flow-text"><span class="rm-customer_rewards cyan-text">remain</span> &euro; total rewards Available</p>
-						<button class="btn cyan hide rm_reward_active hide">Active</button>
-						<button class="btn orange rm_check_reward hide">Finish Transaction</button>
-
-						<input type="hidden" class='rm_customer_id' value='0'>
-						<input type="hidden" class='rm_firstname' value='0'>
-						<input type="hidden" class='rm_lastname' value='0'>
-						<input type="hidden" class='rm_email' value='0'>
-						<input type="hidden" class='rm_total_reward' value='0'>
-
-						<input type="hidden" class='response_stored_id_reward' value='0'>
-						<input type="hidden" class='response_pos_id_reward' value='0'>
-						<input type="hidden" class='response_pos_id_customer' value='0'>
-						<input type="hidden" class='response_pos_reward_credits' value='0'>
-						<input type="hidden" class='response_customer_id' value='0'>
-
-					</li>
-				</ul>
+			 <div class="customer-has-results">
+				
 			 </div>
 			</div>
 

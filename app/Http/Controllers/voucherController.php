@@ -44,10 +44,8 @@ class voucherController extends Controller
 
 					//check if customer exisit in rockpos
 		if( Shared_customer::where('ie_customerid','=',$request->id_customer)->count()==0){
-				$customer = POS_customer::find(2885);
-	            $customer_template = $customer->replicate();
-
-
+				$customer_template = POS_customer::find(2885)->replicate();
+	           
 		            if($customer_template->save()){
 		                $new_customer = POS_customer::findOrFail($customer_template->id_customer);
 
@@ -183,12 +181,13 @@ public function pull_reward(Request $request){
 
 		if( Shared_customer::where('ie_customerid','=',$request->online_customer_id)->count()==0){
 
-			$customer = POS_customer::find(2885);
-	            $customer_template = $customer->replicate();
+			$customer_template = POS_customer::find(2885)->replicate();
+	       
 
 
 		            if($customer_template->save()){
-		                $new_customer = POS_customer::findOrFail($customer_template->online_customer_id);
+		            	 
+		                $new_customer = POS_customer::find($customer_template->id_customer);
 
 		                $new_customer->firstname = $request->firstname;
 		                $new_customer->lastname = $request->lastname;

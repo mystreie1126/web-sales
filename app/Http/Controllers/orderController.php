@@ -64,7 +64,7 @@ class OrderController extends Controller
             if($request->ref == '' || $order==null){
                 return response()->json(['has_order'=>0]);
             }else{
-                $the_customer = new Customer_ie;
+                $the_customer = new Online_customer;
                 $the_customer->refresh();
 
                 $customer = $the_customer->where('id_customer',$order->id_customer)->first();

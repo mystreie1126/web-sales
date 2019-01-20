@@ -240,51 +240,24 @@ let styles = {
 	      });
 	}
 
-	//6.search reward by email ajax call
 
 
-	var search_reward_by_email = function(email){
 
-		let ajax_obj = {
-			url:window.location.href + 'search_reward_by_email',
-			type:'post',
-			dataType:'json',
-			data:{
-				email:email
-			}		
-		}
 
-		$.ajaxSetup({
-	       headers: {
-	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	     }
-	    });
 
-		$.ajax(ajax_obj).done(function(response){
-			console.log(response);
 
-			$('.rm_customer_id').val(response.customer.id_customer);
-			$('.rm_firstname').val(response.customer.firstname);
-			$('.rm_lastname').val(response.customer.lastname);
-			$('.rm_email').val(response.customer.email);
-			$('.rm_total_reward').val(response.reward_total);
 
-			$('.rm-fullname').text(response.customer.firstname + ' '+response.customer.lastname);
-			$('.rm_customer_email').text(response.customer.email);
-			$('.rm-customer_rewards').text(response.reward_total);
-			$('.reward-results').removeClass('hide');	
-			if(response.valid_customer == 0 ){
-				let alert_msg = $("<p class='flow-text red-text'>Customer Not Found!</p>").fadeOut(4000);
-				$('.reward-results').html(alert_msg);
-				//$("<p class='flow-text red-text'>Customer Not Found!</p>").appendTo('.reward-results').fadeOut(4000);
-			}else if(response.valid_customer == 1 && response.reward_total > 0){
-				
-				
-				$('.rm_reward_active').removeClass('hide');
-				$('.rm_check_reward').addClass('hide');
-			}
-		});
-	}
+
+
+
+
+
+
+
+
+
+
+
 
 	//7. transfer customer online ajax call 
 
@@ -496,7 +469,21 @@ function check_new_order_loading(){
 }
 
 
-	//1.toast_inital post var 
+function search_reward_loading(){
+	$('#search-reward-by-email').attr('disabled','disabled');
+	$('#search-reward-by-email').text('Loading...');
+}
+
+function search_reward_reset(){
+	$('#search-reward-by-email').removeAttr('disabled');
+	$('#search-reward-by-email').text('Search Reward');
+}
+
+
+
+
+
+	// get-new order button click
 	$('#get-new-order').click(function(e){
 
 		//check new order
@@ -712,25 +699,13 @@ function check_new_order_loading(){
 				        }
 
 	         		});
-	         			
+	         					
 
-
-	      
-
-
-			
-
-
-	         	});//end of each li tag
-
-
-
-
-
-	         	
+	         	});//end of each li tag         	
 	         });
 	        },
 	        error:function(){
+	        	check_new_order_reset()
 	        	console.log('payment error');
 	        }
 
@@ -738,11 +713,187 @@ function check_new_order_loading(){
 	      });//end of ajax call
 	});//end of click this 
 	
+	
 
-	// $('#order-info').on('click','#check-remain-voucher',function(e){
-	// 	$('#check-remain-voucher').attr('disabled','disabled');
-	// 	check_reward();
-	// });
+	/* =====================search reward by email ===============================================================*/
+	$('#search-reward-by-email').click(function(e){
+		 search_reward_loading();
+		 e.preventDefault();
+		 let input_email = $('#email-for-voucher').val();
+
+		 //console.log(input);
+		  $.ajaxSetup({
+	          headers: {
+	              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	          }
+	      });
+
+		  $.ajax({
+		  	url:window.location.href+'search_reward_by_email',
+			type:'post',
+			dataType:'json',
+			data:{
+				email:input_email
+			},
+			success:function(cus){
+				console.log(cus);
+				search_reward_reset();
+
+				let html = 
+
+				 "<ul class='collection with-header collect-order'>"
+					+"<li class='collection-header flow-text'>"
+						+cus.customer.firstname+ " "+cus.customer.lastname
+					+"</li>"
+
+					+"<li class='collection-item row reward-condition-container'>"
+						+"<p class='col s12'>"+cus.customer.email+"</p>"
+
+						+"<div class='cus-reward-msg col s12'>"
+							+"<p class='reward-none-msg hide'>This customer has no reward points left</p>"
+						+"</div>"
+
+						+"<div class='reward-info-container col s6'>"
+											
+						+"</div>"
+						+"<input type='hidden' class='cus_customer_id' value="+cus.customer.id_customer+">"
+						+"<input type='hidden' class='cus_firstname' value="+cus.customer.firstname+">"
+						+"<input type='hidden' class='cus_lastname' value="+cus.customer.lastname+">"
+						+"<input type='hidden' class='cus_email' value="+cus.customer.email+">"
+
+						
+
+					+"</li>"
+				+"</ul>"
+
+				$('.customer-has-results').html(html);
+
+
+				if(cus.reward_total.length == 0){
+					$('.reward-none-msg').removeClass('hide');
+				}
+				else{
+					let total_reward = cus.reward_total.map(x=>Number(x)).reduce((a,b)=>a+b),
+						html = "<p>This customer has <span class='cyan-text'>"+total_reward+"</span> &euro; reward in total</p>"
+								+"<button class='active_reward_on_pos btn'>Active Reward on Pos</button>";
+
+					console.log('total_reward is '+total_reward+' can used on pos');
+
+					$('.reward-info-container').html(html);
+					
+					$('.active_reward_on_pos').click(function(){
+						$(this).attr('disabled','disabled');
+						$(this).text('loading...');
+
+						$.ajax({
+							url:window.location.href+'pull_reward',
+							type:'post',
+							dataType:'json',
+							data:{
+								online_customer_id:cus.customer.id_customer,
+								firstname:cus.customer.firstname,
+								lastname:cus.customer.lastname,
+								email:cus.customer.email,
+								data:new Date().toISOString().slice(0, 19).replace('T', ' '),
+								total_reward:total_reward
+
+							},
+							success:function(remain){
+								console.log(remain);
+								let html_remain = "<p>This customer has <span class='cyan-text'>"+remain.pos_reward.credits+"</span> &euro; reward available on rockpos</p>"
+								+"<button class='check_reward_on_pos btn amber'>Finish Transaction</button>";
+
+								$('.reward-info-container').html(html_remain);
+
+								$('.check_reward_on_pos').click(function(){
+									$(this).attr('disabled','disabled');
+									$(this).text('loading...');
+									$.ajax({
+										url:window.location.href+'check_remain_reward_use',
+										dataType:'json',
+										type:'post',
+										data:{
+											pos_id_reward:remain.pos_reward.id_reward,
+											reward_total:remain.pos_reward.credits,
+											customer_id:remain.stored_reward.id_customer,
+											stored_id_reward:remain.stored_reward.id_reward
+
+										},
+										success:function(check_remain){
+											console.log(check_remain);
+											if(check_remain.reward_used == 1){
+												$('.customer-has-results').children().remove();
+											}else if(check_remain.reward_used == 0){
+												let condition_html = 
+												"<div class='col s6 row'>"
+													+"<p class='col s12'>You sure proceed without using reward?</p>"
+													+"<button class='btn indigo col s4 not-gonna-use'>Proceed </button>"
+													+"<button class='btn red col s4 forgot-to-use'>No</button>"
+												+"</div>"
+												$('.reward-condition-container').append(condition_html);
+
+
+
+												// forgot to use reward ....
+												$('.forgot-to-use').click(function(){
+													$(this).parent().remove();
+													$('.check_reward_on_pos').removeAttr('disabled');
+													$('.check_reward_on_pos').text('Finish Transaction');
+												});
+
+
+
+												// not gonna use reward anyway
+												$('.not-gonna-use').click(function(){
+													$(this).attr('disabled','disabled');
+													$(this).text('loading....');
+
+													$.ajax({
+														url:window.location.href+'not_use_reward',
+														type:'post',
+														dataType:'json',
+														data:{
+															pos_rewardid:check_remain.pos_rewardid,
+															online_rewardid:check_remain.online_rewardid
+														},
+														success:function(){
+															$('.customer-has-results').children().remove();
+														}
+													});
+												});
+
+											}
+										}
+									});
+								});
+							},
+							error:function(){
+								$('.reward-info-container').html("<p class='red-text'>oppps something went wrong Zzzzz...</p>");
+							}
+						});
+					});
+				}
+						
+
+
+				// console.log(res.reward.length);
+			},
+			error:function(e){
+				search_reward_reset();
+				$('.customer-has-results').html("<p>Customer not found</p>")
+			}
+			
+		  }); // all call ends 
+		  
+
+
+	});
+
+
+
+/*=========================collect in store=====================================================================*/
+
+
 
 
 
@@ -792,12 +943,6 @@ function check_new_order_loading(){
 	});
 
 
-	$('#search-reward-by-email').click((e)=>{
-		e.preventDefault();	
-		let email =  $('#email-for-voucher').val();
-		search_reward_by_email(email);
-		//console.log(input_ref);
-	});
 
 
 	$('#search-online_price-by-email').click((e)=>{
