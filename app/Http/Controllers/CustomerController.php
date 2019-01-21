@@ -123,14 +123,29 @@ class CustomerController extends Controller
     		$money = new Confirm_payment;
     		$money->refresh();
 
-    		$total = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->sum('paid_amount');
-    		$cash = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('cash',1)->sum('paid_amount');
-    		$card = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('card',1)->sum('paid_amount');
+            if($request->today == 1 && $request->alltime == 0){
+               $total = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->sum('paid_amount');
+                $cash = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('cash',1)->sum('paid_amount');
+                $card = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('card',1)->sum('paid_amount');
+                
+               
+            }else if($request->today == 0 && $request->alltime == 1){
+                $total = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->sum('paid_amount');
+                $cash = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->where('cash',1)->sum('paid_amount');
+                $card = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->where('card',1)->sum('paid_amount');
+                
+                
+
+            }
+
+            
+             return response()->json(['total'=>$total,'cash'=>$cash,'card'=>$card]);
     		
-    		return response()->json(['total'=>$total,'cash'=>$cash,'card'=>$card]);
 
     	}
     }
+
+
 
 
 

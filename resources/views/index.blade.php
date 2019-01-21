@@ -180,8 +180,14 @@
 	</div>
 @endif
 	<div>
-		<button class="btn green right" id="get_total_today">Online Order Sales</button>
-		
+		{{-- <button class="btn green right" id="get_total_today">Online Sales from today</button> --}}
+		<button class='dropdown-button btn green right' data-activates='dropdown1'>Get Online Sales</button>
+		  <ul id='dropdown1' class='dropdown-content'>
+		    <li><a id="get_total_today">Today Only</a></li>
+		    <li><a id="get_total_all">All the time</a></li>
+		  
+		  </ul>
+        
 		
 	<table class="striped total-sale">
         <thead>

@@ -422,13 +422,15 @@ let styles = {
 
 	//
 
-	var get_total_today = function(){
+	var get_total_today = function(today,alltime){
 		let ajax_obj = {
 			url:window.location.href+'get_total_today',
 			type:'post',
 			dataType:'json',
 			data:{
-				shop_id:$('.get_total_shop').val()
+				shop_id:$('.get_total_shop').val(),
+				today:today,
+				alltime:alltime
 			}
 		}
 
@@ -626,7 +628,7 @@ function search_reward_reset(){
 
 								$(e).find('#check-remain-voucher').attr('disabled','disabled');
 								console.log($(e).find('#check-remain-voucher').text());
-								$(e).find('#check_btn_lol').removeClass('hide');
+								
 
 								$.ajax({
 									url:window.location.href+'checkreward',
@@ -647,7 +649,7 @@ function search_reward_reset(){
 							            }else if(data.reward_used ==0){
 							            	console.log(2);
 
-							            	
+							            	$(e).find('#check_btn_lol').removeClass('hide');
 
 							            	$(e).find('#proceed').click((function(){
 							            		$(this).attr('disabled','disabled');
@@ -983,9 +985,18 @@ function search_reward_reset(){
 	});
 
 	$('#get_total_today').click((e)=>{
-		get_total_today();
+
+		let today = 1, alltime = 0;
+		get_total_today(today,alltime);
 		
 	});
+
+	$('#get_total_all').click((e)=>{
+		let today = 0, alltime = 1;
+		get_total_today(today,alltime);
+		
+	});
+
 
 });
 
