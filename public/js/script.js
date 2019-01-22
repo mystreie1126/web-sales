@@ -536,7 +536,7 @@ function search_reward_reset(){
 	    								+"<span>"+e.credits+"&euro; <span class='voucher-status'>reward amount</span></span>"
 	    							+"</div>"
 	    			+"<div class='order-dialog col s5'>"
-	  							+"<button class=' btn green' id='payment-accept'>Payment Accept</button>"
+	  							+"<button class=' btn green' id='payment-accept'>Accept Payment</button>"
 	               				+"<button class='btn hide orange white-text' id='check-remain-voucher'>Transition Completed</button>"
 
 		           
