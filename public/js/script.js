@@ -659,6 +659,7 @@ function search_reward_reset(){
 							        success:function(data){
 							        	//$(e).find('#check-remain-voucher').remove();
 								    	if(data.reward_used == 1){
+								    		refresh_flag = 0;
 							              $(e).remove();
 							              check_new_order_reset();
 							            }else if(data.reward_used ==0){
@@ -842,10 +843,11 @@ function search_reward_reset(){
 											console.log(check_remain);
 											if(check_remain.reward_used == 1){
 												$('.customer-has-results').children().remove();
+												refresh_flag = 0;
 											}else if(check_remain.reward_used == 0){
 												let condition_html = 
 												"<div class='col s6 row'>"
-													+"<p class='col s12'>You sure proceed without using reward?</p>"
+													+"<p class='col s12'>Proceed without using reward?</p>"
 													+"<button class='btn indigo col s4 not-gonna-use'>Proceed </button>"
 													+"<button class='btn red col s4 forgot-to-use'>No</button>"
 												+"</div>"
