@@ -792,7 +792,7 @@ function search_reward_reset(){
 				else{
 					let total_reward = cus.reward_total.map(x=>Number(x)).reduce((a,b)=>a+b),
 						html = "<p>This customer has <span class='cyan-text'>"+total_reward+"</span> &euro; reward in total</p>"
-								+"<button class='active_reward_on_pos btn'>Active Reward on Pos</button>";
+								+"<button class='active_reward_on_pos btn'>Activate Rewards on RockPos</button>";
 
 					console.log('total_reward is '+total_reward+' can used on pos');
 
@@ -801,6 +801,8 @@ function search_reward_reset(){
 					$('.active_reward_on_pos').click(function(){
 						$(this).attr('disabled','disabled');
 						$(this).text('loading...');
+
+						refresh_flag = 1;
 
 						$.ajax({
 							url:window.location.href+'pull_reward',
@@ -864,6 +866,8 @@ function search_reward_reset(){
 												$('.not-gonna-use').click(function(){
 													$(this).attr('disabled','disabled');
 													$(this).text('loading....');
+
+													refresh_flag = 0;
 
 													$.ajax({
 														url:window.location.href+'not_use_reward',
