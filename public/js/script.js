@@ -1,4 +1,13 @@
 
+var refresh_flag = 0;
+
+window.onbeforeunload = function(e){
+	if(refresh_flag == 1){
+		return 'error';
+	}
+	
+}
+
 
 const  default_postVar = function()
 
@@ -537,7 +546,7 @@ function search_reward_reset(){
 	    							+"</div>"
 	    			+"<div class='order-dialog col s5'>"
 	  							+"<button class=' btn green' id='payment-accept'>Accept Payment</button>"
-	               				+"<button class='btn hide orange white-text' id='check-remain-voucher'>Transition Completed</button>"
+	               				+"<button class='btn hide orange white-text' id='check-remain-voucher'>Complete Transaction</button>"
 
 		           
 	                +"</div>"
@@ -586,6 +595,7 @@ function search_reward_reset(){
 	         $('.each-order-details').each(function(index,e){
 	         	
 	         	$(e).find('#payment-accept').click(function(){
+	         		refresh_flag = 1;
 	         		$('#payment-accept').attr('disabled','disabled');
 	         		check_new_order_processing();
 		          	$.ajaxSetup({
@@ -616,7 +626,12 @@ function search_reward_reset(){
 					        pay_by_card:0,
 					        pay_by_cash:0
 				        },
-				        success:function(re){
+				        success:function(re){	
+
+				        	
+
+				        	
+
 				        	console.log('payment confirmed');
 				        	$(e).find('#payment-accept').remove();
 
@@ -653,7 +668,7 @@ function search_reward_reset(){
 
 							            	$(e).find('#proceed').click((function(){
 							            		$(this).attr('disabled','disabled');
-
+							            		refresh_flag = 0;
 
 							            		$.ajax({
 							            			url:window.location.href+'not_use_reward',

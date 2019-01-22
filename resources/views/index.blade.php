@@ -36,7 +36,7 @@
 	<div class="row" id="order">
 		 <div class="col s12">
 			 <ul class="tabs">
-				 <li class="tab col s3"><a class="active" href="#test1">Orders</a></li>
+				 <li class="tab col s3"><a class="active" href="#test1">Pre-Own Orders</a></li>
 				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Reward</a></li>
 				 <li class="tab col s3"><a href="#test3" id="get-order-history">Collect in Store</a></li>
 				 <li class="tab col s3"><a href="#test4" id="memmmer">Register Members</a></li>
