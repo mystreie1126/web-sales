@@ -179,7 +179,7 @@
 
 	</div>
 @endif
-	<div>
+	<div class="hide" id='lele'>
 		{{-- <button class="btn green right" id="get_total_today">Online Sales from today</button> --}}
 		<button class='dropdown-button btn green right' data-activates='dropdown1'>Get Online Sales</button>
 		  <ul id='dropdown1' class='dropdown-content'>

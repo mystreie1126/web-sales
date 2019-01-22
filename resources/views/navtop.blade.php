@@ -15,9 +15,10 @@
             {{-- <li>
               <a class="active-link" href="index.html">Home</a>
             </li> --}}
-           {{--  <li>
-              <a href="signup.html">Sign Up</a>
-            </li> --}}
+            <li>
+              
+                <a href="JavaScript:document.location.reload(true);">Hard Refresh</a>
+            </li>
              <li>
               <a href="{{ route('logout') }}"
                   onclick="event.preventDefault();

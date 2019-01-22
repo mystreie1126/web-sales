@@ -1019,6 +1019,10 @@ function search_reward_reset(){
 	});
 
 
+	
+	
+
+
 });
 
 
