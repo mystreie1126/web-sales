@@ -182,7 +182,7 @@
 
 @if(Auth::check())
 
-	<div id="refund">
+	<div id="refund" class="hide">
 		<button id="refund-btn" class="btn red white-text">Refund an Order</button>
 		<div class="row valign-wrapper center" id="refund-info">
 			 <div class="col s8 input-field">

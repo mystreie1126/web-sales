@@ -1033,10 +1033,12 @@ function search_reward_reset(){
 	
 
 	$(".click_flag").bind('click', function(e) {
-		if($(e.target).is('#get-order-history') && ($('#lele').hasClass('hide'))) {
+		if($(e.target).is('#get-order-history') && ($('#lele').hasClass('hide') || $('#refund').hasClass('hide'))) {
 			  $('#lele').removeClass('hide');
-		}else if($('#lele').not( ".hide" )){
+			  $('#refund').removeClass('hide');
+		}else if($('#lele').not( ".hide" )||$('#refund').not(".hide")){
 			$('#lele').addClass('hide');
+			$('#refund').addClass('hide');
 		}
 	});
 
