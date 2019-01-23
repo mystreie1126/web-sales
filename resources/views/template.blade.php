@@ -38,7 +38,7 @@
           color:black;
           font-weight: bolder;
         }
-      #order .tabs-content.carousel .carousel-item { height: 100%; }
+      #order .tabs-content.carousel .carousel-item { height: 70%; }
 
       #order{
         border:1px solid grey;
@@ -67,7 +67,7 @@
         }
     
         .total-sale{
-          height:20vh;
+          height:15vh;
         }
 
         .order-dialog div button{

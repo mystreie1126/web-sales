@@ -35,10 +35,10 @@
 @if(Auth::check())
 	<div class="row" id="order">
 		 <div class="col s12">
-			 <ul class="tabs">
+			 <ul class="tabs click_flag">
 				 <li class="tab col s3"><a class="active" href="#test1">Pre-Owned Orders</a></li>
 				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Remaining Reward</a></li>
-				 <li class="tab col s3"><a href="#test3" id="get-order-history">Collect in Store</a></li>
+				 <li class="tab col s3"><a href="#test3" id="get-order-history" data-clicked="no">Collect in Store</a></li>
 				 <li class="tab col s3"><a href="#test4" id="memmmer">Register Members</a></li>
 			 </ul>
 		 </div>
@@ -179,6 +179,23 @@
 
 	</div>
 @endif
+
+	<div id="refund">
+		<button id="refund-btn" class="btn red white-text">Refund an Order</button>
+		<div class="row valign-wrapper center" id="refund-info">
+			 <div class="col s8 input-field">
+				 <input id="ref-for-refund" type="text" class="validate">
+       			 <label for="ref-for-refund">Refund by Order reference</label>
+			 </div>
+			 <div class="col s4">
+			 	<button class="btn  orange" id="search-refund-by-ref">Refund the Order</button>
+			 </div>
+			
+		 </div>
+		 <div class="refund-order-details row">
+		 	
+		 </div>
+	</div>
 	<div class="hide" id='lele'>
 		{{-- <button class="btn green right" id="get_total_today">Online Sales from today</button> --}}
 		<button class='dropdown-button btn green right' data-activates='dropdown1'>Get Online Sales</button>
@@ -189,26 +206,26 @@
 		  </ul>
         
 		
-	<table class="striped total-sale">
-        <thead>
-          <tr>
-              <th class="center">Card</th>
-              <th class="center">Cash</th>
-              <th class="center">Total</th>
-          </tr>
-        </thead>
+		<table class="striped total-sale">
+	        <thead>
+	          <tr>
+	              <th class="center">Card</th>
+	              <th class="center">Cash</th>
+	              <th class="center">Total</th>
+	          </tr>
+	        </thead>
 
-        <tbody>
-          <tr>
-            <td class="center"><span class="total_card"></span> &euro;</td>
-            <td class="center"><span class="total_cash"></span> &euro;</td>
-            <td class="center"><span class="total_cash_card"></span> &euro;</td>
-          </tr>
-		</tbody>
-	</table>
-	@if(Auth::check())
-		<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
-	@endif
+	        <tbody>
+	          <tr>
+	            <td class="center"><span class="total_card"></span> &euro;</td>
+	            <td class="center"><span class="total_cash"></span> &euro;</td>
+	            <td class="center"><span class="total_cash_card"></span> &euro;</td>
+	          </tr>
+			</tbody>
+		</table>
+		@if(Auth::check())
+			<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
+		@endif
 	
 	</div>
 @endsection

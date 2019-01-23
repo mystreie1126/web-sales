@@ -15,11 +15,11 @@
             {{-- <li>
               <a class="active-link" href="index.html">Home</a>
             </li> --}}
-            <li>
+         {{--    <li>
               
                 <a href="JavaScript:document.location.reload(true);">Hard Refresh</a>
             </li>
-             <li>
+ --}}             <li>
               <a href="{{ route('logout') }}"
                   onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">

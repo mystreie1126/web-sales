@@ -630,7 +630,7 @@ function search_reward_reset(){
 
 				        	
 
-				        	
+				        	console.log(re);
 
 				        	console.log('payment confirmed');
 				        	$(e).find('#payment-accept').remove();
@@ -1019,9 +1019,88 @@ function search_reward_reset(){
 	});
 
 
+	$('#refund-info').hide();
+
+	$('#refund-btn').click(function(){
+		$('#refund-info').toggle('slow');
+
+		let a = $('.refund-order-details').children().remove();
+
+		console.log(a);
+	});
+
 	
 	
 
+	$(".click_flag").bind('click', function(e) {
+		if($(e.target).is('#get-order-history') && ($('#lele').hasClass('hide'))) {
+			  $('#lele').removeClass('hide');
+		}else if($('#lele').not( ".hide" )){
+			$('#lele').addClass('hide');
+		}
+	});
+
+
+	$('#search-refund-by-ref').click(function(e){
+		let input = $('#ref-for-refund').val();
+		if(input == ''){
+			let msg = $("<p class='red-text'>Refund reference can not be empty!</p>").fadeOut(5000);
+			$('#refund').prepend(msg);
+		}else{
+			$.ajaxSetup({
+		       headers: {
+		       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		     }
+		    });
+
+		    $.ajax({
+		    	url:window.location.href+'refund-order',
+		    	type:'post',
+		    	dataType:'json',
+		    	data:{
+		    		ref:input
+		    	},
+		    	success:function(e){
+		    		console.log(e);
+		    		if(Object.keys(e).length == 0){
+		    			let msg = $("<p class='red-text'>Order not found or this order has been refunded already!</p>").fadeOut(5000);
+		    			$('#refund').prepend(msg);
+		    		}else{
+		    			let html = "<div>"+"<span class='red-text col s12'>"+e.reference+ " "+"</span>"
+		    					  +"<span class='col s3'>"+e.firstname + ' '+ e.lastname+"</span><br>"
+		    					  +"<span class='col s4'>"+e.email+"</span>"
+		    					  +"<button class='col s1 red white-text center' id='go-refund'>Refund</button>"
+		    					  +"<input type='hidden' class='refund-order_id' value="+e.id_order+">"
+		    					  +"</div>"
+		    			$('.refund-order-details').html(html);
+
+		    			$('#go-refund').click((e)=>{
+		    				 $.ajax({
+		    				 	url:window.location+'go-refund',
+		    				 	type:'post',
+		    				 	dataType:'json',
+		    				 	data:{
+		    				 		id:$('.refund-order_id').val()
+		    				 	},
+		    				 	success:function(res){
+		    				 		if(res.updated == 1){
+		    				 			let msg = '<span>Order Refunded!</span>';
+		    				 			$('.refund-order-details').append(msg);
+		    				 			$('.refund-order-details').children().remove()
+		    				 		}
+		    				 	}
+		    				 })
+		    			});
+		    		}
+		    		
+		    	}
+		    });
+
+		}
+		
+
+
+	});
 
 });
 

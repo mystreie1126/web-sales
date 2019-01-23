@@ -57,6 +57,7 @@ Route::post('/pull_reward','voucherController@pull_reward');
 
 Route::post('/check_remain_reward_use','voucherController@check_remain_reward_use');
 Route::post('/get_total_today','CustomerController@get_total_today');
-
+Route::post('/refund-order','RefundController@check_order_refund');
+Route::post('/go-refund','RefundController@go_refund');
 
 
