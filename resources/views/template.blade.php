@@ -38,7 +38,7 @@
           color:black;
           font-weight: bolder;
         }
-      #order .tabs-content.carousel .carousel-item { height: 70%; }
+      #order .tabs-content.carousel .carousel-item { height: 100%; }
 
       #order{
         border:1px solid grey;
