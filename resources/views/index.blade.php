@@ -180,6 +180,8 @@
 	</div>
 @endif
 
+@if(Auth::check())
+
 	<div id="refund">
 		<button id="refund-btn" class="btn red white-text">Refund an Order</button>
 		<div class="row valign-wrapper center" id="refund-info">
@@ -223,9 +225,8 @@
 	          </tr>
 			</tbody>
 		</table>
-		@if(Auth::check())
 			<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
-		@endif
 	
 	</div>
+	@endif
 @endsection
