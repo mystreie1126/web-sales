@@ -35,13 +35,13 @@ class OrderController extends Controller
             ->join('ps_rewards','a.id_order','=','ps_rewards.id_order')
             ->join('ps_product_shop as e','b.product_id','=','e.id_product')
             ->where('e.id_shop',1)
-            ->where('c.id_feature',Auth::user()->feature_id)
+            ->where('c.id_feature',2540)
             ->where('c.id_feature_value',Auth::user()->feature_value)
             ->where('a.current_state',10)
             ->where('a.date_add','>',date('Y-m-d'))
             ->orderBy('a.date_add','desc')
             ->get();
-
+        
             $staff = DB::table('users')->select('name','shop_id')->where('shop_id',Auth::User()->shop_id)->get();
             $rockpos = Auth::User()->rockpos;
             return response()->json([ 'order' => $data,'staff'=>$staff,'rockpos'=>$rockpos]);
@@ -61,7 +61,13 @@ class OrderController extends Controller
 
             $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();
 
-            if($request->ref == '' || $order==null){
+            
+            $product = $order->order_detail[0]->product_name;
+          
+            
+
+           
+            if($request->ref == '' || $order==null ||  ((count($order->order_detail) == 1) && (stripos($product, 'imei') !== false))){
                 return response()->json(['has_order'=>0]);
             }else{
                 $the_customer = new Online_customer;
@@ -73,7 +79,8 @@ class OrderController extends Controller
                      'order'=>$order,
                      'items'=>$order->order_detail,
                      'customer'=>$customer,
-                      'has_order'=>1
+                      'has_order'=>1,
+                      // 'aa'=>stristr($product, 'imei')
                     ]);
             }
         } 

@@ -512,13 +512,13 @@ function search_reward_reset(){
 	      	url:url,
 	        type:'get',
 	        dateType:'json',
-	        asycn:false,
 	        success:function(data){
-	        	//console.log(data);
+	        	console.log(data);
 
 	        	// data.order.forEach(function(e){
 	        	// 	console.log(e.reward);
 	        	// });
+	        	
 	        	if(data['order'].length == 0){
 	        		check_new_order_reset();
 	        		let msg = $("<p class='flow-text'>No reward order coming yet!</p>").fadeOut(3000);
