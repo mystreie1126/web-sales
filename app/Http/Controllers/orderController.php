@@ -35,7 +35,7 @@ class OrderController extends Controller
             ->join('ps_rewards','a.id_order','=','ps_rewards.id_order')
             ->join('ps_product_shop as e','b.product_id','=','e.id_product')
             ->where('e.id_shop',1)
-            ->where('c.id_feature',2540)
+            ->where('c.id_feature',Auth::user()->feature_id)
             ->where('c.id_feature_value',Auth::user()->feature_value)
             ->where('a.current_state',10)
             ->where('a.date_add','>',date('Y-m-d'))
@@ -80,7 +80,7 @@ class OrderController extends Controller
                      'items'=>$order->order_detail,
                      'customer'=>$customer,
                       'has_order'=>1,
-                      // 'aa'=>stristr($product, 'imei')
+                    
                     ]);
             }
         } 
