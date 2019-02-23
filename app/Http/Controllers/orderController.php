@@ -56,15 +56,21 @@ class OrderController extends Controller
 
         if(Auth::check()){
 
+            $has_payment_method = 0;
+
             $the_order = new Order;
             $the_order->refresh();
 
-            $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();
-
-            
+            $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();     
             $product = $order->order_detail[0]->product_name;
-          
-            
+            $d = $order->id_order;
+
+            $payment = new Confirm_payment;
+            $payment->refresh();
+
+            $payment_method = $payment->where('order_id',$d)->where('device_order',0)->get();
+
+
 
            
             if($request->ref == '' || $order==null ||  ((count($order->order_detail) == 1) && (stripos($product, 'imei') !== false))){
@@ -80,6 +86,7 @@ class OrderController extends Controller
                      'items'=>$order->order_detail,
                      'customer'=>$customer,
                       'has_order'=>1,
+                      'payment_method'=>$payment_method
                     
                     ]);
             }

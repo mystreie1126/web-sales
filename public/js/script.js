@@ -192,10 +192,43 @@ let styles = {
 	    			//$('.collect-order_customer_info').append("<button href='#modal2' class='modal-trigger btn collect-order_pay'>Pay and Collect</button>");
 	    			
 	    		}else if(response.order.current_state == 5){
-	    			$('.collect-payment_status').html('<span class="green-text">Paid and Collected</span>')
+	    			 if(response.payment_method.length == 0){
+	    			 	$('.collect-payment_status').html('<span class="green-text">Collected and Paid</span>')
+	    			 }
+
+	    			 else if(response.payment_method.length == 1){
+	    			 	if(response.payment_method[0].cash == 1 && response.payment_method[0].card == 0){
+	    			 	  $('.collect-payment_status').html('<span class="green-text">Collected and Paid by</span><span class="orange-text"> Cash</span>')
+	    			 	}else if(response.payment_method[0].cash == 0 && response.payment_method[0].card == 1){
+	    			 		$('.collect-payment_status').html('<span class="green-text">Collected and Paid by</span><span class="blue-text"> Card</span>')
+	    			 	}else{
+	    			 		$('.collect-payment_status').html('<span class="green-text">Collected and Paid</span>')
+	    			 	}    			 
+	    			 }
+
+	    			
 	    		}else if(response.order.current_state == 2){
-	    			$('.collect-payment_status').html('<span class="green-text">Paid</span>');
-	    			$('.collect-order_no_pay').removeClass('hide');
+
+	    			if(response.payment_method.length == 0){
+	    			 	$('.collect-payment_status').html('<span class="green-text">Paid </span>')
+	    			 	$('.collect-order_no_pay').removeClass('hide');
+	    			 }
+
+	    			 else if(response.payment_method.length == 1){
+
+	    			 	if(response.payment_method[0].cash == 1 && response.payment_method[0].card == 0){
+	    			 	  $('.collect-payment_status').html('<span class="green-text">Paid by</span><span class="orange-text"> Cash</span>')
+	    			 	  $('.collect-order_no_pay').removeClass('hide');
+	    			 	}else if(response.payment_method[0].cash == 0 && response.payment_method[0].card == 1){
+	    			 		$('.collect-payment_status').html('<span class="green-text">Paid by</span><span class="blue-text"> Card</span>')
+	    			 		$('.collect-order_no_pay').removeClass('hide');
+	    			 	}else{
+	    			 		$('.collect-payment_status').html('<span class="green-text">Paid</span>')
+	    			 		$('.collect-order_no_pay').removeClass('hide');
+	    			 	}
+	    			 }
+	    		
+	    			
 	    		}
 
 	    		$('.collect-order').removeClass('hide');
