@@ -38,8 +38,9 @@ class OrderController extends Controller
             ->where('c.id_feature',Auth::user()->feature_id)
             ->where('c.id_feature_value',Auth::user()->feature_value)
             ->where('a.current_state',10)
-            ->where('a.date_add','>',date('Y-m-d'))
+            // ->where('a.date_add','>',date('Y-m-d'))
             ->orderBy('a.date_add','desc')
+       
             ->get();
         
             $staff = DB::table('users')->select('name','shop_id')->where('shop_id',Auth::User()->shop_id)->get();

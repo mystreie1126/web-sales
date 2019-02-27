@@ -121,25 +121,34 @@ class CustomerController extends Controller
     public function get_total_today(Request $request){
     	if(Auth::check()){
     		$money = new Confirm_payment;
-    		$money->refresh();
+    		
 
-            if($request->today == 1 && $request->alltime == 0){
-               $total = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->sum('paid_amount');
-                $cash = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('cash',1)->sum('paid_amount');
-                $card = $money->where('rockpos_shop_id',$request->shop_id)->where('created_at','>',date('Y-m-d'))->where('device_order',0)->where('card',1)->sum('paid_amount');
-                
-               
-            }else if($request->today == 0 && $request->alltime == 1){
-                $total = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->sum('paid_amount');
-                $cash = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->where('cash',1)->sum('paid_amount');
-                $card = $money->where('rockpos_shop_id',$request->shop_id)->where('device_order',0)->where('card',1)->sum('paid_amount');
-                
-                
+            $date_from = date('Y-m-d',strtotime($request->start_date)).' '.$request->start_time;
 
-            }
+             $date_end = date('Y-m-d',strtotime($request->end_date)).' '.$request->end_time;
 
-            
-             return response()->json(['total'=>$total,'cash'=>$cash,'card'=>$card]);
+            $result = DB::table('vr_confirm_payment as a')
+               ->select('a.paid_amount','a.cash',
+                        'a.card','a.created_at','b.reference')
+               ->join('ps_orders as b','a.order_id','b.id_order')
+               ->where('device_order',0)
+               ->where('a.rockpos_shop_id',$request->shop_id)
+               ->where('a.created_at','>=',$date_from)
+               ->where('a.created_at','<=',$date_end)
+               ->get();
+
+            $total_cash = $money->where('cash',1)->where('created_at','>=',$date_from)
+               ->where('created_at','<=',$date_end)->where('device_order',0)->where('rockpos_shop_id',$request->shop_id)->sum('paid_amount');
+
+            $total_card = $money->where('card',1)->where('created_at','>=',$date_from)
+               ->where('created_at','<=',$date_end)->where('device_order',0)->where('rockpos_shop_id',$request->shop_id)->sum('paid_amount');
+
+
+            return response()->json(['record'=>$result,
+                                     'date_from'=>$date_from,
+                                    'date_end'=>$date_end,
+                                    'total_cash'=>$total_cash,
+                                    'total_card'=>$total_card]);
     		
 
     	}

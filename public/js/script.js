@@ -43,8 +43,24 @@ $(document).ready(function(){
 	$('.datepicker').pickadate({
 	    selectMonths:true,
 	    selectYear:15,
-	    closeOnSelect:true
+	    closeOnSelect:true,
+	    format: "mmm.dd,yyyy"
 	   });
+
+	$(".timepicker").pickatime({
+	    default: "now",
+	    twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+	    donetext: "Select",
+	    autoclose: false,
+	    vibrate: true,
+	    darktheme:false
+	  });
+	  // For adding seconds (00)
+	  $(".timepicker").on("change", function() {
+	    var receivedVal = $(this).val();
+	    var iam = $(this).attr('id');
+	    // var check_time = $(this).val(receivedVal + ":00");
+	  });
 
 	$('ul.tabs').tabs({
 	     swipeable : true,
@@ -462,35 +478,85 @@ let styles = {
 		 });
 	}
 
-	//
-
-	var get_total_today = function(today,alltime){
-		let ajax_obj = {
-			url:window.location.href+'get_total_today',
-			type:'post',
-			dataType:'json',
-			data:{
-				shop_id:$('.get_total_shop').val(),
-				today:today,
-				alltime:alltime
-			}
-		}
+	
 
 
-		$.ajaxSetup({
-	       headers: {
+
+
+$('.get_online_sales').click(function(e){
+	let url = window.location.href+'get_total_today';
+	$('.get_online_sales').attr('disabled','disabled');
+	//$('.get_online_sales').text('loading..');
+
+    
+    let start_date = $('.start-date').val(),
+    	start_time = $('.start-time').val(),
+    	  end_date = $('.end-date').val(),
+    	  end_time = $('.end-time').val()
+	$.ajaxSetup({
+	    headers: {
 	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	     }
-	    });
+	    }
+	});
 
-	    $.ajax(ajax_obj).done(function(response){
-	    	console.log(response);
+	$.ajax({
+		url:url,
+		type:'post',
+		dataType:'json',
+		data:{
+			   shop_id:$('.get_total_shop').val(),
+				start_date:start_date,
+				start_time:start_time,
+				end_date:end_date,
+				end_time:end_time
+		},
+		success:function(e){
+			$('.get_online_sales').removeAttr('disabled');
+			console.log(e);
+			let htmlresult = '';
 
-	    	$('.total_cash_card').html(response.total);
-	    	$('.total_cash').html(response.cash);
-	    	$('.total_card').html(response.card);
-	    });
-	}
+			let record_message = "<p class='flow-text'>Web Sales Record from "+
+			e.date_from+" to "+e.date_end+" with total "+
+			"<span class='green-text'>"+e.total_cash+" &euro;</span>"+" in Cash and "+
+			"<span class='blue-text'>"+e.total_card+" &euro;</span>"+" in Card"+
+			"</p>";
+
+			$('.websales-record-message').html(record_message)
+
+			if(e.record.length > 0){
+				e.record.forEach(function(el){
+				htmlresult += 
+				"<tr>"+
+					"<td>"+el.reference+"</td>"+
+					"<td>"+el.paid_amount+" &euro;</td>"+
+					"<td>"+!!el.card+"</td>"+
+					"<td>"+!!el.cash+"</td>"+
+					"<td>"+el.created_at+"</td>"+
+				"</tr>"
+
+				});
+				$('.each-websales-record').html(htmlresult);
+			}
+			
+			
+
+		}
+	});
+});
+
+
+$('.total-sale').fancyTable({
+  sortColumn:0,
+  sortable: true,
+  pagination: false, 
+  searchable: true,
+  globalSearch: true,
+  inputPlaceholder: "Search by reference",
+
+});
+
+
+
 
 
 /* =========================================end of all ajax calls =================================*/
@@ -1038,18 +1104,6 @@ function search_reward_reset(){
 		check_remain_reward_use();
 	});
 
-	$('#get_total_today').click((e)=>{
-
-		let today = 1, alltime = 0;
-		get_total_today(today,alltime);
-		
-	});
-
-	$('#get_total_all').click((e)=>{
-		let today = 0, alltime = 1;
-		get_total_today(today,alltime);
-		
-	});
 
 
 	$('#refund-info').hide();

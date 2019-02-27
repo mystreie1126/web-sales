@@ -199,34 +199,71 @@
 		 </div>
 	</div>
 	<div class="hide" id='lele'>
-		{{-- <button class="btn green right" id="get_total_today">Online Sales from today</button> --}}
-		<button class='dropdown-button btn green right' data-activates='dropdown1'>Get Online Sales</button>
-		  <ul id='dropdown1' class='dropdown-content'>
-		    <li><a id="get_total_today">Today Only</a></li>
-		    <li><a id="get_total_all">All the time</a></li>
-		  
-		  </ul>
-        
-		
-		<table class="striped total-sale">
-	        <thead>
-	          <tr>
-	              <th class="center">Card</th>
-	              <th class="center">Cash</th>
-	              <th class="center">Total</th>
-	          </tr>
-	        </thead>
+		 <input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
+		<div class="sales-time-picker">
+			 <div class="row">	 
+			   	<div class="col s12">
+			      	<div class="input-field input-date col s4">
+			      		<input type="text" class="datepicker start-date" id="date" name="dateStart">
+			      		<label for="date" class="green-text">Select the start date:</label>
+			      	</div>
 
-	        <tbody>
-	          <tr>
-	            <td class="center"><span class="total_card"></span> &euro;</td>
-	            <td class="center"><span class="total_cash"></span> &euro;</td>
-	            <td class="center"><span class="total_cash_card"></span> &euro;</td>
-	          </tr>
-			</tbody>
+			      	<div class="input-field input-date col s4">
+						<input type="text" class="timepicker start-time" id="time" name="timeStart">
+						<label for="time" class="green-text">Select the start time:</label>
+					</div>
+
+				</div>
+
+				<div class="col s12">
+			      	<div class="input-field input-date col s4">
+			      		<input type="text" class="datepicker end-date" id="date" name="dateEnd">
+			      		<label for="date" class="indigo-text">Select the end date:</label>
+			      	</div>
+
+			      	<div class="input-field input-date col s4">
+						<input type="text" class="timepicker end-time" id="time" name="timeStart">
+						<label for="time" class="indigo-text">Select the end time:</label>
+					</div>
+					
+					<div class="col s4">
+						<button class="btn-large right cyan get_online_sales">Web Sales Record<i class="material-icons right">send</i></button>
+					</div>
+					
+				</div>	      
+			    
+	  		</div>
+        </div>
+		
+		<div class="websales-record-message flow-text"></div>
+		<table class="striped total-sale ">
+
+      	  <thead>
+          <tr>
+          	  <th>Order Ref</th>
+          	  <th>Amount</th>
+              <th>Card</th>
+              <th>Cash</th>
+              <th>Date</th>
+          </tr>
+        </thead>
+		
+        <tbody class='each-websales-record'>
+          <tr>
+          	<td>0</td>
+          	<td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>           
+         </tr>   
+		</tbody>
 		</table>
-			<input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
-	
+	   
+
+	    
+
+		
+		
 	</div>
 	@endif
 @endsection

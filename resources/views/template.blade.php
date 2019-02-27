@@ -77,6 +77,17 @@
         #check_btn_lol button{
          margin-right: 20px;
         }
+
+        .total-sale{
+          height:30vh;
+          overflow: scroll;
+        }
+
+        .sales-time-picker{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
         </style>
 
     </head>
@@ -91,6 +102,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js
 "></script>
    {{--  <script type="text/javascript" src="{{URL::asset('js/jquery.js')}}"></script> --}}
+    <script type="text/javascript" src="{{URL::asset('js/plugin/fancyTable.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
 
     </body>
