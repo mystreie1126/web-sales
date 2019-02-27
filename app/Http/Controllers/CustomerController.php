@@ -123,9 +123,9 @@ class CustomerController extends Controller
     		$money = new Confirm_payment;
     		
 
-            $date_from = date('Y-m-d',strtotime($request->start_date)).' '.$request->start_time;
+            $date_from = date('Y-m-d',strtotime($request->start_date)).' '.'00:00:00';
 
-             $date_end = date('Y-m-d',strtotime($request->end_date)).' '.$request->end_time;
+             $date_end = date('Y-m-d',strtotime($request->end_date)).' '.'23:59:59';
 
             $result = DB::table('vr_confirm_payment as a')
                ->select('a.paid_amount','a.cash',
@@ -148,7 +148,8 @@ class CustomerController extends Controller
                                      'date_from'=>$date_from,
                                     'date_end'=>$date_end,
                                     'total_cash'=>$total_cash,
-                                    'total_card'=>$total_card]);
+                                    'total_card'=>$total_card
+                                    ]);
     		
 
     	}

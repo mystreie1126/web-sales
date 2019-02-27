@@ -490,9 +490,9 @@ $('.get_online_sales').click(function(e){
 
     
     let start_date = $('.start-date').val(),
-    	start_time = $('.start-time').val(),
-    	  end_date = $('.end-date').val(),
-    	  end_time = $('.end-time').val()
+    	
+    	  end_date = $('.end-date').val();
+    
 	$.ajaxSetup({
 	    headers: {
 	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -506,9 +506,9 @@ $('.get_online_sales').click(function(e){
 		data:{
 			   shop_id:$('.get_total_shop').val(),
 				start_date:start_date,
-				start_time:start_time,
+			
 				end_date:end_date,
-				end_time:end_time
+		
 		},
 		success:function(e){
 			$('.get_online_sales').removeAttr('disabled');
@@ -528,7 +528,7 @@ $('.get_online_sales').click(function(e){
 				htmlresult += 
 				"<tr>"+
 					"<td>"+el.reference+"</td>"+
-					"<td>"+el.paid_amount+" &euro;</td>"+
+					"<td>"+el.paid_amount+"</td>"+
 					"<td>"+!!el.card+"</td>"+
 					"<td>"+!!el.cash+"</td>"+
 					"<td>"+el.created_at+"</td>"+

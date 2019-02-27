@@ -202,35 +202,23 @@
 		 <input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
 		<div class="sales-time-picker">
 			 <div class="row">	 
-			   	<div class="col s12">
 			      	<div class="input-field input-date col s4">
 			      		<input type="text" class="datepicker start-date" id="date" name="dateStart">
-			      		<label for="date" class="green-text">Select the start date:</label>
+			      		<label for="date" class="green-text">From:</label>
 			      	</div>
 
-			      	<div class="input-field input-date col s4">
-						<input type="text" class="timepicker start-time" id="time" name="timeStart">
-						<label for="time" class="green-text">Select the start time:</label>
-					</div>
 
-				</div>
-
-				<div class="col s12">
 			      	<div class="input-field input-date col s4">
 			      		<input type="text" class="datepicker end-date" id="date" name="dateEnd">
-			      		<label for="date" class="indigo-text">Select the end date:</label>
+			      		<label for="date" class="indigo-text">To:</label>
 			      	</div>
 
-			      	<div class="input-field input-date col s4">
-						<input type="text" class="timepicker end-time" id="time" name="timeStart">
-						<label for="time" class="indigo-text">Select the end time:</label>
-					</div>
 					
 					<div class="col s4">
-						<button class="btn-large right cyan get_online_sales">Web Sales Record<i class="material-icons right">send</i></button>
+						<button class="btn-large right cyan get_online_sales">Web Sales Record</button>
 					</div>
 					
-				</div>	      
+				    
 			    
 	  		</div>
         </div>
@@ -241,7 +229,7 @@
       	  <thead>
           <tr>
           	  <th>Order Ref</th>
-          	  <th>Amount</th>
+          	  <th>Amount &euro;</th>
               <th>Card</th>
               <th>Cash</th>
               <th>Date</th>
