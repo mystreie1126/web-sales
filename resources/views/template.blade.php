@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Pre-Own Orders</title>
+        <title>Web-Sales</title>
         <!-- Latest compiled and minified CSS -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -50,7 +50,7 @@
           justify-content: space-around;
           align-items: center;
         }
-    /*   
+    /*
       .collect-order_items_detail{
         display: flex;
 
@@ -58,14 +58,14 @@
       .collect-order_items_detail span{
         padding-right: 10px
       }
-      
-        
+
+
 
         .card .card-content .card-title {
           display: flex;
           justify-content: space-around;
         }
-    
+
         .total-sale{
           height:15vh;
         }
