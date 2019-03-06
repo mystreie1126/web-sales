@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL',  'public/web-sales'),
+    'url' => env('APP_URL', 'http://localhost/public'),
 
     /*
     |--------------------------------------------------------------------------
