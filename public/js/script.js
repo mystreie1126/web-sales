@@ -159,6 +159,12 @@ let styles = {
 
 	//4. search order detail by input ref
 
+	function helperContact(e){
+		return  e !=='' ? e : "Empty";
+	}
+
+	
+
 	var search_order_by_ref = function(ref){
 		let ajax_obj = {
 			url:window.location.href+'search_order_by_ref',
@@ -176,17 +182,27 @@ let styles = {
 	    });
 
 	    $.ajax(ajax_obj).done(function(response){
+	    	console.log('lalalal');
 	    	console.log(response);
 	    	let htmlresult = '';
 
 	    	if(response.has_order == 0){
 	    		$("<p class='flow-text red-text'> Order not found!</p>").appendTo('.lol').fadeOut(4000);
 	    	}else if(response.has_order == 1){
+	    		
+	    		//response.contact.phone = null;
+
 	    		$('.collect-order_ref').text(response.order.reference);
 	    		$('.collect-order_date').text(response.order.date_add);
 	    		$('.collect-order_amount').text(parseFloat(response.order.total_paid_tax_incl));
 	    		$('.collect-order_customer_name').text(response.customer.firstname + ' ' +response.customer.lastname);
 	    		$('.collect-order_email').text(response.customer.email);
+
+	    		$('.collect-order_contact_mobile').text(helperContact(response.contact.phone_mobile));
+	    		$('.collect-order_contact_phone').text(helperContact(response.contact.phone));
+	    		$('.collect-order_contact_city').text(helperContact(response.contact.city));
+
+
 	    		$('.hide-id_order').val(response.order.id_order);
 	    		$('.hide-id_customer').val(response.order.id_customer);
 	    		response.items.forEach((e)=>{

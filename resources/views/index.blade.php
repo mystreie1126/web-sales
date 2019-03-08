@@ -105,8 +105,23 @@
 			              </div>
 			              <div class="collect-order_customer_info">
 							<div>
+								{{-- <span>
+									<span class="collect-order_customer_name">customer name</span>
+									<span class="collect-order_email">email</span>
+								</span> --}}
 				        		<span class="collect-order_customer_name">customer name</span><br>
-				        		<span class="collect-order_email">email</span>
+				        		<span class="collect-order_email">email</span><br>
+				        		<span>
+				        			<span class='cyan-text'>Mobile Number: </span><span class="collect-order_contact_mobile"></span>&nbsp;
+				        		</span>
+				        		<span>
+				        			<span class='cyan-text'>Home Number: </span> <span class="collect-order_contact_phone"></span>&nbsp;
+				        		</span>
+				        		<span>
+				        			<span class='cyan-text'>City: </span><span class="collect-order_contact_City"></span>
+				        		</span>
+				        		<br>
+
 				        		<hr>
 				        	</div>	              
 							<div class="collect-order_items">

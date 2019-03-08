@@ -10,6 +10,7 @@ use App\voucher_ie;
 use App\rd_pickup_order;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Confirm_payment;
+use App\customer_contact;
 
 class OrderController extends Controller
 {
@@ -80,14 +81,18 @@ class OrderController extends Controller
                 $the_customer = new Online_customer;
                 $the_customer->refresh();
 
-                $customer = $the_customer->where('id_customer',$order->id_customer)->first();
+              
+                $contact = customer_contact::where('id_customer',$order->id_customer)
+                           ->where('alias','My address')->first();
+                $customer = $the_customer->findOrFail($order->id_customer);
                 //$order_items = Order::find(9027)->order_detail;
                  return response()->json([
                      'order'=>$order,
                      'items'=>$order->order_detail,
                      'customer'=>$customer,
                       'has_order'=>1,
-                      'payment_method'=>$payment_method
+                      'payment_method'=>$payment_method,
+                      'contact' => $contact
                     
                     ]);
             }
