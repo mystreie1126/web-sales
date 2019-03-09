@@ -198,9 +198,13 @@ let styles = {
 	    		$('.collect-order_customer_name').text(response.customer.firstname + ' ' +response.customer.lastname);
 	    		$('.collect-order_email').text(response.customer.email);
 
-	    		$('.collect-order_contact_mobile').text(helperContact(response.contact.phone_mobile));
-	    		$('.collect-order_contact_phone').text(helperContact(response.contact.phone));
-	    		$('.collect-order_contact_city').text(helperContact(response.contact.city));
+	    		if(response.contact !== null){
+		    		$('.collect-order_contact_mobile').text(helperContact(response.contact.phone_mobile));
+		    		$('.collect-order_contact_phone').text(helperContact(response.contact.phone));
+		    		$('.collect-order_contact_city').text(helperContact(response.contact.city));
+	    		}
+
+	    		
 
 
 	    		$('.hide-id_order').val(response.order.id_order);
