@@ -76,8 +76,8 @@
 			</div>
 
 
-
-
+		
+{{-- 		collection in store --}}
 		 <div id="test3" class="col s12">
 		 	<div class="row valign-wrapper center">
 				 <div class="col s8 input-field">

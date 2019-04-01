@@ -1,11 +1,12 @@
 
+
 var refresh_flag = 0;
 
 window.onbeforeunload = function(e){
 	if(refresh_flag == 1){
 		return 'error';
 	}
-	
+
 }
 
 
@@ -27,7 +28,7 @@ const  default_postVar = function()
 	       total_paid:$('.order-total_paid').val(),
 	       shopname:$('.shopname').val(),
 	       shop_id:$('.shop_id').val(),
-	       
+
 		}
 }
 
@@ -36,7 +37,7 @@ var flag = 0;
 $(document).ready(function(){
 
 
-	//css initialize 
+	//css initialize
 
 	$("select").material_select();
 	$(".button-collapse").sideNav();
@@ -118,7 +119,7 @@ let styles = {
               $('#each-order-details').remove();
               $('#get-new-order').removeAttr('disabled');
             }else if(data.reward_used ==0){
-            	
+
                 $('.toast').show();
             }
 	    });
@@ -126,7 +127,7 @@ let styles = {
 	}//end of ajax call
 
 
-	
+
 	//3 .start proceed without using reward call
 
 	var not_use_reward = function(online_rewardid,pos_rewardid){
@@ -148,9 +149,9 @@ let styles = {
 	    });
 
 	    $.ajax(ajax_obj).done(function(data){
-	    	
 
-	    
+
+
 	    });
 
 
@@ -163,7 +164,7 @@ let styles = {
 		return  e !=='' ? e : "Empty";
 	}
 
-	
+
 
 	var search_order_by_ref = function(ref){
 		let ajax_obj = {
@@ -189,7 +190,7 @@ let styles = {
 	    	if(response.has_order == 0){
 	    		$("<p class='flow-text red-text'> Order not found!</p>").appendTo('.lol').fadeOut(4000);
 	    	}else if(response.has_order == 1){
-	    		
+
 	    		//response.contact.phone = null;
 
 	    		$('.collect-order_ref').text(response.order.reference);
@@ -204,13 +205,13 @@ let styles = {
 		    		$('.collect-order_contact_city').text(helperContact(response.contact.city));
 	    		}
 
-	    		
+
 
 
 	    		$('.hide-id_order').val(response.order.id_order);
 	    		$('.hide-id_customer').val(response.order.id_customer);
 	    		response.items.forEach((e)=>{
-	    			htmlresult += 
+	    			htmlresult +=
 
 	    			"<div class='collect-order_items_detail'>"+
 		    			"<span>"+e.product_name+"</span>"+
@@ -226,7 +227,7 @@ let styles = {
 	    			$('.collect-payment_status').html('<span class="red-text">Not Paid</span>');
 	    			$('.collect-order_pay').removeClass('hide');
 	    			//$('.collect-order_customer_info').append("<button href='#modal2' class='modal-trigger btn collect-order_pay'>Pay and Collect</button>");
-	    			
+
 	    		}else if(response.order.current_state == 5){
 	    			 if(response.payment_method.length == 0){
 	    			 	$('.collect-payment_status').html('<span class="green-text">Collected and Paid</span>')
@@ -239,10 +240,10 @@ let styles = {
 	    			 		$('.collect-payment_status').html('<span class="green-text">Collected and Paid by</span><span class="blue-text"> Card</span>')
 	    			 	}else{
 	    			 		$('.collect-payment_status').html('<span class="green-text">Collected and Paid</span>')
-	    			 	}    			 
+	    			 	}
 	    			 }
 
-	    			
+
 	    		}else if(response.order.current_state == 2){
 
 	    			if(response.payment_method.length == 0){
@@ -263,8 +264,8 @@ let styles = {
 	    			 		$('.collect-order_no_pay').removeClass('hide');
 	    			 	}
 	    			 }
-	    		
-	    			
+
+
 	    		}
 
 	    		$('.collect-order').removeClass('hide');
@@ -292,7 +293,7 @@ let styles = {
 
 
 				paid_amount:Number($('.collect-order_amount').text()),
-				
+
 				shop_name:$('.hide-shop_name').val(),
 				card:card,
 				cash:cash
@@ -307,7 +308,7 @@ let styles = {
 	    });
 
 	      $.ajax(ajax_obj).done(function(response){
-	      	console.log(response.collected);
+	      	console.log(response);
 
 	      	if(response.collected == 1){
 	      		$('.collect-order_items_detail').remove();
@@ -337,7 +338,7 @@ let styles = {
 
 
 
-	//7. transfer customer online ajax call 
+	//7. transfer customer online ajax call
 
 	var transfer_customer_check = function(email){
 		let ajax_obj = {
@@ -363,14 +364,14 @@ let styles = {
 			}else if(response.valid_customer == 1){
 				$('.online-customer_email').text(response.customer.email);
 				$('.online-customer_fullname').text(response.customer.firstname + ' ' + response.customer.lastname);
-			
+
 
 				$('.online-customer_id-hide').val(response.customer.id_customer);
 				$('.online-customer_firstname-hide').val(response.customer.firstname);
 				$('.online-customer_lastname-hide').val(response.customer.lastname);
 				$('.online-customer_email-hide').val(response.customer.email);
 
-				
+
 				$('.online-customer-transfer').removeClass('hide');
 
 				if(response.share_customer == 0){
@@ -385,7 +386,7 @@ let styles = {
 
 	}
 
-	//8. transfer customer to pos for online price 
+	//8. transfer customer to pos for online price
 
 	var get_member = function(id,firstname,lastname,email){
 		let ajax_obj = {
@@ -398,7 +399,7 @@ let styles = {
 				lastname:lastname,
 				email:$('.online-customer_email').text(),
 				date:new Date().toISOString().slice(0, 19).replace('T', ' ')
-			}	
+			}
 		}
 
 		$.ajaxSetup({
@@ -417,9 +418,9 @@ let styles = {
 
 	}
 
-	//9.pull reward ajax call 
+	//9.pull reward ajax call
 
-	
+
 	var pull_reward = function(){
 		let ajax_obj = {
 			url:window.location.href+'pull_reward',
@@ -455,11 +456,11 @@ let styles = {
 		 		$('.rm_check_reward').removeClass('hide');
 
 		 	}
-		 
+
 		 });
 	}
 
-	//10.check remain reward ajax call 
+	//10.check remain reward ajax call
 
 	var check_remain_reward_use = function(){
 		let ajax_obj = {
@@ -491,14 +492,14 @@ let styles = {
               $('#search-reward-by-email').removeAttr('disabled');
               $('.rm_reward_active').removeAttr('disabled')
             }else if(response.reward_used ==0){
-            	
+
                 $('.toast').show();
             }
 
 		 });
 	}
 
-	
+
 
 
 
@@ -508,11 +509,11 @@ $('.get_online_sales').click(function(e){
 	$('.get_online_sales').attr('disabled','disabled');
 	//$('.get_online_sales').text('loading..');
 
-    
+
     let start_date = $('.start-date').val(),
-    	
+
     	  end_date = $('.end-date').val();
-    
+
 	$.ajaxSetup({
 	    headers: {
 	       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -526,9 +527,9 @@ $('.get_online_sales').click(function(e){
 		data:{
 			   shop_id:$('.get_total_shop').val(),
 				start_date:start_date,
-			
+
 				end_date:end_date,
-		
+
 		},
 		success:function(e){
 			$('.get_online_sales').removeAttr('disabled');
@@ -545,7 +546,7 @@ $('.get_online_sales').click(function(e){
 
 			if(e.record.length > 0){
 				e.record.forEach(function(el){
-				htmlresult += 
+				htmlresult +=
 				"<tr>"+
 					"<td>"+el.reference+"</td>"+
 					"<td>"+el.paid_amount+"</td>"+
@@ -557,8 +558,8 @@ $('.get_online_sales').click(function(e){
 				});
 				$('.each-websales-record').html(htmlresult);
 			}
-			
-			
+
+
 
 		}
 	});
@@ -568,7 +569,7 @@ $('.get_online_sales').click(function(e){
 $('.total-sale').fancyTable({
   sortColumn:0,
   sortable: true,
-  pagination: false, 
+  pagination: false,
   searchable: true,
   globalSearch: true,
   inputPlaceholder: "Search by reference",
@@ -637,19 +638,19 @@ function search_reward_reset(){
 	        	// data.order.forEach(function(e){
 	        	// 	console.log(e.reward);
 	        	// });
-	        	
+
 	        	if(data['order'].length == 0){
 	        		check_new_order_reset();
 	        		let msg = $("<p class='flow-text'>No reward order coming yet!</p>").fadeOut(3000);
 	        		$('.new-order').html(msg);
 	        	}
 
-	        
+
 
 	        	let htmlresult = '';
 	         	data['order'].forEach(function(e){
 	         		console.log(e);
-	            htmlresult += 
+	            htmlresult +=
 	              "<li class='each-order-details'>"+
 	                "<div class='collapsible-header order-basic-info'>"
 	                  +"<i class='material-icons indigo-text'>payment</i>"
@@ -667,14 +668,14 @@ function search_reward_reset(){
 	  							+"<button class=' btn green' id='payment-accept'>Accept Payment</button>"
 	               				+"<button class='btn hide orange white-text' id='check-remain-voucher'>Complete Transaction</button>"
 
-		           
+
 	                +"</div>"
 	                +"<div id='check_btn_lol' class='hide'>"
        					+"<h6 class='red-text' style='font-weight:bold;'>Are you sure proceed without using Reward?</h6>"
-			            	
+
 	            		+"<button id='proceed' class='btn teal accent-3'>Proceed</button>"
 	            		+"<button id='no-proceed' class='btn  blue-grey'>No</button>"
-							            	
+
 	               	+"</div>"
 	                +"<input type='hidden' value="+e.id_reward+" class='order-reward_id'>"
 	                +"<input type='hidden' value="+e.email+" class='order-email'>"
@@ -702,7 +703,7 @@ function search_reward_reset(){
 
 	              +"</li>"
 
-	              
+
 	          });
 
 	         $('#order-info').html(htmlresult);
@@ -712,7 +713,7 @@ function search_reward_reset(){
 				}
 
 	         $('.each-order-details').each(function(index,e){
-	         	
+
 	         	$(e).find('#payment-accept').click(function(){
 	         		refresh_flag = 1;
 	         		$('#payment-accept').attr('disabled','disabled');
@@ -722,7 +723,7 @@ function search_reward_reset(){
 				       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				     	}
 	   				 });
-	
+
 
 	         		$.ajax({
 	         			url:window.location.href+'createvoucher',
@@ -745,9 +746,9 @@ function search_reward_reset(){
 					        pay_by_card:0,
 					        pay_by_cash:0
 				        },
-				        success:function(re){	
+				        success:function(re){
 
-				        	
+
 
 				        	console.log(re);
 
@@ -762,7 +763,7 @@ function search_reward_reset(){
 
 								$(e).find('#check-remain-voucher').attr('disabled','disabled');
 								console.log($(e).find('#check-remain-voucher').text());
-								
+
 
 								$.ajax({
 									url:window.location.href+'checkreward',
@@ -800,7 +801,7 @@ function search_reward_reset(){
 							            			},
 							            			success:function(res){
 							            				console.log(res);
-							            
+
 							            				$(e).remove();
 
 							            				if($('#order-info').children().length == 0){
@@ -808,9 +809,9 @@ function search_reward_reset(){
 							            				}
 							            			}
 							            		});
-							            		
 
-							            		
+
+
 							            	}));
 
 
@@ -818,7 +819,7 @@ function search_reward_reset(){
 							            		$(this).parent().prev().children().removeAttr('disabled');
 							            		$(this).parent().addClass('hide');
 							            	}));
-							              	
+
 
 
 							            }
@@ -827,7 +828,7 @@ function search_reward_reset(){
 
 
 							});//end of function
-							
+
 							// a.on('click','a',function(){
 
 							// })
@@ -836,9 +837,9 @@ function search_reward_reset(){
 				        }
 
 	         		});
-	         					
 
-	         	});//end of each li tag         	
+
+	         	});//end of each li tag
 	         });
 	        },
 	        error:function(){
@@ -848,9 +849,9 @@ function search_reward_reset(){
 
 
 	      });//end of ajax call
-	});//end of click this 
-	
-	
+	});//end of click this
+
+
 
 	/* =====================search reward by email ===============================================================*/
 	$('#search-reward-by-email').click(function(e){
@@ -876,7 +877,7 @@ function search_reward_reset(){
 				console.log(cus);
 				search_reward_reset();
 
-				let html = 
+				let html =
 
 				 "<ul class='collection with-header collect-order'>"
 					+"<li class='collection-header flow-text'>"
@@ -891,14 +892,14 @@ function search_reward_reset(){
 						+"</div>"
 
 						+"<div class='reward-info-container col s6'>"
-											
+
 						+"</div>"
 						+"<input type='hidden' class='cus_customer_id' value="+cus.customer.id_customer+">"
 						+"<input type='hidden' class='cus_firstname' value="+cus.customer.firstname+">"
 						+"<input type='hidden' class='cus_lastname' value="+cus.customer.lastname+">"
 						+"<input type='hidden' class='cus_email' value="+cus.customer.email+">"
 
-						
+
 
 					+"</li>"
 				+"</ul>"
@@ -917,7 +918,7 @@ function search_reward_reset(){
 					console.log('total_reward is '+total_reward+' can used on pos');
 
 					$('.reward-info-container').html(html);
-					
+
 					$('.active_reward_on_pos').click(function(){
 						$(this).attr('disabled','disabled');
 						$(this).text('loading...');
@@ -964,7 +965,7 @@ function search_reward_reset(){
 												$('.customer-has-results').children().remove();
 												refresh_flag = 0;
 											}else if(check_remain.reward_used == 0){
-												let condition_html = 
+												let condition_html =
 												"<div class='col s6 row'>"
 													+"<p class='col s12'>Proceed without using reward?</p>"
 													+"<button class='btn indigo col s4 not-gonna-use'>Proceed </button>"
@@ -1015,7 +1016,7 @@ function search_reward_reset(){
 						});
 					});
 				}
-						
+
 
 
 				// console.log(res.reward.length);
@@ -1024,9 +1025,9 @@ function search_reward_reset(){
 				search_reward_reset();
 				$('.customer-has-results').html("<p>Customer not found</p>")
 			}
-			
-		  }); // all call ends 
-		  
+
+		  }); // all call ends
+
 
 
 	});
@@ -1042,18 +1043,18 @@ function search_reward_reset(){
 
 
 
-	
+
 	$('.collect-order_no_pay').click(function(e){
 		e.preventDefault();
 		pay_flag = 1;
-		let cash = 0, card = 0; 
+		let cash = 0, card = 0;
 		$('.collect-order_amount').text('0');
 		collect_payment(cash,card);
 
 	});
 
 	$('#search-order-by-reference').click((e)=>{
-		e.preventDefault();	
+		e.preventDefault();
 		let input_ref =  $('#input-id-ref').val();
 		search_order_by_ref(input_ref);
 		//console.log(input_ref);
@@ -1136,8 +1137,8 @@ function search_reward_reset(){
 		console.log(a);
 	});
 
-	
-	
+
+
 
 	$(".click_flag").bind('click', function(e) {
 		if($(e.target).is('#get-order-history') && ($('#lele').hasClass('hide') || $('#refund').hasClass('hide'))) {
@@ -1201,19 +1202,14 @@ function search_reward_reset(){
 		    				 })
 		    			});
 		    		}
-		    		
+
 		    	}
 		    });
 
 		}
-		
+
 
 
 	});
 
 });
-
-
-
-
-

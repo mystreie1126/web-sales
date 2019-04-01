@@ -33,6 +33,7 @@ Auth::routes();
 
 Route::get('/testa',function(){
 
+	
 
 });
 

@@ -20,6 +20,7 @@ class OrderController extends Controller
     }
 
 
+
     //show the coming order
     public function newOrder(){
 
@@ -41,9 +42,9 @@ class OrderController extends Controller
             ->where('a.current_state',10)
             // ->where('a.date_add','>',date('Y-m-d'))
             ->orderBy('a.date_add','desc')
-       
+
             ->get();
-        
+
             $staff = DB::table('users')->select('name','shop_id')->where('shop_id',Auth::User()->shop_id)->get();
             $rockpos = Auth::User()->rockpos;
             return response()->json([ 'order' => $data,'staff'=>$staff,'rockpos'=>$rockpos]);
@@ -63,7 +64,7 @@ class OrderController extends Controller
             $the_order = new Order;
             $the_order->refresh();
 
-            $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();     
+            $order = $the_order->where('reference','like','%'.$request->ref.'%')->first();
             $product = $order->order_detail[0]->product_name;
             $d = $order->id_order;
 
@@ -74,14 +75,14 @@ class OrderController extends Controller
 
 
 
-           
+
             if($request->ref == '' || $order==null ||  ((count($order->order_detail) == 1) && (stripos($product, 'imei') !== false))){
                 return response()->json(['has_order'=>0]);
             }else{
                 $the_customer = new Online_customer;
                 $the_customer->refresh();
 
-              
+
                 $contact = customer_contact::where('id_customer',$order->id_customer)
                            ->where('alias','My address')->first();
                 $customer = $the_customer->findOrFail($order->id_customer);
@@ -93,10 +94,10 @@ class OrderController extends Controller
                       'has_order'=>1,
                       'payment_method'=>$payment_method,
                       'contact' => $contact
-                    
+
                     ]);
             }
-        } 
+        }
     }
 
 
@@ -105,13 +106,41 @@ class OrderController extends Controller
 
     public function collect_in_store(Request $request){
 
-        if(Auth::check()){
+        
+        $order_details = Order::find($request->online_order_id)->order_detail;
+
+        for($i = 0; $i<count( $order_details); $i++){
+            if($order_details[$i]->product_attribute_id == 0){
+                DB::table('ps_stock_available')
+                ->where('id_product',$order_details[$i]->product_id)
+                ->where('id_product_attribute',0)
+                ->where('id_shop_group',3)
+                ->increment('quantity',$order_details[$i]->product_quantity);
+            }else{
+                 DB::table('ps_stock_available')
+                ->where('id_product',$order_details[$i]->product_id)
+                ->where('id_product_attribute',$order_details[$i]->product_attribute_id)
+                ->where('id_shop_group',3)
+                ->increment('quantity',$order_details[$i]->product_quantity);
+
+                 DB::table('ps_stock_available')
+                ->where('id_product',$order_details[$i]->product_id)
+                ->where('id_product_attribute',0)
+                ->where('id_shop_group',3)
+                ->increment('quantity',$order_details[$i]->product_quantity);
+            }
+        }
+    
+    if(Auth::check()){
+
+
+
             $pick_up = new rd_pickup_order;
             $pick_up->ie_customer_id = $request->online_customer_id;
             $pick_up->ie_order_id = $request->online_order_id;
             $pick_up->pos_shop_id = $request->shop_id;
             $pick_up->created_at = $request->date;
-
+        
             if($pick_up->save()){
                 $collect = new Confirm_payment;
                 $collect->paid_amount = $request->paid_amount;
@@ -124,27 +153,22 @@ class OrderController extends Controller
                 $collect->card = $request->card;
                 $collect->created_at = $request->date;
                 if($collect->save()){
-
+        
                     $order = new Order;
                     $order->refresh();
-
+        
                     $order->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
-                  
+        
                     return response()->json(['collected'=>1,'order'=>$order]);
                 }
-
-
-                
-
             }
 
-
-
-        }
-
-
-
         
+        }
+        
+
+
+
     }
 
 
