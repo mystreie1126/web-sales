@@ -3,8 +3,8 @@
 
 
 @section('content')
-{{-- 	
-<a href='#modal1' class="btn collect-order_pay">Pay and Collect</a> --}} 
+{{--
+<a href='#modal1' class="btn collect-order_pay">Pay and Collect</a> --}}
 
 	{{--   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> --}}
 
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-	
+
 @if(Auth::check())
 	<div class="row" id="order">
 		 <div class="col s12">
@@ -39,7 +39,7 @@
 				 <li class="tab col s3"><a class="active" href="#test1">Pre-Owned Orders</a></li>
 				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Remaining Reward</a></li>
 				 <li class="tab col s3"><a href="#test3" id="get-order-history" data-clicked="no">Collect in Store</a></li>
-				 <li class="tab col s3"><a href="#test4" id="memmmer">Register Members</a></li>
+				 <li class="tab col s3"><a href="#test4" id="stock_update">Branch Stock</a></li>
 			 </ul>
 		 </div>
 		 <div id="test1" class="col s12">
@@ -50,7 +50,7 @@
 			 <div class="new-order blue lighten-4">
 
 				 <ul class="collapsible" data-collapsible="expandable" id="order-info">
-					 
+
 				</ul>
 
 
@@ -71,12 +71,12 @@
 			 </div>
 
 			 <div class="customer-has-results">
-				
+
 			 </div>
 			</div>
 
 
-		
+
 {{-- 		collection in store --}}
 		 <div id="test3" class="col s12">
 		 	<div class="row valign-wrapper center">
@@ -88,7 +88,7 @@
 				 	<button class="btn  light-blue darken-2" id="search-order-by-reference">Search</button>
 				 </div>
 			 </div>
-			
+
 			 <div class="lol">
 			 	<div class="row collect-order hide">
 			        <div class="col s12">
@@ -123,7 +123,7 @@
 				        		<br>
 
 				        		<hr>
-				        	</div>	              
+				        	</div>
 							<div class="collect-order_items">
 								<div class="collect-order_items_detail">
 								</div>
@@ -149,45 +149,21 @@
 			          </div>
 			        </div>
 			    </div>
-			
+
 
 		 </div>
 
 		 <div id="test4" class="col s12">
-		 	<div class="row valign-wrapper center">
-				 <div class="col s8 input-field">
-					 <input id="input-online_email" type="text" class="validate">
-           			 <label for="input-online_email">Customer's Email</label>
-				 </div>
-				 <div class="col s4">
-				 	<button class="btn purple white-text" id="search-online_price-by-email">Search</button>
-				 </div>
-			 </div>
 
-
-			 <div class="yolo">
-			 	
-				 	<ul class="collection online-customer-transfer  with-header hide">
-						<li class="collection-items">
-							<p class="online-customer_email flow-text"></p>
-							<p class="online-customer_fullname flow-text"></p>
-							
-							<p class="has_online_price flow-text"></p>
-							
-								<button class="btn transfer_customer_to_pos hide">Online Price</button>
-							
-							
-							<br>
-							<input type="hidden" value="0" class="online-customer_id-hide">
-							<input type="hidden" value="0" class="online-customer_firstname-hide">
-							<input type="hidden" value="0" class="online-customer_lastname-hide">
-							<input type="hidden" value="0" class="online-customer_email-hide">			
-							
-						</li>
-			
-				    </ul>
-				
-			 </div>
+       {{-- <ul class="collection">
+         <li class="collection-item stock_detail">
+           <span class="">IPhone TPU wallet case 7.89asdadadadasdasda</span>
+           <span class="">100067</span>
+           <input type="number" value="" required class="update_stock_input " placeholder="quantity">
+           <span class="update_btn">Update</span>
+         </li>
+       </ul> --}}
+       
 		 </div>
 
 	 </div>
@@ -207,16 +183,16 @@
 			 <div class="col s4">
 			 	<button class="btn  orange" id="search-refund-by-ref">Refund the Order</button>
 			 </div>
-			
+
 		 </div>
 		 <div class="refund-order-details row">
-		 	
+
 		 </div>
 	</div>
 	<div class="hide" id='lele'>
 		 <input type="hidden" value="{{Auth::User()->shop_id}}" class="get_total_shop">
 		<div class="sales-time-picker">
-			 <div class="row">	 
+			 <div class="row">
 			      	<div class="input-field input-date col s4">
 			      		<input type="text" class="datepicker start-date" id="date" name="dateStart">
 			      		<label for="date" class="green-text">From:</label>
@@ -228,16 +204,16 @@
 			      		<label for="date" class="indigo-text">To:</label>
 			      	</div>
 
-					
+
 					<div class="col s4">
 						<button class="btn-large right cyan get_online_sales">Web Sales Record</button>
 					</div>
-					
-				    
-			    
+
+
+
 	  		</div>
         </div>
-		
+
 		<div class="websales-record-message flow-text"></div>
 		<table class="striped total-sale ">
 
@@ -250,23 +226,23 @@
               <th>Date</th>
           </tr>
         </thead>
-		
+
         <tbody class='each-websales-record'>
           <tr>
           	<td>0</td>
           	<td>0</td>
             <td>0</td>
             <td>0</td>
-            <td>0</td>           
-         </tr>   
+            <td>0</td>
+         </tr>
 		</tbody>
 		</table>
-	   
 
-	    
 
-		
-		
+
+
+
+
 	</div>
 	@endif
 @endsection

@@ -21,13 +21,13 @@
                                     document.getElementById('logout-form').submit();">
                         Logout
                     </a>
-    
+
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                     </form>
-                       
+
                 </li>
-                
+
               </ul>
               <ul class="side-nav" id="mobile-nav">
                 @if(Auth::check())
@@ -48,16 +48,16 @@
                   <div class="divider"></div>
                 </li>
                <li>
-                      <a href="{{ route('logout') }}" 
+                      <a href="{{ route('logout') }}"
                           onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();">
                           Logout
                       </a>
-      
+
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           {{ csrf_field() }}
                       </form>
-                     
+
                   </li>
               </ul>
             </div>
@@ -74,9 +74,8 @@
               Sequi magnam quo ut quae quia? Sequi laboriosam nam consequatur inventore impedit obcaecati molestias quis, numquam hic laborum ipsam ullam incidunt modi repellendus officiis minus quasi et voluptates nulla soluta.
               Nemo voluptate sunt doloremque laboriosam, maxime saepe delectus vero molestias nam ipsa recusandae sapiente repudiandae, dolorum rerum asperiores voluptatibus sit culpa consequuntur explicabo ipsam quas perferendis? Culpa ea totam quis.</p>
               <br>
-              
+
             </div>
           </div>
         </div>
       </header>
-   

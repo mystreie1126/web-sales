@@ -11,14 +11,31 @@ use App\rd_pickup_order;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Confirm_payment;
 use App\customer_contact;
+use App\Category_product;
+use App\stockinfo;
+
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    private function IN_SHOP_NO_HQ($product_id){
+      $check = in_array($product_id,Category_product::where('id_category',1507)->pluck('id_product')->toArray());
+      return $check ? 1 : 0;
     }
 
+    private function NO_MORE_STOCK($product_id){
+      $check = in_array($product_id,stockinfo::pluck('ie_product_id')->toArray());
+
+      return $check ? 1:0;
+    }
+
+    private function NO_MORE_STOCK_ID($product_id){
+      return stockinfo::where('ie_product_id',$product_id)->value('pos_product_id');
+    }
 
 
     //show the coming order
@@ -105,33 +122,43 @@ class OrderController extends Controller
 
 
     public function collect_in_store(Request $request){
+      if(Auth::check()){
 
-        
         $order_details = Order::find($request->online_order_id)->order_detail;
 
         for($i = 0; $i<count( $order_details); $i++){
-            if($order_details[$i]->product_attribute_id == 0){
-                DB::table('ps_stock_available')
-                ->where('id_product',$order_details[$i]->product_id)
-                ->where('id_product_attribute',0)
-                ->where('id_shop_group',3)
-                ->increment('quantity',$order_details[$i]->product_quantity);
-            }else{
-                 DB::table('ps_stock_available')
-                ->where('id_product',$order_details[$i]->product_id)
-                ->where('id_product_attribute',$order_details[$i]->product_attribute_id)
-                ->where('id_shop_group',3)
-                ->increment('quantity',$order_details[$i]->product_quantity);
+          if(SELF::IN_SHOP_NO_HQ($order_details[$i]->product_id) == 0){
 
-                 DB::table('ps_stock_available')
-                ->where('id_product',$order_details[$i]->product_id)
-                ->where('id_product_attribute',0)
-                ->where('id_shop_group',3)
-                ->increment('quantity',$order_details[$i]->product_quantity);
-            }
+
+              if($order_details[$i]->product_attribute_id == 0){
+                  DB::table('ps_stock_available')
+                  ->where('id_product',$order_details[$i]->product_id)
+                  ->where('id_product_attribute',0)
+                  ->where('id_shop_group',3)
+                  ->increment('quantity',$order_details[$i]->product_quantity);
+              }else{
+                   DB::table('ps_stock_available')
+                  ->where('id_product',$order_details[$i]->product_id)
+                  ->where('id_product_attribute',$order_details[$i]->product_attribute_id)
+                  ->where('id_shop_group',3)
+                  ->increment('quantity',$order_details[$i]->product_quantity);
+
+                   DB::table('ps_stock_available')
+                  ->where('id_product',$order_details[$i]->product_id)
+                  ->where('id_product_attribute',0)
+                  ->where('id_shop_group',3)
+                  ->increment('quantity',$order_details[$i]->product_quantity);
+              }
+          }
+
+          if(SELF::NO_MORE_STOCK($order_details[$i]->product_id) == 1){
+            DB::connection('mysql2')->table('ps_stock_available')
+            ->where('id_product',SELF::NO_MORE_STOCK_ID($order_details[$i]->product_id))
+            ->where('id_shop',Auth::User()->shop_id)
+            ->decrement('quantity',$order_details[$i]->product_quantity));
+          }
+
         }
-    
-    if(Auth::check()){
 
 
 
@@ -140,7 +167,7 @@ class OrderController extends Controller
             $pick_up->ie_order_id = $request->online_order_id;
             $pick_up->pos_shop_id = $request->shop_id;
             $pick_up->created_at = $request->date;
-        
+
             if($pick_up->save()){
                 $collect = new Confirm_payment;
                 $collect->paid_amount = $request->paid_amount;
@@ -153,21 +180,16 @@ class OrderController extends Controller
                 $collect->card = $request->card;
                 $collect->created_at = $request->date;
                 if($collect->save()){
-        
+
                     $order = new Order;
                     $order->refresh();
-        
+
                     $order->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
-        
+
                     return response()->json(['collected'=>1,'order'=>$order]);
                 }
             }
-
-        
         }
-        
-
-
 
     }
 

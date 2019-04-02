@@ -5,18 +5,18 @@
             min-height: 100px;
             color: #000;
           }
-  
+
           .main-header .showcase {
             padding-top: 20px;
             width:70%;
             border:1px solid red;
           }
-          
+
           .active-link {
             color: yellow;
             font-weight: bold;
           }
-          
+
           .coming-orders{
             width:70%;
             border:1px solid red;
@@ -25,4 +25,28 @@
           .bold{
             font-weight: bolder;
           }
-  
+
+          .update_btn{
+            padding:5px;
+            background: teal;
+            color:#fff;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: .2s ease;
+          }
+
+          .update_btn:active{
+            transform:scale(1);
+            opacity: .5;
+          }
+
+          .stock_detail{
+            width:85%;
+            display: flex;
+            justify-content: space-between;
+
+          }
+
+          #test4{
+            overflow: auto;
+          }

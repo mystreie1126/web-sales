@@ -33,7 +33,7 @@ Auth::routes();
 
 Route::get('/testa',function(){
 
-	
+
 
 });
 
@@ -62,3 +62,6 @@ Route::post('/refund-order','RefundController@check_order_refund');
 Route::post('/go-refund','RefundController@go_refund');
 
 
+Route::get('/stockindex','stockController@index');
+Route::post('/stock_update','stockController@update');
+Route::get('/stock_sync','stockController@sync');
