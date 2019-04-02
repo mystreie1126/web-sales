@@ -155,7 +155,7 @@ class OrderController extends Controller
             DB::connection('mysql2')->table('ps_stock_available')
             ->where('id_product',SELF::NO_MORE_STOCK_ID($order_details[$i]->product_id))
             ->where('id_shop',Auth::User()->shop_id)
-            ->decrement('quantity',$order_details[$i]->product_quantity));
+            ->decrement('quantity',$order_details[$i]->product_quantity);
           }
 
         }
