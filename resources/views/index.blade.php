@@ -39,7 +39,7 @@
 				 <li class="tab col s3"><a class="active" href="#test1">Pre-Owned Orders</a></li>
 				 <li class="tab col s3"><a href="#test2" id="get-pickup-order">Remaining Reward</a></li>
 				 <li class="tab col s3"><a href="#test3" id="get-order-history" data-clicked="no">Collect in Store</a></li>
-				 <li class="tab col s3"><a href="#test4" id="stock_update">Branch Stock</a></li>
+				 <li class="tab col s3"><a href="#test4" id="counting_stock">Stock Check</a></li>
 			 </ul>
 		 </div>
 		 <div id="test1" class="col s12">
@@ -77,7 +77,7 @@
 
 
 
-{{-- 		collection in store --}}
+		{{-- collection in store --}}
 		 <div id="test3" class="col s12">
 		 	<div class="row valign-wrapper center">
 				 <div class="col s8 input-field">
@@ -153,16 +153,16 @@
 
 		 </div>
 
-		 <div id="test4" class="col s12">
+		<div id="test4" class="col s12">
 
-       {{-- <ul class="collection">
+        {{-- <ul class="collection">
          <li class="collection-item stock_detail">
            <span class="">IPhone TPU wallet case 7.89asdadadadasdasda</span>
            <span class="">100067</span>
            <input type="number" value="" required class="update_stock_input " placeholder="quantity">
            <span class="update_btn">Update</span>
          </li>
-       </ul> --}}
+        </ul> --}}
        
 		 </div>
 

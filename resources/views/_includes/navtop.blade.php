@@ -8,7 +8,7 @@
               <a href="#" data-activates="mobile-nav" class="button-collapse">
                 <i class="fa fa-bars"></i>
               </a>
-              <ul class="right hide-on-med-and-down">
+              <ul class="right">
                 <li>
                   <a class="active-link" href="#">Home</a>
                 </li>

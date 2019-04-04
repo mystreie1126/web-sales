@@ -31,15 +31,14 @@ Auth::routes();
 
 //Route::get('/order', 'HomeController@index')->name('home');
 
-Route::get('/testa',function(){
-
-
-
-});
-
 Route::get('/',function(){
 	return view('index');
-});
+})->name('home');
+
+Route::get('/countStock',function(){
+	return view('countStock');
+})->name('countStock');
+
 Route::get('/test','voucherController@test');
 Route::get('/neworder','OrderController@newOrder');
 Route::post('/createvoucher','voucherController@createPosVoucher');
@@ -62,6 +61,4 @@ Route::post('/refund-order','RefundController@check_order_refund');
 Route::post('/go-refund','RefundController@go_refund');
 
 
-Route::get('/stockindex','stockController@index');
-Route::post('/stock_update','stockController@update');
-Route::get('/stock_sync','stockController@sync');
+Route::get('/countStockbranchStockInfo','stockController@branchStockList');

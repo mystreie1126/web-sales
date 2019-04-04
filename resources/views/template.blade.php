@@ -88,6 +88,39 @@
           justify-content: space-between;
           align-items: center;
         }
+
+        .shop_name_logo{
+          font-size: 2rem;
+        }
+
+       .stockinfo_row{
+        width:100%;
+       }
+        
+        .stockinfo_row th{
+          width:25%;
+         }
+
+         .updateToStock{
+           padding: 25px;
+           background-color: #f4c242;
+           border-radius: 5px;
+           transition: .5s ease;
+           cursor: pointer;
+           
+         }
+
+         .updateToStock:hover{
+            background: red;
+         }
+          
+           .updateToStock:active{
+              transform: translateY(15px);
+            }
+
+
+
+
         </style>
 
     </head>
@@ -96,15 +129,16 @@
         <div class="container">
             @yield('content')
         </div>
-
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+      
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js
 "></script>
    {{--  <script type="text/javascript" src="{{URL::asset('js/jquery.js')}}"></script> --}}
     <script type="text/javascript" src="{{URL::asset('js/plugin/fancyTable.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('js/plugin/notify.min.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
+    @stack('countStock')
+
 
     </body>
 </html>

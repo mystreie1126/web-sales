@@ -2,7 +2,7 @@
 function init_input(){
 	$('.update_stock_input').css({
 		"height":"auto",
-		"width":"auto",
+		"width":"2px",
 		"margin":"0"
 	})
 }
@@ -14,6 +14,7 @@ window.onbeforeunload = function(e){
 	}
 
 }
+
 
 
 const  default_postVar = function()
@@ -92,87 +93,8 @@ let styles = {
 
 /* check stock */
 
-$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-$.ajax({
-	url:window.location.href+'stockindex',
-	type:'get',
-	dataType:'json',
-	success:function(res){
-		console.log(res);
 
-		let html = '';
 
-		res.stock.forEach((e,i)=>{
-			html+= '<ul class="collection">'+
-			         '<li class="collection-item stock_detail">'+
-			           '<span class="indigo-text">'+e.name+'</span>'+
-			           '<span class="stock_ref">'+e.reference+'</span>'+
-			          '<input type="number" value="" required class="update_stock_input " placeholder="input quantity">'+
-			          '<span class="update_btn ">Update</span>'+
-								'<input type="hidden" value='+e.ie_product_id+'>'+
-								'<input type="hidden" value='+e.pos_product_id+'>'+
-								'<input type="hidden" value='+e.id+'>'+
-								'<input type="hidden" class="notification">'+
-			         '</li>'+
-			      '</ul>'
-
-			$('#test4').html(html);
-			init_input();
-			if(res.shop_id == 27){
-					$('#test4').append('<button class="btn green waves-effect waves-light" id="sync_the_stock" style="margin-bottom:5px">Sync the Stock</btn>')
-			}
-		});
-	}
-});
-
-$('#test4').on('click','.update_btn',function(){
-	let input_qty = $(this).parent().find('.update_stock_input').val(),
-			ie_product_id = $(this).parent().find('input')[1].value,
-		  pos_product_id = $(this).parent().find('input')[2].value,
-			stock_id = $(this).parent().find('input')[3].value,
-			ref = $(this).parent().find('.stock_ref').text();
-			if(input_qty != "" && input_qty > 0){
-				$(this).parent().parent().remove();
-				$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-				$.ajax({
-					url:window.location.href+'stock_update',
-					type:'post',
-					dataType:'json',
-					data:{
-						pos_product_id:pos_product_id,
-						qty:input_qty,
-						stock_id:stock_id
-					},
-					success:function(res){
-						console.log(res);
-						$.notify(ref+" quantity has been Updated!","success");
-					}
-				});
-
-			}else{
-				$.notify("Please input a valid number",{position:"right middle"});
-
-			}
-
-			//$(this).parent().parent().remove();
-});
-
-$('#test4').on('click','#sync_the_stock',function(e){
-		e.preventDefault(e);
-		$(this).attr('disabled','disabled');
-		$(this).text('syncing....')
-		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-		$.ajax({
-			url:window.location.href+'stock_sync',
-			type:'get',
-			dataType:'json',
-			success:function(res){
-				console.log(res)
-				$('#sync_the_stock').removeAttr('disabled');
-				$('#sync_the_stock').text('sync the stock');
-			}
-		})
-});
 
 
 
