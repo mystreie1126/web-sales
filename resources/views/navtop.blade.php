@@ -12,9 +12,9 @@
             <i class="fa fa-bars"></i>
           </a>
           <ul class="right">
-            <li>
+            {{-- <li>
               <a class="active-link" href="{{route('countStock')}}">Counting Stock</a>
-            </li>
+            </li> --}}
            <li>
               <a href="{{ route('logout') }}"
                   onclick="event.preventDefault();
