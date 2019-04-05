@@ -39,6 +39,10 @@ Route::get('/countStock',function(){
 	return view('countStock');
 })->name('countStock');
 
+Route::get('/updatedHistory','stockController@updatedRecord')->name('updatedStockHistory');
+Route::post('/deleteRecord','stockController@deleteSavedRecord')->name('deleterecord');
+
+
 Route::get('/test','voucherController@test');
 Route::get('/neworder','OrderController@newOrder');
 Route::post('/createvoucher','voucherController@createPosVoucher');
@@ -62,3 +66,4 @@ Route::post('/go-refund','RefundController@go_refund');
 
 
 Route::get('/countStockbranchStockInfo','stockController@branchStockList');
+Route::post('/countStockUpdateBranchStock','stockController@updateStock');

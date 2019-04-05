@@ -93,32 +93,30 @@
           font-size: 2rem;
         }
 
-       .stockinfo_row{
-        width:100%;
-       }
+      
+
+        .countStock div{
+          width: 100%;
+          height:50vh;
+          overflow: auto;
+          margin:0;
+        }
         
-        .stockinfo_row th{
-          width:25%;
-         }
+        .updateToStock{
+          padding: 15px;
+          transition: .2s ease;
+          cursor: pointer;
+        }
 
-         .updateToStock{
-           padding: 25px;
-           background-color: #f4c242;
-           border-radius: 5px;
-           transition: .5s ease;
-           cursor: pointer;
-           
-         }
+        .updateToStock:hover{
+          background-color: green;
+          color:#fff;
+        }
 
-         .updateToStock:hover{
-            background: red;
-         }
-          
-           .updateToStock:active{
-              transform: translateY(15px);
-            }
-
-
+        #myInput::placeholder{
+          font-style: italic;
+          font-weight: bold;
+        }
 
 
         </style>
