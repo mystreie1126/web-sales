@@ -16,8 +16,13 @@
                 <li>
                   <a href="{{route('updatedStockHistory')}}">Updated Record</a>
                 </li>
-                
+              @else
+                <li>
+                 <span class="flow-text red-text">Please log in</span>
+                </li>
               @endif
+
+
                 <li class="right">
                    <a href="{{ route('logout') }}"
                   onclick="event.preventDefault();
