@@ -106,12 +106,18 @@
           padding: 15px;
           transition: .2s ease;
           cursor: pointer;
-        }
-
-        .updateToStock:hover{
-          background-color: green;
+          width:50%;
+          margin:auto;
+          display: block;
+          font-size: 2rem;
+          background: orange;
           color:#fff;
         }
+
+      /*  .updateToStock:hover{
+          background-color: green;
+          color:#fff;
+        }*/
 
         #myInput::placeholder{
           font-style: italic;

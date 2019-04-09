@@ -18,18 +18,18 @@
 	
 </div> --}}
 
-<table class="striped" id="branchStockList">
-  <thead>
+<div class="striped" id="branchStockList">
+{{--   <thead>
     <tr>
         <th>Name</th>
         <th>reference</th>
         <th class="center">Quantity</th>
         <th class="center">Update</th>
     </tr>
+  </thead> --}}
     <input type="text" id="myInput" placeholder="Search by name or reference(at least 2 characters)">
-  </thead>
 
-    <tbody class="stockinfo_branch">
+    <ul class="stockinfo_branch">
 	{{-- 	<tr class="stockinfo_row">
 			<th class="indigo-text">iOhone asdadqwedad a adadqweqdad</th>
 			<th class="teal-text">2000007891</th>
@@ -42,8 +42,8 @@
 			<input type="hidden" value="" class="branch_product_id">
 		</tr> --}}
 
-   </tbody>
-</table>
+   </ul>
+</div>
 
 @push('countStock')
   <script type="text/javascript" src="{{URL::asset('js/countstock.js')}}"></script>

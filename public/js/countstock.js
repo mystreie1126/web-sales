@@ -22,17 +22,18 @@ $(document).ready(function(){
 			let html = '';
 
 			response.forEach((e)=>{
-				html += '<tr class="stockinfo_row hide">'+
-							'<th class="indigo-text">'+e.name+'</th>'+
-							'<th class="teal-text">'+e.reference+'</th>'+
-							'<th>'+
+				html += '<li class="stockinfo_row collection-item hide">'+
+							'<span class="indigo-text flow-text">'+e.name+'</span>'+
+							'<br>'+
+							'<span class="teal-text flow-text">'+e.reference+'</span>'+
+							'<span>'+
 								'<input type="number" class="update_stock_input center" required>'+
-							'</th>'+
-							'<th class="center">'+
-								'<i class="material-icons updateToStock">check</i>'+
-							'</th>'+
+							'</span>'+
+							'<span class="center">'+
+								'<button class=" updateToStock">Update</button>'+
+							'</span>'+
 							'<input type="hidden" value="'+e.branch_product_id+'" class="branch_product_id">'+
-						'</tr>'
+						'</li>'
 
 			});
 
@@ -59,7 +60,7 @@ $(document).ready(function(){
 	});
 
 	$('.stockinfo_branch').on('click','.updateToStock',function(e){
-		$(this).text('arrow_upward');
+		
 		    let updateQty = $(this).parent().parent().find('.update_stock_input').val(),
 		    	reference = $(this).parent().parent().find('.teal-text').text(),
 		    	name      = $(this).parent().parent().find('.indigo-text').text(),
@@ -86,7 +87,7 @@ $(document).ready(function(){
 			 	});
 			}else{
 			 	Materialize.toast('<span class="red-text bold">Valid Quantity Please</span>', 1000);
-			 	$(this).text('check');
+			 	// $(this).text('check');
 			}
  	})
 
