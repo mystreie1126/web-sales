@@ -20,7 +20,7 @@
 				<th>
 					<form action='{{route('deleterecord')}}' method="POST">
 						<input type="hidden" name="record_id" value="{{$d->id}}">
-						<button class="btn">Restore</button>
+						<button class="btn">Delete</button>
 						{{csrf_field()}}
 					</form>
 				</th>

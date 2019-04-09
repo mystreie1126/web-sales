@@ -59,7 +59,7 @@ class stockController extends Controller
         $updateHistory = new updateHistory;
         $updateHistory::findOrFail($request->record_id)->delete();
 
-        return redirect('countStock');
+        return redirect('updatedHistory');
 
     }
 
