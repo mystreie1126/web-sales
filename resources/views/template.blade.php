@@ -140,9 +140,11 @@
    {{--  <script type="text/javascript" src="{{URL::asset('js/jquery.js')}}"></script> --}}
     <script type="text/javascript" src="{{URL::asset('js/plugin/fancyTable.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('js/plugin/notify.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('js/plugin/csvExport.min.js')}}"></script>
+
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
     @stack('countStock')
-
+    @stack('preown')
 
     </body>
 </html>

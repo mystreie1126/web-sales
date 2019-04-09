@@ -22,7 +22,7 @@ $(document).ready(function(){
 			let html = '';
 
 			response.forEach((e)=>{
-				html += '<li class="stockinfo_row collection-item hide">'+
+				html += '<li class="stockinfo_row collection-item  hide">'+
 							'<span class="indigo-text flow-text">'+e.name+'</span>'+
 							'<br>'+
 							'<span class="teal-text flow-text">'+e.reference+'</span>'+
@@ -30,10 +30,11 @@ $(document).ready(function(){
 								'<input type="number" class="update_stock_input center" required>'+
 							'</span>'+
 							'<span class="center">'+
-								'<button class=" updateToStock">Update</button>'+
+								'<button class="updateToStock">Update</button>'+
 							'</span>'+
 							'<input type="hidden" value="'+e.branch_product_id+'" class="branch_product_id">'+
 						'</li>'
+
 
 			});
 

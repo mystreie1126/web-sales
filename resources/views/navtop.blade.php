@@ -16,6 +16,9 @@
                 <li>
                   <a href="{{route('updatedStockHistory')}}">Updated Record</a>
                 </li>
+                 <li>
+                  <a href="{{route('preown')}}">Phone Stock</a>
+                </li>
               @else
                 <li>
                  <span class="flow-text red-text">Please log in</span>
@@ -49,6 +52,10 @@
                 </li>
                 <li>
                   <a href="{{route('updatedStockHistory')}}">Updated Record</a>
+                </li>
+
+                 <li>
+                  <a href="{{route('preown')}}">Phone Stock</a>
                 </li>
                 
               @endif

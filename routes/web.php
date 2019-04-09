@@ -67,3 +67,4 @@ Route::post('/go-refund','RefundController@go_refund');
 
 Route::get('/countStockbranchStockInfo','stockController@branchStockList');
 Route::post('/countStockUpdateBranchStock','stockController@updateStock');
+Route::get('/preownstock','stockController@preownStock')->name('preown');
