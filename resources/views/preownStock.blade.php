@@ -2,7 +2,7 @@
 @include('navtop')
 @section('content')
 
-<button class="btn indigo right" id="preown_export">Export to CSV</button>
+<button class="btn indigo right" id="preown_export">Export</button>
 
 <table class="striped" id="preownStock_table">
 	
@@ -11,6 +11,7 @@
 		
 	</tr>
 </thead>
+<p class="flow-text">Total <span class="orange-text">{{count($stocks)}}</span> devices in stock</p>
 
 <tbody>
 	@foreach($stocks as $stock)

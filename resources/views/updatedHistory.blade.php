@@ -11,7 +11,6 @@
         <th>Restore</th>
     </tr>
   </thead>
-
     <tbody>
     	@foreach($data as $d)
 			<tr>
