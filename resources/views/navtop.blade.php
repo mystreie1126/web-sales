@@ -10,6 +10,8 @@
               
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
+                    
+                    {{Auth::User()->name}}
                   </a>
                 </li>
               
