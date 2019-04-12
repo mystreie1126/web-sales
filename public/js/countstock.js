@@ -27,7 +27,7 @@ $(document).ready(function(){
 							'<br>'+
 							'<span class="teal-text flow-text">'+e.reference+'</span>'+
 							'<span>'+
-								'<input type="number" class="update_stock_input center" required>'+
+								'<input type="number" class="update_stock_input center" placeholder="input quantity here" required>'+
 							'</span>'+
 							'<span class="center">'+
 								'<button class="updateToStock">Update</button>'+

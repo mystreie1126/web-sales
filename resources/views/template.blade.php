@@ -103,7 +103,8 @@
         }
         
         .updateToStock{
-          padding: 15px;
+          padding: 10px;
+          border-radius: 2px;
           transition: .2s ease;
           cursor: pointer;
           width:50%;
@@ -122,6 +123,16 @@
         #myInput::placeholder{
           font-style: italic;
           font-weight: bold;
+        }
+
+        .stockinfo_row{
+          margin-bottom: 5px;
+          border:2px solid green;
+        }
+
+        .stockinfo_branch{
+          height:100vh;
+          overflow: auto;
         }
 
 
