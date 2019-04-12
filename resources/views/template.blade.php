@@ -130,7 +130,7 @@
           border:2px solid green;
         }
 
-        .stockinfo_branch{
+        .countStock{
           height:100vh;
           overflow: auto;
         }

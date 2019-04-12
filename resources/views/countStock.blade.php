@@ -1,6 +1,7 @@
 @extends('template')
 @include('navtop')
 @section('content')
+ <input type="text" id="myInput" placeholder="Search by name or reference(at least 2 characters)">
 
 <div class="countStock">
 	
@@ -27,8 +28,7 @@
         <th class="center">Update</th>
     </tr>
   </thead> --}}
-    <input type="text" id="myInput" placeholder="Search by name or reference(at least 2 characters)">
-
+   
     <ul class="stockinfo_branch">
 	{{-- 	<tr class="stockinfo_row">
 			<th class="indigo-text">iOhone asdadqwedad a adadqweqdad</th>
