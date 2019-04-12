@@ -7,9 +7,17 @@
                
 
               @if(Auth::check())
+              
                 <li>
-                  <a href="{{route('home')}}" class="shop_name_logo col s3">{{Auth::User()->name}}</a>
+                  <a href="{{route('home')}}" class="shop_name_logo col s3">
+                    @if(Auth::User()->shop_id == 27)
+                    {{'HQ'}}
+                    @else
+                    {{Auth::User()->name}}
+                    @endif
+                  </a>
                 </li>
+              
                 <li>
                   <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
                 </li>
