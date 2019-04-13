@@ -10,8 +10,11 @@
               
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
-                    
+                    @if(Auth::User()->shop_id == 27)
+                      WareHouse
+                    @else
                     {{Auth::User()->name}}
+                    @endif
                   </a>
                 </li>
               
