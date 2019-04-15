@@ -1,7 +1,9 @@
 @extends('template')
 @include('navtop')
 @section('content')
-
+@if(Auth::check())
+	<input type="hidden" value="{{Auth::User()->feature_value}}">
+@endif
 <button class="btn indigo right" id="preown_export">Export</button>
 
 <table class="striped" id="preownStock_table">

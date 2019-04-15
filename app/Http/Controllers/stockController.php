@@ -102,7 +102,7 @@ class stockController extends Controller
     public function preownStock()
     {
         if(Auth::check()){
-         $stocks =    DB::table('ps_feature_product as a')->select('b.name')
+         $stocks =    DB::table('ps_feature_product as a')->select('b.name','a.id_product')
             ->join('ps_product_lang as b','a.id_product','b.id_product')
             ->join('ps_product_shop as c','c.id_product','a.id_product')
             ->join('ps_category_product as d','d.id_product','a.id_product')
@@ -118,11 +118,10 @@ class stockController extends Controller
                 ['e.id_product_attribute',0],
                 ['e.quantity','>=',1]
             ])
-            ->groupBy('b.name')
+           ->groupBy('a.id_product')
 
             ->get();
 
-            //Auth::User()->feature_value
 
             return view('preownStock',compact('stocks'));
         }

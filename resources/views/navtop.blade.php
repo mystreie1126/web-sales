@@ -10,22 +10,20 @@
               
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
-                    @if(Auth::User()->shop_id == 27)
-                      WareHouse
-                    @else
+                    
                     {{Auth::User()->name}}
-                    @endif
+
                   </a>
                 </li>
               
-                <li>
+                {{-- <li>
                   <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
                 </li>
                 <li>
                   <a href="{{route('updatedStockHistory')}}">Updated Record</a>
-                </li>
+                </li> --}}
                  <li>
-                  <a href="{{route('preown')}}">Phone Stock</a>
+                  <a href="{{route('preown')}}">Device List</a>
                 </li>
               @else
                 <li>
@@ -55,15 +53,15 @@
                 <li class="left">
                   <a href="{{route('home')}}" class="shop_name_logo left">{{Auth::User()->name}}</a>
                 </li>
-                <li>
+               {{--  <li>
                   <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
                 </li>
                 <li>
                   <a href="{{route('updatedStockHistory')}}">Updated Record</a>
-                </li>
+                </li> --}}
 
                  <li>
-                  <a href="{{route('preown')}}">Phone Stock</a>
+                  <a href="{{route('preown')}}">Device List</a>
                 </li>
                 
               @endif
