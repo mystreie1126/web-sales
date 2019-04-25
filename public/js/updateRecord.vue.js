@@ -1,4 +1,4 @@
-const api = 'http://stockupdateapi.funtech.ie/api';
+const api = 'http://stockupdateapi.funtech.ie/api/';
 
 
 var record = new Vue({
