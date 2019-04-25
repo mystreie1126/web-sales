@@ -1,51 +1,33 @@
 @extends('template')
 @include('navtop')
 @section('content')
- <input type="text" id="myInput" placeholder="Search by name or reference(at least 2 characters)">
+@if(Auth::check())
+  <input type="hidden" value="{{Auth::User()->shop_id}}" class="stock_shopID">
 
-<div class="countStock">
-	
-{{-- 
-	<div class="update_product row">
-		<div class="input-field col s12 m12 l12">
-	         <input id="last_name" type="text" class="validate" placeholder="reference">
-        </div>
-		
-		<button class="btn col s12 l12">Search</button>
-	</div>
+  <div class="parent">
 
-	
-	<div class="updated_stock row"></div>
-	
-</div> --}}
+    <input type="hidden" name="" value="">
+    <input type="text" v-model="search">
+    <div v-if="stocks.length > 0" v-for="(stock,index) in filterStocks" v-bind:style="{'border':'1px dotted teal'}">
+      <div class="test_1">
+          <div @style="styleObj" class="row">
+            <h5 class="col s8 m8 l8 indigo-text">@{{stock.name}}</h5>
+            <input type="number" class="col s4 m4 l4" v-model="stock.updateQty" placeholder="Updated Qty can not be empty">
 
-<div class="striped" id="branchStockList">
-{{--   <thead>
-    <tr>
-        <th>Name</th>
-        <th>reference</th>
-        <th class="center">Quantity</th>
-        <th class="center">Update</th>
-    </tr>
-  </thead> --}}
-   
-    <ul class="stockinfo_branch">
-	{{-- 	<tr class="stockinfo_row">
-			<th class="indigo-text">iOhone asdadqwedad a adadqweqdad</th>
-			<th class="teal-text">2000007891</th>
-			<th>
-				<input type="number" class="update_stock_input center" required>
-			</th>
-			<th class="center">
-				<button>Update</button>
-			</th>
-			<input type="hidden" value="" class="branch_product_id">
-		</tr> --}}
+            <h5 class="col s6 m6 l6 orange-text" >@{{stock.ref}}</h5>
 
-   </ul>
-</div>
-
+            <button type="button" v-bind:class="['btn-large','a'+stock.stock_id,'blue darken-4 col s6 m6 l6 right']"
+            v-on:click.prevent="tt(index,stock.ref,stock.id_product,stock.stock_id,stock.updateQty,$event)"
+            v-bind:style="{'marginBottom':'10px'}">
+              Update
+            </button>
+            </div>
+      </div>
+  </div>
+  </div>
 @push('countStock')
-  <script type="text/javascript" src="{{URL::asset('js/countstock.js')}}"></script>
+  <script type="text/javascript" src="{{URL::asset('js/countstock.vue.js')}}"></script>
 @endpush
+
+@endif
 @stop

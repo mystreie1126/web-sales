@@ -39,6 +39,10 @@ Route::get('/countStock',function(){
 	return view('countStock');
 })->name('countStock');
 
+Route::get('/stockUpdateRecord',function(){
+	return view('stockUpdateRecord');
+})->name('stockUpdateRecord');
+
 Route::get('/updatedHistory','stockController@updatedRecord')->name('updatedStockHistory');
 Route::post('/deleteRecord','stockController@deleteSavedRecord')->name('deleterecord');
 

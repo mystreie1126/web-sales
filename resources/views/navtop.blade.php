@@ -4,24 +4,25 @@
       <div class="container">
         <div class="nav-wrapper">
             <ul>
-               
+
 
               @if(Auth::check())
-              
+
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
-                    
+
                     {{Auth::User()->name}}
 
                   </a>
                 </li>
-              
-                {{-- <li>
+                <li>
                   <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
                 </li>
+
                 <li>
-                  <a href="{{route('updatedStockHistory')}}">Updated Record</a>
-                </li> --}}
+                  <a class="active-link" href="{{route('stockUpdateRecord')}}">Update Record</a>
+                </li>
+
                  <li>
                   <a href="{{route('preown')}}">Device List</a>
                 </li>
@@ -38,7 +39,7 @@
                            document.getElementById('logout-form').submit();">
                   Logout
                   </a>
-  
+
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                   </form>
@@ -46,7 +47,7 @@
             </ul>
 
           </ul>
-          
+
 
           <ul id="side-nav" class="side-nav">
              @if(Auth::check())
@@ -63,7 +64,7 @@
                  <li>
                   <a href="{{route('preown')}}">Device List</a>
                 </li>
-                
+
               @endif
                 <li class="right">
                    <a href="{{ route('logout') }}"
@@ -71,7 +72,7 @@
                            document.getElementById('logout-form').submit();">
                   Logout
                   </a>
-  
+
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                   </form>
