@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 |
 */
 
-//Auth::routes();
+Auth::routes();
 
 // Route::resource('order','orderController',[
 // 		'except' => ['show','edit','update','destroy','create']
