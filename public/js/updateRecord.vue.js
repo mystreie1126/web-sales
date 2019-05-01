@@ -1,4 +1,4 @@
-const api = 'https://calm-anchorage-96610.herokuapp.com/http://stockupdateapi.funtech.ie/api/';
+const api = 'https://calm-anchorage-96610.herokuapp.com/http://stockmangagerapi.funtech.ie/api/';
 
 
 var record = new Vue({
