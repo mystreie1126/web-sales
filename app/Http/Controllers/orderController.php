@@ -184,7 +184,7 @@ class OrderController extends Controller
                     $order = new Order;
                     $order->refresh();
 
-                    $order->where('id_order',$request->online_order_id)->update(['current_state'=>5]);
+                    $order->where('id_order',$request->online_order_id)->update(['current_state'=>30]);
 
                     return response()->json(['collected'=>1,'order'=>$order]);
                 }
