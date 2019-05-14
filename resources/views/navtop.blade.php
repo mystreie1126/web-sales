@@ -19,9 +19,9 @@
                   <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
                 </li>
 
-                <li>
+                {{-- <li>
                   <a class="active-link" href="{{route('stockUpdateRecord')}}">Update Record</a>
-                </li>
+                </li> --}}
 
                  <li>
                   <a href="{{route('preown')}}">Device List</a>
