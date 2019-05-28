@@ -3,6 +3,10 @@
 
 
 @section('content')
+
+<div class="container">
+	
+
 {{--
 <a href='#modal1' class="btn collect-order_pay">Pay and Collect</a> --}}
 
@@ -32,7 +36,7 @@
   </div>
 
 
-@if(Auth::check())
+@if(Auth::check() && Auth::user()->user_type < 10)
 	<div class="row" id="order">
 		 <div class="col s12">
 			 <ul class="tabs click_flag">
@@ -245,4 +249,5 @@
 
 	</div>
 	@endif
+</div>
 @endsection

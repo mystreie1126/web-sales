@@ -6,7 +6,7 @@
             <ul>
 
 
-              @if(Auth::check())
+              @if(Auth::check() && Auth::user()->user_type < 10)
 
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
@@ -15,17 +15,19 @@
 
                   </a>
                 </li>
+
+
+              @elseif(Auth::user()->user_type > 10)
+
+               <li>
+                  <a class="active-link" href="{{route('stockTake')}}">Branch Stock Take</a>
+                </li>
+
                 <li>
-                  <a class="active-link" href="{{route('countStock')}}">Update Stock</a>
-                </li>
+                   <a class="active-link" href="{{route('MyStockTake')}}">My StockTake</a>
+                 </li>
 
-                {{-- <li>
-                  <a class="active-link" href="{{route('stockUpdateRecord')}}">Update Record</a>
-                </li> --}}
 
-                 <li>
-                  <a href="{{route('preown')}}">Device List</a>
-                </li>
               @else
                 <li>
                  <span class="flow-text red-text">Please log in</span>

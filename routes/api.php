@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/branchStockTakeList','StockTakeController@get_stockTake_list');
+Route::post('/saveToBranchStockTakeHistory','StockTakeController@saveTo_stockTakeHistory');
+Route::post('/addMissing','StockTakeController@addMissing_toStockTakeHistory');
+
+Route::post('/myStockTake_records','StockTakeController@myStockTake_records');
+Route::post('/allStockTake_records','StockTakeController@allStockTake_records');
+Route::post('/stockTake_final_results','StockTakeController@stockTake_final_results');

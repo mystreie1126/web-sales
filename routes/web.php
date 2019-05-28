@@ -35,9 +35,11 @@ Route::get('/',function(){
 	return view('index');
 })->name('home');
 
-Route::get('/countStock',function(){
-	return view('countStock');
-})->name('countStock');
+Route::get('/stockTake',function(){
+	return view('stockTake');
+})->name('stockTake');
+
+
 
 Route::get('/stockUpdateRecord',function(){
 	return view('stockUpdateRecord');
@@ -69,6 +71,9 @@ Route::post('/refund-order','RefundController@check_order_refund');
 Route::post('/go-refund','RefundController@go_refund');
 
 
-Route::get('/countStockbranchStockInfo','stockController@branchStockList');
-Route::post('/countStockUpdateBranchStock','stockController@updateStock');
 Route::get('/preownstock','stockController@preownStock')->name('preown');
+
+
+Route::get('/myStockTake',function(){
+	return view('myStockTake');
+})->name('MyStockTake');

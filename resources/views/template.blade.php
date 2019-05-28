@@ -9,10 +9,26 @@
         <title>Web-Sales</title>
         <!-- Latest compiled and minified CSS -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
+        <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/tabulator.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
          <link rel="stylesheet" href="{{URL::asset('css/style/main.css')}}">
 
         <style>
+
+          .stockTake_page{
+              font-family:  'Russo One', sans-serif;
+          }
+
+          .pre-loader{
+  position: absolute;
+  margin: auto;
+  top: 50vh;
+  bottom: 50vh;
+  left: 0;
+  right: 0;
+
+}
            .main-header {
             background: #fff;
             background-size: cover;
@@ -141,9 +157,13 @@
     </head>
     <body>
 
-        <div class="container">
+        <div>
             @yield('content')
         </div>
+    <script type="text/javascript">
+    //const api = 'http://localhost/project/laravel/reward-test/public/api/';
+    const api = 'http://web-sales.funtech.ie/api';
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -155,7 +175,8 @@
     <script type="text/javascript" src="{{URL::asset('js/plugin/csvExport.min.js')}}"></script>
 
     <script type="text/javascript" src="{{URL::asset('js/script.js')}}"></script>
-    @stack('countStock')
+    @stack('stockTake')
+    @stack('myStockTake')
     @stack('preown')
     @stack('updateRecord')
 

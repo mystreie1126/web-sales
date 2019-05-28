@@ -24,7 +24,7 @@ class rewardController extends Controller
         	DB::table('ps_rewards')->where('id_order',$request->id_order)
         	->update(['id_reward_state'=>4]);
         	return redirect()->route('homepage');;
-        
+
 
     }
 
@@ -33,13 +33,13 @@ class rewardController extends Controller
     }
 
     public function rewardPos(Request $request){
-        
+
         /*
           1.online customer firstname,lastname,email
-          2.online id_order and id_customer 
+          2.online id_order and id_customer
           3.credits
         */
-      
+
         // $this->validate($request,[
         //     'id_order'=>'required|integer',
         //     'id_customer'=>'required|integer',
@@ -48,7 +48,7 @@ class rewardController extends Controller
         //     'lastname'=>'required',
         //     'email'=>'required'
         // ]);
-       
+
         //update firstname,lastname and email
 
 
@@ -67,7 +67,7 @@ class rewardController extends Controller
         $reward_template = $reward->replicate();
         $reward_template->save();
 
-        
+
         $new_customer = pos_customer::findOrFail($customer_template->id_customer);
 
         $new_customer->firstname = $request->firstname;
@@ -79,7 +79,7 @@ class rewardController extends Controller
 
         $new_reward = pos_reward::findOrFail($reward_template->id_reward);
 
-        
+
         $new_reward->id_customer = $new_customer->id_customer;
         $new_reward->credits = $request->credits;
 
