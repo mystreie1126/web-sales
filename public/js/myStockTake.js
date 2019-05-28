@@ -19,7 +19,7 @@ var mystockTake = new Vue({
                 console.log(res.data);
 
                 var table = new Tabulator('.mystocktake_table',{
-                  data:res.data.list,
+                  data:res.data,
                   layout:"fitColumns",
                   // height:"100vh",
                   placeholder:"No Data Available",
