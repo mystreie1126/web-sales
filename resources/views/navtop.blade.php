@@ -4,9 +4,9 @@
       <div class="container">
         <div class="nav-wrapper">
             <ul>
+              @if(Auth::check())
 
-
-              @if(Auth::check() && Auth::user()->user_type < 10)
+                @if(Auth::user()->user_type < 10)
 
                 <li>
                   <a href="{{route('home')}}" class="shop_name_logo col s3">
@@ -17,7 +17,7 @@
                 </li>
 
 
-              @elseif(Auth::user()->user_type > 10)
+                 @elseif(Auth::user()->user_type > 10)
 
                <li>
                   <a class="active-link" href="{{route('stockTake')}}">Branch Stock Take</a>
@@ -27,7 +27,8 @@
                    <a class="active-link" href="{{route('MyStockTake')}}">My StockTake</a>
                  </li>
 
-
+                  @endif
+                  
               @else
                 <li>
                  <span class="flow-text red-text">Please log in</span>
