@@ -79,6 +79,9 @@ var parent = new Vue({
       }else{
         Materialize.toast(`<h6 class='red-text'>Can Not Sumbit Empty Value!</h6>`, 1000);
       }
+    },
+    reset_input:function(){
+      this.search = '';
     }
   },
   computed:{

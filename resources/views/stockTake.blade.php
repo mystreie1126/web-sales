@@ -35,11 +35,14 @@
 
 
   <div id="stockTake_HQ" class="container">
+
       <span class="right" style="font-size:1.2rem;">
           Branch:
           <span class="teal-text show_branch_name"></span><br>
           Stock-Take By:
           <span class="red-text">{{Auth::User()->name}}</span><br>
+          <button class="btn amber" v-on:click.prevent="reset_input()">Clear Search</button>
+
       </span>
 
       <input type="hidden" value="{{Auth::User()->shop_id}}" class="stock_shopID">
@@ -47,6 +50,8 @@
 
       <input type="hidden" name="" value="">
       <input type="text" v-model="search" placeholder="Search by refernce or name" class="searchable">
+
+
 
       <div class="preloader-wrapper big active pre-loader" v-if="loading">
         <div class="spinner-layer spinner-blue-only">
