@@ -89,10 +89,19 @@ var parent = new Vue({
       return this.search.toLowerCase();
     },
     filterStocks:function(){
-      return this.stockTakeList.filter((stock)=>{
-        return stock.search.match(this.searchLower);
-      })
+      if(this.searchLower.length > 5){
+          return this.stockTakeList.filter((stock)=>{
+            return stock.search.match(this.searchLower);
+          })
+      }else{
+          return [];
+      }
+    },
+    someshit:function(){
+        return 13123123;
     }
+
+
   }
 
 });

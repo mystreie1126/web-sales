@@ -41,7 +41,6 @@
           <span class="teal-text show_branch_name"></span><br>
           Stock-Take By:
           <span class="red-text">{{Auth::User()->name}}</span><br>
-          <button class="btn amber" v-on:click.prevent="reset_input()">Clear Search</button>
 
       </span>
 
@@ -65,7 +64,12 @@
         </div>
       </div>
 
-
+      <div v-if="filterStocks.length == 0">
+           <h5 class="center">No results found</h5>
+      </div>
+      <div v-else>
+          <h5 class="center">total <span class="teal-text">@{{filterStocks.length}}</span> results found</h5>
+      </div>
 
       <div v-if="stockTakeList.length > 0" v-for="(stock,index) in filterStocks" v-bind:style="{'border':'1px dotted teal'}">
         <div class="test_1">
@@ -85,7 +89,8 @@
 
     </div>
 
-    </div>
+
+</div>
 
 </div>
 @stop
