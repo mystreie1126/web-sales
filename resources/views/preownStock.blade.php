@@ -4,26 +4,27 @@
 @if(Auth::check())
 	<input type="hidden" value="{{Auth::User()->feature_value}}">
 @endif
-<button class="btn indigo right" id="preown_export">Export</button>
+<div class="container">
+	<button class="btn indigo right" id="preown_export">Export</button>
 
-<table class="striped" id="preownStock_table">
-	
-<thead>
-	<tr>
+	<table class="striped" id="preownStock_table">
 		
-	</tr>
-</thead>
-<p class="flow-text">Total <span class="orange-text">{{count($stocks)}}</span> devices in stock</p>
+	<thead>
+		<tr>
+			
+		</tr>
+	</thead>
+	<p class="flow-text">Total <span class="orange-text">{{count($stocks)}}</span> devices in stock</p>
 
-<tbody>
-	@foreach($stocks as $stock)
-	<tr>
-		<th>{{$stock->name}}</th>
-	</tr>
-	@endforeach
-</tbody>
-</table>
-
+	<tbody>
+		@foreach($stocks as $stock)
+		<tr>
+			<th>{{$stock->name}}</th>
+		</tr>
+		@endforeach
+	</tbody>
+	</table>
+</div>
 @stop
 
 @push('preown')

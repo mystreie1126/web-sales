@@ -71,7 +71,7 @@ Route::post('/refund-order','RefundController@check_order_refund');
 Route::post('/go-refund','RefundController@go_refund');
 
 
-Route::get('/preownstock','stockController@preownStock')->name('preown');
+Route::get('/preownstock','preOwnController@preownStock')->name('preown');
 
 
 Route::get('/myStockTake',function(){

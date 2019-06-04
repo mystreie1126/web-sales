@@ -16,6 +16,10 @@
                   </a>
                 </li>
 
+                <li>
+                  <a href="{{route('preown')}}">Device List</a>
+                </li>
+
 
                  @elseif(Auth::user()->user_type > 10)
 
