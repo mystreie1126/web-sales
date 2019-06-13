@@ -41,7 +41,7 @@ var parent = new Vue({
   methods:{
 
     tt:function(index,name,ref,stock_id,qty,$e){
-      if(qty !== undefined && qty > 0 && qty !== ''){
+      if(qty !== undefined && qty >= 0 && qty !== ''){
         console.log(name,ref,stock_id,qty)
 
       let btn =  document.querySelector(`.a${stock_id}`);
