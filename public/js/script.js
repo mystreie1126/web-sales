@@ -237,12 +237,12 @@ let styles = {
 
 	    		$('.collect-order_items').html(htmlresult);
 
-	    		if(response.order.current_state !== 2 && response.order.current_state !==5 ){
+	    		if(response.order.current_state !== 2 && response.order.current_state !==5 && response.order.current_state !== 30){
 	    			$('.collect-payment_status').html('<span class="red-text">Not Paid</span>');
 	    			$('.collect-order_pay').removeClass('hide');
 	    			//$('.collect-order_customer_info').append("<button href='#modal2' class='modal-trigger btn collect-order_pay'>Pay and Collect</button>");
 
-	    		}else if(response.order.current_state == 5){
+	    		}else if(response.order.current_state == 5 || response.order.current_state == 30){
 	    			 if(response.payment_method.length == 0){
 	    			 	$('.collect-payment_status').html('<span class="green-text">Collected and Paid</span>')
 	    			 }
@@ -1070,8 +1070,12 @@ function search_reward_reset(){
 	$('#search-order-by-reference').click((e)=>{
 		e.preventDefault();
 		let input_ref =  $('#input-id-ref').val();
-		search_order_by_ref(input_ref);
-		//console.log(input_ref);
+	  if(input_ref >= 6){
+			search_order_by_ref(input_ref);
+		}else{
+			alert('Reference has to be exactly match!');
+		}
+		
 	});
 
 

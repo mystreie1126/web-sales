@@ -94,7 +94,7 @@
 			 </div>
 
 			 <div class="lol">
-			 	<div class="row collect-order hide">
+			 	<div class="row collect-order show">
 			        <div class="col s12">
 			          <div class="card">
 			            <div class="card-content">

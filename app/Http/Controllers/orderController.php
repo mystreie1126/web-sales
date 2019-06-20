@@ -37,6 +37,16 @@ class OrderController extends Controller
       return stockinfo::where('ie_product_id',$product_id)->value('pos_product_id');
     }
 
+    private function get_branchStockID_by_ref($ref,$shop_id){
+        $query = DB::table('c1ft_pos_prestashop.ps_product as product')
+            ->select('stock.id_stock_available')
+            ->join('c1ft_pos_prestashop.ps_stock_available as stock','stock.id_product','product.id_product')
+            ->where('stock.id_shop',$shop_id)
+            ->where('product.reference',$ref)
+            ->get();
+
+        if($query->count() == 1) return $query[0]->id_stock_available;
+    }
 
     //show the coming order
     public function newOrder(){
@@ -127,9 +137,7 @@ class OrderController extends Controller
         $order_details = Order::find($request->online_order_id)->order_detail;
 
         for($i = 0; $i<count( $order_details); $i++){
-          if(SELF::IN_SHOP_NO_HQ($order_details[$i]->product_id) == 0){
-
-
+         
               if($order_details[$i]->product_attribute_id == 0){
                   DB::table('ps_stock_available')
                   ->where('id_product',$order_details[$i]->product_id)
@@ -149,14 +157,11 @@ class OrderController extends Controller
                   ->where('id_shop_group',3)
                   ->increment('quantity',$order_details[$i]->product_quantity);
               }
-          }
-
-          if(SELF::NO_MORE_STOCK($order_details[$i]->product_id) == 1){
+         
             DB::connection('mysql2')->table('ps_stock_available')
-            ->where('id_product',SELF::NO_MORE_STOCK_ID($order_details[$i]->product_id))
-            ->where('id_shop',Auth::User()->shop_id)
+            ->where('id_stock_available',SELF::get_branchStockID_by_ref($order_details[$i]->product_reference,Auth::User()->shop_id))
             ->decrement('quantity',$order_details[$i]->product_quantity);
-          }
+          
 
         }
 
