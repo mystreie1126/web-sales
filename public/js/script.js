@@ -1070,7 +1070,7 @@ function search_reward_reset(){
 	$('#search-order-by-reference').click((e)=>{
 		e.preventDefault();
 		let input_ref =  $('#input-id-ref').val();
-	  if(input_ref >= 6){
+	  if(input_ref.length >= 6){
 			search_order_by_ref(input_ref);
 		}else{
 			alert('Reference has to be exactly match!');
