@@ -78,10 +78,11 @@ class voucherController extends Controller
 								DB::table('ps_rewards')->where('id_reward',$request->id_reward)->update(['id_reward_state'=>4]);
 								DB::table('ps_orders')->where('id_order',$request->order_id)->update(['current_state'=>5]);
 
-								$qty = DB::table('ps_stock_available')->where('id_shop',1)
-								                            ->where('id_product',$request->product_id)
-								                            ->value('quantity');
-								if($qty < 1){
+								$qty = DB::table('ps_stock_available')
+										->select(DB::raw('sum(quantity) as qty'))
+								        ->where('id_product',$request->product_id)
+								        ->value('quantity');
+								if(intval($qty) < 1){
 									DB::table('ps_product_shop')->where('id_shop',1)
 			                            ->where('id_product',$request->product_id)
 			                            ->update(['active'=>0]);
