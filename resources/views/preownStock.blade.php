@@ -35,7 +35,7 @@
 		<p class="flow-text">Available Brand New Devices in RockPos</p>
 		<button class="btn amber right" id="brandnew_export">Export</button>
 		
-		<table class="striped" id="preownStock_table">	
+		<table class="striped" id="brandnewStock_table">	
 			<thead>
 				<tr>
 					<th>Device Name</th>
@@ -91,8 +91,8 @@
 
 	$('#brandnew_export').click((e)=>{
 		e.preventDefault();
-		$('#brandNewStock_table').csvExport({
-             title:"Pre Own Stock"
+		$('#brandnewStock_table').csvExport({
+             title:"Brand New Stock"
          });
 	})
 
