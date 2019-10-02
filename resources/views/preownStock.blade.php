@@ -12,8 +12,10 @@
 		<table class="striped" id="preownStock_table">	
 			<thead>
 				<tr>
+					<th>id</th>
 					<th>Device Name</th>
 					<th>IMEI</th>
+					<th>Shop</th>
 				</tr>
 			</thead>
 			<p class="flow-text">Total <span class="orange-text">{{count($preown_stocks)}}</span> devices</p>
@@ -21,8 +23,10 @@
 			<tbody>
 				@foreach($preown_stocks as $stock)
 				<tr>
+					<th>{{$stock->id_product}}</th>
 					<th>{{$stock->name}}</th>
 					<th>{{$stock->imei}}</th>
+					<th>{{$stock->shopname}}</th>
 				</tr>
 				@endforeach
 			</tbody>
@@ -38,8 +42,10 @@
 		<table class="striped" id="brandnewStock_table">	
 			<thead>
 				<tr>
+					<th>id</th>
 					<th>Device Name</th>
 					<th>IMEI</th>
+					<th>Shop</th>
 				</tr>
 			</thead>
 			<p class="flow-text">Total <span class="orange-text">{{count($brandnew_stocks)}}</span> devices</p>
@@ -47,8 +53,10 @@
 			<tbody>
 				@foreach($brandnew_stocks as $stock)
 				<tr>
+					<th>{{$stock->id_product}}</th>
 					<th>{{$stock->name}}</th>
 					<th>{{$stock->imei}}</th>
+					<th>{{$stock->shopname}}</th>
 				</tr>
 				@endforeach
 			</tbody>

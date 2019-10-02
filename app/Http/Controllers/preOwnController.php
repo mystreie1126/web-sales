@@ -15,12 +15,14 @@ class preOwnController extends Controller
 	           			 ->join('c1ft_pos_prestashop.ps_product_lang as c','c.id_product','a.id_product')
 	           			 ->join('c1ft_pos_prestashop.ps_product as d','d.id_product','a.id_product')
 	           			 ->join('c1ft_pos_prestashop.ps_stock_available as e','e.id_product','a.id_product')
-	           			 ->select('c.name','d.reference as imei')
-	           			 ->where('a.id_shop',Auth::User()->shop_id)
-	           			 ->where('c.id_shop',Auth::User()->shop_id)
+	           			 ->join('c1ft_pos_prestashop.ps_shop as f','f.id_shop','a.id_shop')
+	           			 ->select('c.name','d.reference as imei','f.name as shopname','a.id_product')
+	           			
 	           			 ->where('b.id_category',$category_id)
 	           			 ->where('e.quantity',1)
 	           			 ->where('a.active',1)
+	           			 ->groupBy('d.reference')
+	           			 ->orderBy('a.id_shop')
 	           			 ->get();
 	    return $stocks;
 	}
