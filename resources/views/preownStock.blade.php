@@ -15,6 +15,7 @@
 					<th>id</th>
 					<th>Device Name</th>
 					<th>IMEI</th>
+					<th>Price</th>
 					<th>Shop</th>
 				</tr>
 			</thead>
@@ -26,6 +27,7 @@
 					<th>{{$stock->id_product}}</th>
 					<th>{{$stock->name}}</th>
 					<th>{{$stock->imei}}</th>
+					<th class="teal-text">{{round($stock->retail,2)}}</th>
 					<th>{{$stock->shopname}}</th>
 				</tr>
 				@endforeach
@@ -45,6 +47,7 @@
 					<th>id</th>
 					<th>Device Name</th>
 					<th>IMEI</th>
+					<th>Price</th>
 					<th>Shop</th>
 				</tr>
 			</thead>
@@ -56,6 +59,7 @@
 					<th>{{$stock->id_product}}</th>
 					<th>{{$stock->name}}</th>
 					<th>{{$stock->imei}}</th>
+					<th class="teal-text">{{round($stock->retail,2)}}</th>
 					<th>{{$stock->shopname}}</th>
 				</tr>
 				@endforeach

@@ -16,7 +16,7 @@ class preOwnController extends Controller
 	           			 ->join('c1ft_pos_prestashop.ps_product as d','d.id_product','a.id_product')
 	           			 ->join('c1ft_pos_prestashop.ps_stock_available as e','e.id_product','a.id_product')
 	           			 ->join('c1ft_pos_prestashop.ps_shop as f','f.id_shop','a.id_shop')
-	           			 ->select('c.name','d.reference as imei','f.name as shopname','a.id_product')
+	           			 ->select('c.name','d.reference as imei','f.name as shopname','a.id_product',DB::raw('a.price * 1.23 as retail'))
 	           			
 	           			 ->where('b.id_category',$category_id)
 	           			 ->where('e.quantity',1)
