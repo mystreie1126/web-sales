@@ -7,24 +7,31 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 
 class preOwnController extends Controller
-{	
+{
 
 	private function rockposDeviceStock($category_id){
-		 $stocks = DB::table('c1ft_pos_prestashop.ps_product_shop as a')
-	           			 ->join('c1ft_pos_prestashop.ps_category_product as b','a.id_product','b.id_product')
-	           			 ->join('c1ft_pos_prestashop.ps_product_lang as c','c.id_product','a.id_product')
-	           			 ->join('c1ft_pos_prestashop.ps_product as d','d.id_product','a.id_product')
-	           			 ->join('c1ft_pos_prestashop.ps_stock_available as e','e.id_product','a.id_product')
-	           			 ->join('c1ft_pos_prestashop.ps_shop as f','f.id_shop','a.id_shop')
-	           			 ->select('c.name','d.reference as imei','f.name as shopname','a.id_product',DB::raw('a.price * 1.23 as retail'))
-	           			
-	           			 ->where('b.id_category',$category_id)
-	           			 ->where('e.quantity',1)
-	           			 ->where('a.active',1)
-	           			 ->groupBy('d.reference')
-	           			 ->orderBy('a.id_shop')
-	           			 ->get();
+		 // $stocks = DB::table('c1ft_pos_prestashop.ps_product_shop as a')
+	     //       			 ->join('c1ft_pos_prestashop.ps_category_product as b','a.id_product','b.id_product')
+	     //       			 ->join('c1ft_pos_prestashop.ps_product_lang as c','c.id_product','a.id_product')
+	     //       			 ->join('c1ft_pos_prestashop.ps_product as d','d.id_product','a.id_product')
+	     //       			 ->join('c1ft_pos_prestashop.ps_stock_available as e','e.id_product','a.id_product')
+	     //       			 ->join('c1ft_pos_prestashop.ps_shop as f','f.id_shop','a.id_shop')
+	     //       			 ->select('c.name','d.reference as imei','f.name as shopname','a.id_product',DB::raw('a.price * 1.23 as retail'))
+	     //       			 ->where('b.id_category',$category_id)
+			// 			 ->where('a.id_shop','c.id_shop')
+	     //       			 ->where('e.quantity',1)
+	     //       			 ->where('a.active',1)
+	     //       			 ->groupBy('d.reference')
+	     //       			 ->orderBy('a.id_shop')
+	     //       			 ->get();
+
+		$stocks = DB::select(`select * from ps_shop`);
 	    return $stocks;
+
+		// $stocks = DB::connection('mysql2')
+		// 		->select(' select * from ps_shop
+		//
+		// 		')
 	}
      public function preownStock(){
         if(Auth::check()){
@@ -63,10 +70,10 @@ class preOwnController extends Controller
 
 	           // return $preown;
 
-        	$preown_stocks = self::rockposDeviceStock(16);
-        	$brandnew_stocks = self::rockposDeviceStock(17);
-
-	            return view('preownStock',compact('preown_stocks','brandnew_stocks'));
+        	// $preown_stocks = self::rockposDeviceStock(16);
+        	// $brandnew_stocks = self::rockposDeviceStock(17);
+			// return $preown_stocks;
+	            return view('preownStock');
 
         }
     }

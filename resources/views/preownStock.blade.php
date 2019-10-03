@@ -4,110 +4,90 @@
 @if(Auth::check())
 	<input type="hidden" value="{{Auth::User()->feature_value}}">
 @endif
-<div class="container">
-	@if(count($preown_stocks) > 0)	
-		<p class="flow-text">Available Pre Own Devices in RockPos</p>
-		<button class="btn indigo right" id="preown_export">Export</button>
-		
-		<table class="striped" id="preownStock_table">	
-			<thead>
-				<tr>
-					<th>id</th>
-					<th>Device Name</th>
-					<th>IMEI</th>
-					<th>Price</th>
-					<th>Shop</th>
-				</tr>
-			</thead>
-			<p class="flow-text">Total <span class="orange-text">{{count($preown_stocks)}}</span> devices</p>
+<div class="container device_list">
+	<p class="flow-text">All Available Devices in RockPos</p>
+	{{-- <button class="btn indigo right" id="preown_export">Export</button> --}}
+	<input type="text" v-model="search" placeholder="SEARCH BY IMEI OR MODEL OR SHOP NAME" class="searchable">
 
-			<tbody>
-				@foreach($preown_stocks as $stock)
-				<tr>
-					<th>{{$stock->id_product}}</th>
-					<th>{{$stock->name}}</th>
-					<th>{{$stock->imei}}</th>
-					<th class="teal-text">{{round($stock->retail,2)}}</th>
-					<th>{{$stock->shopname}}</th>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-	@else
-		<p class="flow-text">No Available Pre Own Devices in RockPos</p>
-	@endif
-
-	@if(count($brandnew_stocks) > 0)	
-		<p class="flow-text">Available Brand New Devices in RockPos</p>
-		<button class="btn amber right" id="brandnew_export">Export</button>
-		
-		<table class="striped" id="brandnewStock_table">	
-			<thead>
-				<tr>
-					<th>id</th>
-					<th>Device Name</th>
-					<th>IMEI</th>
-					<th>Price</th>
-					<th>Shop</th>
-				</tr>
-			</thead>
-			<p class="flow-text">Total <span class="orange-text">{{count($brandnew_stocks)}}</span> devices</p>
-
-			<tbody>
-				@foreach($brandnew_stocks as $stock)
-				<tr>
-					<th>{{$stock->id_product}}</th>
-					<th>{{$stock->name}}</th>
-					<th>{{$stock->imei}}</th>
-					<th class="teal-text">{{round($stock->retail,2)}}</th>
-					<th>{{$stock->shopname}}</th>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-	@else
-		<p class="flow-text">No Available Brand New Devices in RockPos</p>
-	@endif
-
-
-	{{-- <p class="flow-text">New Phone Stock</p>
-	<button class="btn indigo right" id="brandnew_export">Export</button>
-	<table class="striped" id="brandNewStock_table">	
+	<table>
 		<thead>
+          <tr>
+              <th>Model</th>
+              <th>IMEI</th>
+              <th>Price</th>
+			  <th>Shop</th>
+          </tr>
+        </thead>
+		<tbody v-if="devices.length > 0" v-for="(device,index) in filterdevices">
 			<tr>
-				<th>Device Name</th>
-				<th>IMEI</th>
+				<td>@{{device.NAME}}</td>
+				<td>@{{device.imei}}</td>
+				<td>@{{device.price}}&euro;</td>
+				<td>@{{device.shopname}}</td>
 			</tr>
-		</thead>
-		<p class="flow-text">Total <span class="orange-text">{{count($stocks)}}</span> devices</p>
-
-		<tbody>
-			@foreach($stocks as $stock)
-			<tr>
-				<th>{{$stock->name}}</th>
-			</tr>
-			@endforeach
 		</tbody>
-	</table> --}}
+	</table>
+	{{-- <div v-if="devices.length > 0" v-for="(device,index) in filterdevices">
+	  <div class="test_1">
+		  <div  class="row">
+			<h5 class="col s8 m8 l8 indigo-text text-darken-4">@{{device.name}}</h5>
+
+			<h5 class="col s6 m6 l6 orange-text" >@{{device.imei}}</h5>
+
+
+			</div>
+	  </div> --}}
 </div>
 @stop
 
 @push('preown')
 <script type="text/javascript">
-	$('#preown_export').click((e)=>{
-		e.preventDefault();
-		$('#preownStock_table').csvExport({
-             title:"Pre Own Stock"
-         });
-	})
+	// $('#preown_export').click((e)=>{
+	// 	e.preventDefault();
+	// 	$('#preownStock_table').csvExport({
+    //          title:"Pre Own Stock"
+    //      });
+	// })
+	//
+	// $('#brandnew_export').click((e)=>{
+	// 	e.preventDefault();
+	// 	$('#brandnewStock_table').csvExport({
+    //          title:"Brand New Stock"
+    //      });
+	// })
 
-	$('#brandnew_export').click((e)=>{
-		e.preventDefault();
-		$('#brandnewStock_table').csvExport({
-             title:"Brand New Stock"
-         });
+	var cors = 'https://calm-anchorage-96610.herokuapp.com/';
+	var device_list = new Vue({
+		el:'.device_list',
+		data:{
+			devices:[],
+			search:''
+		},
+		created:function(){
+			axios({
+				method:'get',
+				url:cors+'https://stockmananger-api.herokuapp.com/devices/allshop-devices',
+				dataType:'json'
+			}).then((res)=>{
+				res.data.forEach((e)=>{
+					e.searchstr = e.NAME.toString().toLowerCase().concat(e.imei.toString().toLowerCase())
+													  .concat(e.shopname.toString().toLowerCase());
+				    e.price = e.retail.toFixed(2);
+				})
+				device_list.devices = res.data
+			})
+		},
+		computed:{
+			searchLower:function(){
+		      return this.search.toLowerCase();
+		    },
+			filterdevices:function(){
+		          return this.devices.filter((e)=>{
+		            return e.searchstr.match(this.searchLower);
+				});
+		    }
+		}
 	})
-
 
 
 </script>
