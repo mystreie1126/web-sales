@@ -77,3 +77,7 @@ Route::get('/preownstock','preOwnController@preownStock')->name('preown');
 Route::get('/myStockTake',function(){
 	return view('myStockTake');
 })->name('MyStockTake');
+
+Route::get('/parts-stockTake',function(){
+	return view('parts_stockTake');
+})->name('parts_stockTake');
