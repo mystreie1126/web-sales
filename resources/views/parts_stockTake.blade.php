@@ -5,14 +5,15 @@
     @if(Auth::check())
         <input type="hidden" value="{{Auth::User()->shop_id}}" class="shop_id">
         <div class="file-field input-field">
-            <div class="btn">
+            <div class="btn" :disabled="disabled">
                 <span>Upload</span>
-                <input type="file" id="file" v-on:change="fileUpload()">
+                <input type="file" id="file" v-on:change="fileUpload()" :disabled="disabled">
             </div>
             <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+                <input class="file-path validate" type="text" :disabled="disabled">
                 <p class="right filesize" style="font-style:italic">@{{filesize_content}}</p>
             </div>
+            <p class="center">@{{message}}</p>
         </div>
     @endif
 </div>
@@ -26,7 +27,12 @@
         data:{
             file:'',
             filesize_content:'',
-            shop_id:''
+            shop_id:'',
+            disabled:'',
+            message:''
+        },
+        created(){
+            this.check();
         },
         methods:{
             fileUpload:function(){
@@ -50,6 +56,8 @@
                     alert("Please select a file before clicking 'Load'");
                 }
                 else {
+                    this.disabled = true;
+                    this.message = 'Uploading... please do not refresh the page...Zzzz'
                     this.file = input.files[0];
                     this.filesize_content = `${this.file.size} bytes`;
                     let formData = new FormData();
@@ -57,14 +65,49 @@
                     formData.append('shop_id',document.querySelector('.shop_id').value)
                     axios({
                         method:'post',
-                        url:stockMan_api+'uploaded-part-stocktake-sheet',
+                        url:stockMan_api+'parts-stocktake-upload',
                         data:formData,
                         headers:{
                             'Content-Type': 'multipart/form-data',
                         }
-                    }).then((e)=>console.log(e.data))
+                    }).then((e)=>{
+                        console.log(e)
+                        if(e.data.status == 'success'){
+                            console.log('ahahah')
+                            location.reload();
+                        }else if (e.data.status == 'failed'){
+                            this.disabled = false;
+                            this.message= e.data.data.message;
+                        }
+                    }).catch((e)=>{
+                        this.check();
+                        location.reload();
+                    })
                 }
-
+            },
+            check:function(){
+                axios({
+                    method:'get',
+                    url:stockMan_api+'parts-stocktake-upload/check/'+document.querySelector('.shop_id').value
+                }).then((e)=>{
+                    let res = e.data;
+                    console.log(res)
+                    //allow to upload nothing being check
+                    if(res.status == 'success' && res.data.flag == 'upload'){
+                        this.disabled = false;
+                        this.message = res.data.msg
+                    }
+                    //lock upload after 1st time upload 
+                    else if(res.status == 'success' && res.data.flag == 'checkingByKeiran'){
+                        this.disabled = true;
+                        this.message = res.data.msg
+                    }
+                    //give double check
+                    else if(res.status == 'success' && res.data.flg == 'doublecheck'){
+                        this.disabled = true;
+                        this.message = res.data.msg
+                    }
+                })
             }
         }
     })

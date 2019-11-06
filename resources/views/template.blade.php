@@ -163,7 +163,8 @@
     <script type="text/javascript">
     //const api = 'http://localhost/project/laravel/reward-test/public/api/';
     const api = 'http://web-sales.funtech.ie/api/';
-    const stockMan_api = 'http://localhost:3000/';
+    //const stockMan_api = 'http://localhost:3000/';
+    const stockMan_api = 'https://stockmananger-api.herokuapp.com/'
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
