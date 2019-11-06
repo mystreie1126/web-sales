@@ -19,7 +19,10 @@
                 <li>
                   <a href="{{route('preown')}}">Device List</a>
                 </li>
-
+                
+                 <li>
+                  <a href="{{route('parts_stockTake')}}">Parts stock check</a>
+                </li>
 
                  @elseif(Auth::user()->user_type > 10)
 
@@ -71,6 +74,8 @@
                  <li>
                   <a href="{{route('preown')}}">Device List</a>
                 </li>
+
+                
 
               @endif
                 <li class="right">

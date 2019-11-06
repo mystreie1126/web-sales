@@ -81,3 +81,9 @@ Route::get('/myStockTake',function(){
 Route::get('/parts-stockTake',function(){
 	return view('parts_stockTake');
 })->name('parts_stockTake');
+
+
+
+
+
+
