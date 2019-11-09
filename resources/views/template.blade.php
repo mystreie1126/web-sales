@@ -162,7 +162,7 @@
         </div>
     <script type="text/javascript">
     //const api = 'http://localhost/project/laravel/reward-test/public/api/';
-    const api = 'http://web-sales.funtech.ie/api/';
+    //const api = 'http://web-sales.funtech.ie/api/';
     //const stockMan_api = 'http://localhost:3000/';
     const stockMan_api = 'https://stockmananger-api.herokuapp.com/'
     </script>

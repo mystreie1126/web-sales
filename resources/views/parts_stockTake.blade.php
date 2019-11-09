@@ -13,8 +13,29 @@
                 <input class="file-path validate" type="text" :disabled="disabled">
                 <p class="right filesize" style="font-style:italic">@{{filesize_content}}</p>
             </div>
-            <p class="center">@{{message}}</p>
+            <p class="center flow-text">@{{message}}</p>
         </div>
+        <table class="center" v-if="doublecheck_parts.length > 0">
+            <p class="flow-text" v-if="doublecheck_parts.length > 0">Total @{{doublecheck_parts.length}} missmatches</p>
+            <thead>
+                <tr>
+                    <th>Parts ID</th>
+                    <th>Parts Name</th>
+                    <th>Your Stock Qty</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in doublecheck_parts">
+                    <td>@{{item.parts_id}}</td>
+                    <td>@{{item.name}}</td>
+                    <td><input type="number" v-model="item.doublecheck_qty" class="center"></td>
+                    <td>
+                        <button class="btn" @click.prevent="submit_doubleck(item)" :disabled="submit_btn">submit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     @endif
 </div>
 @stop
@@ -29,7 +50,9 @@
             filesize_content:'',
             shop_id:'',
             disabled:'',
-            message:''
+            submit_btn:false,
+            message:'',
+            doublecheck_parts:[]
         },
         created(){
             this.check();
@@ -91,23 +114,46 @@
                     url:stockMan_api+'parts-stocktake-upload/check/'+document.querySelector('.shop_id').value
                 }).then((e)=>{
                     let res = e.data;
-                    console.log(res)
+                    console.log(e)
                     //allow to upload nothing being check
-                    if(res.status == 'success' && res.data.flag == 'upload'){
+                    if(e.data.status == 'success' && e.data.data.flag == 'upload'){
                         this.disabled = false;
-                        this.message = res.data.msg
+                        this.message = e.data.data.msg
                     }
                     //lock upload after 1st time upload 
-                    else if(res.status == 'success' && res.data.flag == 'checkingByKeiran'){
+                    else if(e.data.status== 'success' && e.data.data.flag == 'checkingByKeiran'){
                         this.disabled = true;
-                        this.message = res.data.msg
+                        this.message = e.data.data.msg
                     }
                     //give double check
-                    else if(res.status == 'success' && res.data.flg == 'doublecheck'){
+                    else if(e.data.status == 'success' && e.data.data.flag == 'doublecheck'){
+                       this.disabled = true;
+                       this.message = e.data.data.msg
+                       this.doublecheck_parts = e.data.data.doublecheck;
+                        
+
+                       //console.log( this.doublecheck_parts)
+                    }else{
                         this.disabled = true;
-                        this.message = res.data.msg
+                        this.message = e.data.data.msg
                     }
                 })
+            },
+            submit_doubleck:function(item,index){
+               
+                if(Number(item.doublecheck_qty) >= 0){
+                    this.submit_btn = true;
+                    axios({
+                        method:'put',
+                        url:stockMan_api+'parts-stocktake-upload/doublecheck-after-rebuff/'+document.querySelector('.shop_id').value,
+                        data:item
+                    }).then((e)=>{
+                        console.log(e.data.data.flag)
+                        this.submit_btn = false;
+                        this.check();
+                       
+                    })
+                }
             }
         }
     })
