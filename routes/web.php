@@ -83,7 +83,9 @@ Route::get('/parts-stockTake',function(){
 })->name('parts_stockTake');
 
 
-
+Route::get('/stocktake_scanner',function(){
+	return view('stocktake_scanner');
+})->name('stocktake_scanner');
 
 
 

@@ -182,5 +182,7 @@
     @stack('preown')
     @stack('updateRecord')
     @stack('parts_stockTake')
+    @stack('pop_stockTake')
+    @stack('stocktake_scanner')
     </body>
 </html>
