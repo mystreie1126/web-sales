@@ -17,6 +17,14 @@
                 </li>
 
                 <li>
+                  <a href="{{route('stocktake_scanner')}}" style="display:flex; justify-content: space-between;">
+                     <i class="material-icons">camera</i>
+                    <span>Stock Take Scanner</span>
+                   
+                    </a>
+                </li>
+
+                <li>
                   <a href="{{route('preown')}}">Device List</a>
                 </li>
                 
@@ -24,13 +32,7 @@
                   <a href="{{route('parts_stockTake')}}">Parts stock check</a>
                 </li>
 
-                <li>
-                  <a href="{{route('stocktake_scanner')}}" style="display:flex; justify-content: space-between;">
-                     <i class="material-icons">camera</i>
-                    <span>Stock Take Scanner</span>
-                   
-                    </a>
-                </li>
+               
 
                 {{-- <li>
                   <a href="{{route('pop_stockTake')}}" class="amber-text">devices stock check</a>
